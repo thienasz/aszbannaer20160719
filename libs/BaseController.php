@@ -16,10 +16,8 @@ class BaseController
     public function loadModel($name)
     {
         $file= 'models/'.$name.'Model.php';
-        require $file;
-
-        if (file_exists($file)){
-
+        if(file_exists($file)){
+            require_once $file;
             $className = $name.'Model';
             $this->model = new $className();
         }

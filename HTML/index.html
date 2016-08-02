@@ -1,0 +1,152 @@
+<html>
+<head>
+    <style>
+        .wrap, .inner-el {
+            position: relative;
+        }
+        .bg {
+            height: 150px;
+            width: 500px;
+        }
+        .inner-el {
+            border: 1px dotted black;
+            z-index: 1;
+        }
+        .rotate {
+            position: absolute;
+            top: 0;
+            right: 0;
+        }
+        .inner-rotate:before {
+            content: '';
+            position: absolute;
+            top: 19px;
+            width: 20px;
+            height: 0;
+            border-top: 1px dashed #3f4652;
+            background-color: #fff;
+        }
+        .inner-rotate:after {
+            content: '';
+            background-color: #fff;
+            background-image: url(https://static.canva.com/static/images/icon_rotate.svg);
+            background-size: 14px 14px;
+            background-repeat: no-repeat;
+            background-position: 1px 2px;
+            position: absolute;
+            left: 11px;
+            top: 12px;
+            width: 16px;
+            height: 16px;
+            border-radius: 16px;
+            box-shadow: 0 0 3px 1px rgba(0,0,0,.15)
+        }
+
+        .el {
+            position: absolute;
+        }
+
+        .handle, .selected-option {
+            position: absolute;
+        }
+
+        .handle:before {
+            content: "+++";
+        }
+
+        .pst {
+            top: -15px;
+        }
+
+        .pst50 {
+            top: 50%;
+        }
+
+        .psb {
+            bottom: -15px;
+        }
+
+        .psb50 {
+            bottom: 50%;
+        }
+
+        .psl {
+            left: -15px;
+        }
+
+        .psl50 {
+            left: 50%;
+        }
+
+        .psr {
+            right: -15px;
+        }
+
+        .psr50 {
+            right: 50%;
+        }
+
+        .resize-drag {
+            background-color: #29e;
+            color: white;
+            font-size: 20px;
+            font-family: sans-serif;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 30px 20px;
+
+            box-sizing: border-box;
+        }
+        .selected-option {
+            top: -20px;
+            right: 0;
+            color: #fff;
+            background-color: #000;
+        }
+        .selected-option a{
+            padding: 0 10px;
+            cursor: default;
+        }
+        .w100 {
+            width: 100%;
+        }
+        .h100 {
+            height: 100%;
+        }
+        .rotate-event {
+            cursor: default;
+        }
+    </style>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery-ui.js"></script>
+    <script src="../assets/js/libs/interact.js"></script>
+</head>
+<body>
+<br>
+<br>
+<br>
+<center>
+    <div class="wrap">
+    <div class="menu-option menu">
+        <div class="selected-option">
+            <a class="color option" data-option="color">color</a>
+            <a class="opacity option" data-option="opacity">opacity</a>
+            <a class="up option" data-option="up">up</a>
+            <a class="down option" data-option="down">down</a>
+        </div>
+    </div>
+        <div class="bg el">
+            <div class="inner-el resize-drag-full " element-active="true">
+                <img class="w100" src="bg.jpg">
+                <div class="rotate rotate-event">
+                    <div class="inner-rotate"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</center>
+<script>
+
+</script>
+</body>
+</html>

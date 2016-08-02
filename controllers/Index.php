@@ -7,6 +7,6 @@ class Index extends BaseController
     }
     public function index()
     {
-        $this->view->render('banner/index', false);
+        echo 'index';
     }
 }

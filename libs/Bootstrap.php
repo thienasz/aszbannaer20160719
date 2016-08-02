@@ -32,10 +32,12 @@ class Bootstrap
         }
         $controller = new $args[0];
         $controller->loadModel($args[0]);
-
         if (isset($args[1])) {
-            if(method_exists($controller, $args[1]))
-                $controller->$args[1]();
+            if(method_exists($controller, $args[1])){
+//                $controller->$args[1]();
+                $params = array_slice($args, 2);
+                call_user_func_array(array($controller, $args[1]), $params);
+            }
             else
                 echo 'errrr';
         } else {
