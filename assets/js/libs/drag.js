@@ -144,7 +144,6 @@ $.widget("ui.draggable", $.ui.mouse, {
         setTimeout(function () {
             console.log(2);
         }, 1000);
-        console.log(3);
         var o = this.options;
         this.workingEl = o.workingEl;
         //Create and append the visible helper
@@ -253,7 +252,9 @@ $.widget("ui.draggable", $.ui.mouse, {
             this.position = ui.position;
         }
         if(this.options.workingEl){
-            this.workingEl = $(this.options.workingEl);
+            var name = this.options.workingEl+'-'+this.element.data('value');
+            this.workingEl = $(name);
+            this.workingEl.css('position', "absolute");
             this.workingEl.css('left', this.position.left + "px");
             this.workingEl.css('right', -this.position.left + "px");
             this.workingEl.css('top', this.position.top + "px");

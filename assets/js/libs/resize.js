@@ -24,6 +24,7 @@ $.widget("ui.resizable", $.ui.mouse, {
     options: {
         alsoResize: false,
         animate: false,
+        workingEl: false,
         animateDuration: "slow",
         animateEasing: "swing",
         aspectRatio: false,
@@ -506,7 +507,12 @@ $.widget("ui.resizable", $.ui.mouse, {
         if (this.size.height !== this.prevSize.height) {
             props.height = this.size.height + "px";
         }
-
+        console.log(props);
+        if(this.options.workingEl){
+            var name = this.options.workingEl+'-'+this.element.data('value');
+            this.workingEl = $(name);
+            this.workingEl.css(props);
+        }
         this.helper.css(props);
 
         return props;
@@ -678,7 +684,7 @@ $.widget("ui.resizable", $.ui.mouse, {
             if (!this.outerDimensions) {
                 this.outerDimensions = this._getPaddingPlusBorderDimensions(prel);
             }
-
+            console.log(prel);
             prel.css({
                 height: ( element.height() - this.outerDimensions.height ) || 0,
                 width: ( element.width() - this.outerDimensions.width ) || 0
@@ -698,6 +704,7 @@ $.widget("ui.resizable", $.ui.mouse, {
             this.helper = this.helper || $("<div style='overflow:hidden;'></div>");
 
             this._addClass(this.helper, this._helper);
+            console.log(this.helper);
             this.helper.css({
                 width: this.element.outerWidth(),
                 height: this.element.outerHeight(),

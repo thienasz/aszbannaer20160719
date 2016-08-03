@@ -111,7 +111,7 @@ a:hover {
     bottom: 0;
     padding: 0;
     margin: 0;
-    position: relative;
+    position: absolute;
     border: 2px dotted darkgray;
 }
 .img-handle {
@@ -132,7 +132,6 @@ a:hover {
     bottom: -1px;
     left: -1px;
     right: -1px;
-    border: dashed 1px red;
     z-index: 11;
 }
 .ui-resizable-handle {

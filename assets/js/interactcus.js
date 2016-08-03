@@ -5,12 +5,12 @@ function interactInit() {
     console.log(initOnce);
     $('.j-resize').resizable(
         {
-            handles: "n, e, s, w"
+            handles: "n, e, s, w",
+            workingEl: '.img-handle',
         }
     );
     $('.j-drag').draggable(
         {
-            handle: ".border-box",
             workingEl: '.img-handle',
             cursor: "move",
             start: function( event, ui ) {
@@ -25,7 +25,9 @@ function interactInit() {
             }
         }
     );
-    $('.j-rotate').rotatable();
+    $('.j-rotate').rotatable({
+        workingEl: '.img-handle',
+    });
 
     $('.menu').find('.option').click(function () {
         var option = $(this).data('option');
@@ -63,6 +65,16 @@ function interactInit() {
         $(this).attr('element-active', 'true');
         showBoderSelect($(this));
     });
+    //event for border
+    $('.border-box').mousedown(function () {
+        var ac = $(this);
+        refreshBorder(ac);
+    });
+
+    function refreshBorder(el) {
+        $('.border-box').css('border', 'none');
+        el.css('border', 'dashed 1px red');
+    }
 }
 
 

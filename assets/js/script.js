@@ -59,18 +59,17 @@ function addToWorkSection() {
             },
             success: function (value) {
                 removeActiveEl();
+                //random number by time
+                var numberTime = new Date().valueOf();
+                console.log(numberTime);
                 var html = '';
-                // html += '<div class="box-hidden"';
-                // html += '</div>';
-
-                html += '<div class="active-el j-drag j-resize j-rotate" data-value="'+value.id+'" element-active="true" style="position: absolute"> ' +
-                    '<div class="box-hidden">' +
-                    '<div class="img-handle">' +
-                    ' <img class="img-show h100 cursor-move" src="data:image/png;base64,'+value.image+'">' +
-                    '</div>' +
-                    '</div>' +
-                    '<div class="border-box"></div>' +
-                    '</div>';
+                // add content img
+                html += '<div class="img-handle-'+numberTime+'" data-value="'+value.id+'" element-active="true">' +
+                            ' <img class="img-show h100 cursor-move" src="data:image/png;base64,'+value.image+'">' +
+                        '</div>';
+                $('#working-box .working-inner-box .box-hidden').append(html);
+                //add border
+                html = '<div class="border-box border-box-'+numberTime+' j-drag j-resize j-rotate" data-value="'+numberTime+'" ></div>';
                 $('#working-box .working-inner-box').append(html);
                 $('#working-box').trigger('contentChange');
             }

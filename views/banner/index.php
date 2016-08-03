@@ -32,7 +32,9 @@
             </div>
             <div class="working-box-wrapper  col-sm-8 col-sm-offset-2 no-padding">
                 <div class="inner-box">
-                    <div class="working-inner-box"></div>
+                    <div class="working-inner-box">
+                        <div class="box-hidden"></div>
+                    </div>
                 </div>
             </div>
         </div>
