@@ -33,7 +33,9 @@
             <div class="working-box-wrapper  col-sm-8 col-sm-offset-2 no-padding">
                 <div class="inner-box">
                     <div class="working-inner-box">
-                        <div class="box-hidden"></div>
+                        <div class="box-hidden">
+                            <div id="myeditablediv">Click here to edit!</div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -46,8 +48,38 @@
 <script src="assets/js/libs/drag.js"></script>
 <script src="assets/js/libs/resize.js"></script>
 <script src="assets/js/libs/jquery.ui.rotatable.min.js"></script>
+<script src="assets/js/libs/tinymce.min.js"></script>
 <script src="assets/js/script.js"></script>
 <script src="assets/js/interactcus.js"></script>
 <script src="assets/js/libs/bootstrap.min.js"></script>
+<script>
+
+    tinymce.init({
+        selector: '#myeditablediv',
+        inline: true,
+        menubar: false,
+        theme: 'modern',
+        plugins: [
+            'emoticons template paste textcolor colorpicker '
+        ],
+        toolbar: ' insertfile undo redo | styleselect | fontselect fontsizeselect forecolor | bold italic | emoticons paste ',
+        font_sizes : "8px,10px,12px,14px,16px,18px,20px,24px,32px,36px",
+        style_formats: [
+            {title: 'Open Sans', inline: 'span', styles: { 'font-family':'Open Sans'}},
+            {title: 'Arial', inline: 'span', styles: { 'font-family':'arial'}},
+            {title: 'Book Antiqua', inline: 'span', styles: { 'font-family':'book antiqua'}},
+            {title: 'Comic Sans MS', inline: 'span', styles: { 'font-family':'comic sans ms,sans-serif'}},
+            {title: 'Courier New', inline: 'span', styles: { 'font-family':'courier new,courier'}},
+            {title: 'Georgia', inline: 'span', styles: { 'font-family':'georgia,palatino'}},
+            {title: 'Helvetica', inline: 'span', styles: { 'font-family':'helvetica'}},
+            {title: 'Impact', inline: 'span', styles: { 'font-family':'impact,chicago'}},
+            {title: 'Symbol', inline: 'span', styles: { 'font-family':'symbol'}},
+            {title: 'Tahoma', inline: 'span', styles: { 'font-family':'tahoma'}},
+            {title: 'Terminal', inline: 'span', styles: { 'font-family':'terminal,monaco'}},
+            {title: 'Times New Roman', inline: 'span', styles: { 'font-family':'times new roman,times'}},
+            {title: 'Verdana', inline: 'span', styles: { 'font-family':'Verdana'}}
+        ],
+    });
+</script>
 </body>
 </html>
