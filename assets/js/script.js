@@ -93,5 +93,33 @@ $(function () {
     });
     $('#working-box').on('contentChange', function () {
         interactInit()
+    });
+    $('.test-click').click(function () {
+
+        // call api
+        $.ajax({
+            url: 'http://localhost/banner/element/getElementTestAjax',
+            dataType: 'json',
+            type: 'POST',
+            error: function() {
+                $('#info').html('<p>An error has occurred</p>');
+            },
+            success: function (value) {
+                removeActiveEl();
+                //random number by time
+                var numberTime = new Date().valueOf();
+                console.log(numberTime);
+                var html = '';
+                // add content img
+                html += '<div class="img-handle-'+numberTime+'" data-value= element-active="true">' +
+                    ' <img class="img-show h100 cursor-move" src="data:image/png;base64,'+value.image+'">' +
+                    '</div>';
+                $('#working-box .working-inner-box .box-hidden').append(html);
+                //add border
+                html = '<div class="border-box border-box-'+numberTime+' j-drag j-resize j-rotate" data-value="'+numberTime+'" ></div>';
+                $('#working-box .working-inner-box').append(html);
+                $('#working-box').trigger('contentChange');
+            }
+        });
     })
 });

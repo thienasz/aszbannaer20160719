@@ -15,6 +15,7 @@
                 <a href="#"><?= $cate['name'] ?></a>
             </li>
         <?php endforeach; ?>
+        <li class="test-click"><a href="#">test-click</a></li>
     </ul>
     <div class="content content-show left-wrapper" id="content-show"></div>
 </section>
@@ -28,6 +29,7 @@
                     <li class="option" data-option="up"><a href="#">up</a></li>
                     <li class="option" data-option="down"><a href="#">down</a></li>
                     <li class="option" data-option="delete"><a href="#">delete</a></li>
+                    <li class="submit_image" data-option="submit"><a href="#">submit</a></li>
                 </ul>
             </div>
             <div class="working-box-wrapper  col-sm-8 col-sm-offset-2 no-padding">
@@ -53,7 +55,64 @@
 <script src="assets/js/interactcus.js"></script>
 <script src="assets/js/libs/bootstrap.min.js"></script>
 <script>
+    function getParamas(el) {
+        var obj = {};
+        var top = 0 , left = 0, rotate = 0, zIndex = 0, width, height, id;
+        top = !isNaN(parseInt(el.css('top'))) ? parseInt(el.css('top')) : 0;
+        left = !isNaN(parseInt(el.css('left'))) ? parseInt(el.css('left')) : 0;
+        zIndex = !isNaN(parseInt(el.css('zIndex'))) ? parseInt(el.css('zIndex')) : 0;
+        width = parseInt(el.css('width'));
+        height = parseInt(el.css('height'));
+        id = el.data("value");
+        obj['top'] = top;
+        obj['left'] = left;
+        obj['zindex'] = zIndex;
+        obj['width'] = width;
+        obj['height'] = height;
+        obj['element_id'] = id;
+        console.log(obj);
+        return obj;
+    }
+    $('.submit_image').click(function () {
+        var actives = $('[class *= "img-handle"]');
+        console.log(actives);
+        var data = [];
+        actives.each(function () {
+            var value = $(this);
+            console.log(1);
+            data.push(getParamas(value));
+        });
+        var jsonData = JSON.parse(JSON.stringify(data))
+        console.log(data);
+        $.ajax({
+            url: 'http://localhost/banner/layout/saveDataLayout',
+            data: {
+                data: jsonData,
+            },
+            dataType: 'json',
+            type: 'POST',
+            error: function() {
+                $('#info').html('<p>An error has occurred</p>');
+            },
+            success: function (value) {
+                removeActiveEl();
+                //random number by time
+                var numberTime = new Date().valueOf();
+                console.log(numberTime);
+                var html = '';
+                // add content img
+                html += '<div class="img-handle-'+numberTime+'" data-value="'+value.id+'" element-active="true">' +
+                    ' <img class="img-show h100 cursor-move" src="data:image/png;base64,'+value.image+'">' +
+                    '</div>';
+                $('#working-box .working-inner-box .box-hidden').append(html);
+                //add border
+                html = '<div class="border-box border-box-'+numberTime+' j-drag j-resize j-rotate" data-value="'+numberTime+'" ></div>';
+                $('#working-box .working-inner-box').append(html);
+                $('#working-box').trigger('contentChange');
+            }
+        });
 
+    });
     tinymce.init({
         selector: '#myeditablediv',
         inline: true,

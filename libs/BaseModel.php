@@ -20,4 +20,52 @@ class BaseModel
             echo "Connection failed: " . $e->getMessage();
         }
     }
+    public function update($tablename, $data){
+        $els = $this->db->prepare("SHOW COLUMNS FROM layouts");
+        $els->execute();
+        $els->setFetchMode(PDO::FETCH_ASSOC);
+        $res = $els->fetchAll();
+        $field = array();
+        foreach ($res as $value) {
+            $field[] = $value['field'];
+        }
+        foreach ($data as $values){
+            if(!$values['id']) continue;
+            $sql_set = '';
+            foreach ( $values as $key => $value){
+                if(!in_array($key, $field)) {
+                    unset($data[$key]);
+                } else {
+                    $sql_set .= "$key = $value".",";
+                }
+            }
+            $sql = 'UPDATE ' . $tablename . ' SET ' . $sql_set . ' WHERE id = ' . $values['id'];
+            $els = $this->db->prepare($sql);
+            $els->execute();
+        }
+    }
+    public function insert($tablename, $data){
+        $els = $this->db->prepare("SHOW COLUMNS FROM layouts");
+        $els->execute();
+        $els->setFetchMode(PDO::FETCH_ASSOC);
+        $res = $els->fetchAll();
+        $field = array();
+        foreach ($res as $value) {
+            $field[] = $value['field'];
+        }
+        foreach ($data as $values){
+            if($values['id']) continue;
+            $sql_set = '';
+            foreach ( $values as $key => $value){
+                if(!in_array($key, $field)) {
+                    unset($data[$key]);
+                } else {
+                    $sql_set .= "$key = $value".",";
+                }
+            }
+            $sql = 'INSERT ' . $tablename . ' SET ' . $sql_set . ' WHERE id = ' . $values['id'];
+            $els = $this->db->prepare($sql);
+            $els->execute();
+        }
+    }
 }
