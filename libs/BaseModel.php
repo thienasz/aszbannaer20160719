@@ -52,10 +52,9 @@ class BaseModel
     public function insert($tablename, $a) {
         echo 11;
         list($fields, $values) = $this->convertData($tablename, $a);
-        var_dump($fields, $values);
-        $fieldlist=implode(',',$fields);
+        $fieldlist=implode('`,`',$fields);
         $qs=str_repeat("?,",count($fields)-1);
-        $sql="insert into user($fieldlist) values(${qs}?)";
+        $sql="insert into `$tablename`(`$fieldlist`) values($qs?)";
         $q= $this->db->prepare($sql);
         if($q->execute($values)) {
             return $this->db->lastInsertId();
@@ -63,14 +62,12 @@ class BaseModel
         return 0;
     }
     protected function convertData($tablename, $data) {
-        var_dump($tablename, $data);
         foreach($data as $f=>$v){
             if($this->validateField($tablename, $f)){
                 $fields[]=$f;
                 $values[]=$v;
             }
         }
-        var_dump($fields, $values);
         return array($fields, $values);
     }
     protected function validateField($tablename, $field) {
