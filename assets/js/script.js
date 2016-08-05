@@ -1,6 +1,6 @@
 // global var
 var initOnce = 0;
-
+var root = "http://banner.dev";
 function reset() {
     var active;
     active = $(".active");
@@ -17,7 +17,7 @@ function reset() {
         category = active.data("value");
         // call api
         $.ajax({
-            url: 'http://localhost/banner/element/getAllElementsAjax',
+            url: root +'/element/getAllElementsAjax',
             data: {
                 cateId: category,
             },
@@ -48,7 +48,7 @@ function addToWorkSection() {
         console.log(id);
         // call api
         $.ajax({
-            url: 'http://localhost/banner/element/getElementAjax',
+            url: root +'/element/getElementAjax',
             data: {
                 id: id,
             },
@@ -98,7 +98,7 @@ $(function () {
 
         // call api
         $.ajax({
-            url: 'http://localhost/banner/element/getElementTestAjax',
+            url: root +'/element/getElementTestAjax',
             dataType: 'json',
             type: 'POST',
             error: function() {

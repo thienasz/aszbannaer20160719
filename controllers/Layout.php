@@ -10,11 +10,12 @@ class Layout extends BaseController
 {
     public function saveDataLayout() {
 
-        $data = $_POST['data'];
+        $datas = $_POST['data'];
 //        $data = json_decode($data);
         echo '<pre>';
-        var_dump($data);
-        $this->model->update($data);
+        foreach ($datas as $data) {
+            $this->model->insertLayout($data);
+        }
     }
     public function getLayout()
     {

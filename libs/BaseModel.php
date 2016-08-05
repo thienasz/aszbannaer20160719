@@ -44,28 +44,44 @@ class BaseModel
             $els->execute();
         }
     }
-    public function insert($tablename, $data){
-        $els = $this->db->prepare("SHOW COLUMNS FROM layouts");
+    public function insertArrays($tablename, $datas){
+        foreach ($datas as $value){
+            $this->insert($tablename, $value);
+        }
+    }
+    public function insert($tablename, $a) {
+        echo 11;
+        list($fields, $values) = $this->convertData($tablename, $a);
+        var_dump($fields, $values);
+        $fieldlist=implode(',',$fields);
+        $qs=str_repeat("?,",count($fields)-1);
+        $sql="insert into user($fieldlist) values(${qs}?)";
+        $q= $this->db->prepare($sql);
+        if($q->execute($values)) {
+            return $this->db->lastInsertId();
+        }
+        return 0;
+    }
+    protected function convertData($tablename, $data) {
+        var_dump($tablename, $data);
+        foreach($data as $f=>$v){
+            if($this->validateField($tablename, $f)){
+                $fields[]=$f;
+                $values[]=$v;
+            }
+        }
+        var_dump($fields, $values);
+        return array($fields, $values);
+    }
+    protected function validateField($tablename, $field) {
+        $els = $this->db->prepare("SHOW COLUMNS FROM $tablename");
         $els->execute();
         $els->setFetchMode(PDO::FETCH_ASSOC);
         $res = $els->fetchAll();
-        $field = array();
+        $fieldArray = array();
         foreach ($res as $value) {
-            $field[] = $value['field'];
+            $fieldArray[] = $value['Field'];
         }
-        foreach ($data as $values){
-            if($values['id']) continue;
-            $sql_set = '';
-            foreach ( $values as $key => $value){
-                if(!in_array($key, $field)) {
-                    unset($data[$key]);
-                } else {
-                    $sql_set .= "$key = $value".",";
-                }
-            }
-            $sql = 'INSERT ' . $tablename . ' SET ' . $sql_set . ' WHERE id = ' . $values['id'];
-            $els = $this->db->prepare($sql);
-            $els->execute();
-        }
+        return in_array($field, $fieldArray) ? true :false ;
     }
 }

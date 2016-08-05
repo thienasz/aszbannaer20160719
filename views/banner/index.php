@@ -3,6 +3,7 @@
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
     <link rel="stylesheet" href="assets/css/font-awesome.min.css">
     <link rel="stylesheet" href="assets/css/style.css">
+	<script> var root = <?php echo ROOT; ?> </script>
 </head>
 <body>
 <header>
@@ -85,7 +86,7 @@
         var jsonData = JSON.parse(JSON.stringify(data))
         console.log(data);
         $.ajax({
-            url: 'http://localhost/banner/layout/saveDataLayout',
+            url: root+'/layout/saveDataLayout',
             data: {
                 data: jsonData,
             },
