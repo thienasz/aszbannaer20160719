@@ -36,7 +36,7 @@
             <div class="working-box-wrapper  col-sm-8 col-sm-offset-2 no-padding">
                 <div class="inner-box">
                     <div class="working-inner-box">
-                        <div class="box-hidden">
+                        <div class="box-hidden" id="box-hidden">
                             <div id="myeditablediv">Click here to edit!</div>
                         </div>
                     </div>
@@ -56,7 +56,7 @@
 <script src="assets/js/interactcus.js"></script>
 <script src="assets/js/libs/bootstrap.min.js"></script>
 <script>
-    function getParamas(el) {
+    function getParamas(el, times) {
         var obj = {};
         var top = 0 , left = 0, rotate = 0, zIndex = 0, width, height, id;
         top = !isNaN(parseInt(el.css('top'))) ? parseInt(el.css('top')) : 0;
@@ -68,23 +68,24 @@
         obj['top'] = top;
         obj['left'] = left;
         obj['zindex'] = zIndex;
-        obj['width'] = width;
-        obj['height'] = height;
+        obj['width'] = width * times;
+        obj['height'] = height * times;
         obj['element_id'] = id;
         console.log(obj);
+        console.log(1111);
         return obj;
     }
+    //need change
     $('.submit_image').click(function () {
         var actives = $('[class *= "img-handle"]');
-        console.log(actives);
+        var times = 784/ parseInt($('#box-hidden').width());
         var data = [];
         actives.each(function () {
             var value = $(this);
             console.log(1);
-            data.push(getParamas(value));
+            data.push(getParamas(value, times));
         });
         var jsonData = JSON.parse(JSON.stringify(data))
-        console.log(data);
         $.ajax({
             url: root+'/layout/saveDataLayout',
             data: {

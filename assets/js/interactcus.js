@@ -119,7 +119,7 @@ function drawBoxColor() {
 function heightWorkingbox() {
     var innerBox = $('.inner-box');
     var iw = innerBox.outerWidth();
-    var ih = (iw*444)/1200;
+    var ih = (iw*295)/784;
     innerBox.outerHeight(ih);
 }
 $(function () {
