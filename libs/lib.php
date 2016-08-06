@@ -93,9 +93,19 @@ function imagecreatefromfile($path, $user_functions = false)
 /**
  * func create image to ajax for background
  */
-function covertImageToBase64 ($path) {
+function covertImageToBase64 ($path, $type = 'jpg') {
     ob_start();
-    $im = imagecreatefromjpeg (ROOT . '/' . $path);
+    switch ($type) {
+        case 'png':
+            $im = imagecreatefrompng (ROOT . '/' . $path);
+            imageAlphaBlending($im, true);
+            imageSaveAlpha($im, true);
+            break;
+        case 'jpg':
+        default:
+            $im = imagecreatefromjpeg (ROOT . '/' . $path);
+            break;
+    }
     imagepng($im);
     imagedestroy($im);
     // Get Image content a variable

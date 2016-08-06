@@ -507,7 +507,6 @@ $.widget("ui.resizable", $.ui.mouse, {
         if (this.size.height !== this.prevSize.height) {
             props.height = this.size.height + "px";
         }
-        console.log(props);
         if(this.options.workingEl){
             var name = this.options.workingEl+'-'+this.element.data('value');
             this.workingEl = $(name);

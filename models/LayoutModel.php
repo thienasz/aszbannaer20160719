@@ -8,20 +8,17 @@
  */
 class LayoutModel extends BaseModel
 {
-    public function updateLayout($data){
-        $this->update('layouts', $data);
-    }
     public function insertLayout($datas) {
-        $data['name']=  'th';
+        $data['name']=  'fix'; //@to do
         $layout_id = $this->insert('layouts', $data);
         foreach ($datas as $data) {
             $data['layout_id'] = $layout_id;
             $this->insert('detail_layouts', $data);
         }
     }
-    public function getLayoutById($cateId)
+    public function getLayoutById($Id)
     {
-        $els = $this->db->prepare("select * from detail_layouts as l INNER JOIN elements as e ON l.element_id = e.id where layout_id = " . $cateId);
+        $els = $this->db->prepare("select * from detail_layouts as l INNER JOIN elements as e ON l.element_id = e.id where layout_id = " . $Id);
         $els->execute();
         $els->setFetchMode(PDO::FETCH_ASSOC);
         return $els->fetchAll();

@@ -1,9 +1,8 @@
 // global var
-var initOnce = 0;
-var root = "http://banner.dev";
+var root = "http://localhost/banner";
+
 function reset() {
-    var active;
-    active = $(".active");
+    var active = $(".active");
     if(active.length == 0) {
         if (localStorage.getItem("back_category") != null) {
             $(".menu-fix").find("[data-value='" + localStorage.getItem("back_category") + "']").addClass("active");
@@ -13,8 +12,9 @@ function reset() {
         }
         reset();
     } else {
-        var category;
-        category = active.data("value");
+        var category = active.data("value");
+        var type = active.data('value');
+        console.log(type);
         // call api
         $.ajax({
             url: root +'/element/getAllElementsAjax',
@@ -30,7 +30,9 @@ function reset() {
                 var html = '';
                 html += '<div class="left-wrapper">';
                 $.each (data, function (index, value) {
-                    html += '<div class="box-left working-el" data-value="'+value.id+'"> <img class="img-show" src="data:image/png;base64,'+value.image+'"></div>';
+                    html += '<div class="box-left working-el type-' + type + '" data-value="'+value.id+'"> ' +
+                        '<img class="img-show" src="data:image/png;base64,' + value.image + '">' +
+                        '</div>';
                 });
                 $('#content-show').html(html);
                 $('#content-show').trigger('contentChange');
@@ -38,14 +40,14 @@ function reset() {
         });
     }
 }
-// function add al to work section
-
+/**
+ * add el to work section
+ */
 function addToWorkSection() {
     var workEls = $('.working-el');
     workEls.click(function () {
         var workEl = $(this);
         var id = workEl.data("value");
-        console.log(id);
         // call api
         $.ajax({
             url: root +'/element/getElementAjax',
@@ -61,17 +63,21 @@ function addToWorkSection() {
                 removeActiveEl();
                 //random number by time
                 var numberTime = new Date().valueOf();
-                console.log(numberTime);
                 var html = '';
                 // add content img
-                html += '<div class="img-handle-'+numberTime+'" data-value="'+value.id+'" element-active="true">' +
+                html += '<div class="img-handle img-handle-'+numberTime+' img-width-' + value.category_id + '" data-value="'+value.id+'" element-active="true">' +
                             ' <img class="img-show h100 cursor-move" src="data:image/png;base64,'+value.image+'">' +
                         '</div>';
                 $('#working-box .working-inner-box .box-hidden').append(html);
                 //add border
-                html = '<div class="border-box border-box-'+numberTime+' j-drag j-resize j-rotate" data-value="'+numberTime+'" ></div>';
+                html = '<div class="border-box border-box-'+numberTime+' j-drag j-resize j-rotate img-width-' + value.category_id + '" data-value="'+numberTime+'"  element-active="true"></div>';
                 $('#working-box .working-inner-box').append(html);
                 $('#working-box').trigger('contentChange');
+                if(value.category_id == 3) {
+                    var w = $("[element-active = 'true']").find('img').get(0).naturalWidth;
+                    var h = $("[element-active = 'true']").find('img').get(0).naturalHeight;
+                    $("[element-active = 'true']").height(parseInt(h)* 100/ parseInt(w));
+                }
             }
         });
     });
@@ -79,7 +85,6 @@ function addToWorkSection() {
 
 //load js
 $(function () {
-    $( ".selector" ).draggable( "option", "addClasses", false );
     reset();
     $(".menu-fix > li").click(function () {
         $(".active").removeClass("active");
@@ -94,32 +99,29 @@ $(function () {
     $('#working-box').on('contentChange', function () {
         interactInit()
     });
-    $('.test-click').click(function () {
-
-        // call api
+    interactInit()
+    $('.submit_image').click(function () {
+        var actives = $('[class *= "img-handle"]');
+        var times = 784/ parseInt($('#box-hidden').width());
+        var data = [];
+        actives.each(function () {
+            var value = $(this);
+            data.push(getParamas(value, times));
+        });
+        var jsonData = JSON.parse(JSON.stringify(data))
         $.ajax({
-            url: root +'/element/getElementTestAjax',
+            url: root+'/layout/saveDataLayout',
+            data: {
+                data: jsonData,
+            },
             dataType: 'json',
             type: 'POST',
             error: function() {
                 $('#info').html('<p>An error has occurred</p>');
             },
             success: function (value) {
-                removeActiveEl();
-                //random number by time
-                var numberTime = new Date().valueOf();
-                console.log(numberTime);
-                var html = '';
-                // add content img
-                html += '<div class="img-handle-'+numberTime+'" data-value= element-active="true">' +
-                    ' <img class="img-show h100 cursor-move" src="data:image/png;base64,'+value.image+'">' +
-                    '</div>';
-                $('#working-box .working-inner-box .box-hidden').append(html);
-                //add border
-                html = '<div class="border-box border-box-'+numberTime+' j-drag j-resize j-rotate" data-value="'+numberTime+'" ></div>';
-                $('#working-box .working-inner-box').append(html);
-                $('#working-box').trigger('contentChange');
+
             }
         });
-    })
+    });
 });

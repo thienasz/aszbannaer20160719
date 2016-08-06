@@ -8,12 +8,4 @@
  */
 class BannerModel extends BaseModel
 {
-    function __construct()
-    {
-        
-    }
-    public function bla()
-    {
-        return 10;
-    }
 }

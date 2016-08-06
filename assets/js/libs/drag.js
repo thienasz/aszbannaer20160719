@@ -1,5 +1,4 @@
 
-
 /*!
  * jQuery UI Draggable 1.12.0
  * http://jqueryui.com
@@ -255,15 +254,23 @@ $.widget("ui.draggable", $.ui.mouse, {
             var name = this.options.workingEl+'-'+this.element.data('value');
             this.workingEl = $(name);
             this.workingEl.css('position', "absolute");
-            this.workingEl.css('left', this.position.left + "px");
-            this.workingEl.css('right', -this.position.left + "px");
-            this.workingEl.css('top', this.position.top + "px");
-            this.workingEl.css('bottom', -this.position.top + "px");
+            this.workingEl.css('left', "0px");
+            this.handleElement.css('left', "0px");
+            // this.workingEl.css('left', this.position.left + "px");
+            // this.workingEl.css('right', -this.position.left + "px");
+            this.workingEl.css('top', "0px");
+            this.handleElement.css('top', "0px");
+            // this.workingEl.css('top', this.position.top + "px");
+            // this.workingEl.css('bottom', -this.position.top + "px");
+            var rt = getRotationDegrees(this.workingEl);
+            this.workingEl.css('transform', 'translate3d('+this.position.left+'px, '+this.position.top+'px, 0px) rotate('+rt+'deg)');
+            this.handleElement.css('transform', 'translate3d('+this.position.left+'px, '+this.position.top+'px, 0px) rotate('+rt+'deg)');
 
-            this.handleElement.css('left', this.position.left + "px");
-            this.handleElement.css('right', -this.position.left + "px");
-            this.handleElement.css('top', this.position.top + "px");
-            this.handleElement.css('bottom', -this.position.top + "px");
+
+            // this.handleElement.css('left', this.position.left + "px");
+            // this.handleElement.css('right', -this.position.left + "px");
+            // this.handleElement.css('top', this.position.top + "px");
+            // this.handleElement.css('bottom', -this.position.top + "px");
         }
             // this.helper[0].style.left = this.position.left + "px";
             // this.helper[0].style.right = -this.position.left + "px";

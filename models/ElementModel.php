@@ -8,18 +8,16 @@
  */
 class ElementModel extends  BaseModel
 {
-    public function getAllElementByCategory($cateId)
+    private $table = 'elements';
+    public function getAllElementByCategory($Id)
     {
-        $els = $this->db->prepare("select * from elements where category_id = " . $cateId);
+        $els = $this->db->prepare("select * from elements where category_id = " . $Id);
         $els->execute();
         $els->setFetchMode(PDO::FETCH_ASSOC);
         return $els->fetchAll();
     }
     public function getElementById($id)
     {
-        $els = $this->db->prepare("select * from elements where id = " . $id);
-        $els->execute();
-        $els->setFetchMode(PDO::FETCH_ASSOC);
-        return $els->fetchAll()[0];
+        return $this->getTableById($this->table, $id);
     }
 }

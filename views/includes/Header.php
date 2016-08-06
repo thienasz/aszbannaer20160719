@@ -1,6 +1,11 @@
 <html>
 <head>
-<link href="<?= BASE_URL.'/assets/css/style.css'?>">
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/font-awesome.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <script> var root = '<?php echo BASE_URL; ?>' </script>
 </head>
 <body>
-vao header
+<header>
+    <div class="top-header">abc</div>
+</header>

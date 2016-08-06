@@ -54,6 +54,9 @@ a:hover {
     height: 100%;
     background-color: #004863;
 }
+.z-show {
+    z-index: 100;
+}
 .menu-fix {
     position: absolute;
     height: 100%;
@@ -113,15 +116,17 @@ a:hover {
     margin: 0;
     position: absolute;
     border: 2px dotted darkgray;
+    z-index: -9999;
 }
 .img-handle {
-    position: relative;
+    position: absolute;
     top: 0;
     right: 0;
     left: 0;
     bottom: 0;
     padding: 0;
     margin: 0;
+    z-index: 11;
 }
 .no-padding {
     padding: 0;
@@ -134,58 +139,78 @@ a:hover {
     right: -1px;
     z-index: 11;
 }
-.ui-resizable-handle {
+.th-resize {
     position: absolute;
 }
 
-.ui-resizable-handle:before {
-    content: "+++";
+.th-resize:before {
+    position: absolute;
+    content: '';
+    background: #3f4652;
+    width: 10px;
+    height: 10px;
+    left: 0px;
+    right: 0px;
+    top: 0px;
+    border: 2px solid #fff;
+    border-radius: 10px;
+    transition: background .15s linear;
+    box-shadow: 0 0 3px 1px rgba(0,0,0,.15);
 }
-.ui-resizable-n {
+.resize-n {
     top: -10px;
     left: 50%;
+    cursor: n-resize;
 }
 
-.ui-resizable-ne {
+.resize-ne {
     top: -10px;
-    right: -10px;
+    right: 0px;
+    cursor: ne-resize;
 }
 
-.ui-resizable-e {
-    right: -10px;
+.resize-e {
+    right: 0px;
     top: 50%;
+    cursor: e-resize;
 }
 
-.ui-resizable-es {
-    left: -10px;
-    bottom: -10px;
+.resize-se {
+    right: 0px;
+    bottom: 0px;
+    cursor: se-resize;
 }
 
-.ui-resizable-s {
-    bottom: -10px;
+.resize-s {
+    bottom: 0px;
     right: 50%;
+    cursor: s-resize;
 }
 
-.ui-resizable-sw {
+.resize-sw {
     left: -10px;
-    bottom: -10px;
+    bottom: 0px;
+    cursor: sw-resize;
 }
 
-.ui-resizable-w {
+.resize-w {
     left: -10px;
     bottom: 50%;
+    cursor: w-resize;
 }
 
-.ui-resizable-wn {
+.resize-nw {
     left: -10px;
     top: -10px;
+    cursor: nw-resize;
 }
-.ui-rotatable-handle {
+.th-rotate-handle {
     position: absolute;
     right: 0;
     top: 30%;
+    z-index: 90;
 }
-.ui-rotatable-handle:before {
+.th-rotate-handle:before {
     content: '';
     position: absolute;
     right: -20px;
@@ -194,11 +219,18 @@ a:hover {
     border-top: 1px dashed #3f4652;
     background-color: #fff;
 }
-.ui-rotatable-handle:after {
+.th-rotate-handle:after {
     content: '\f0e2';
     position: absolute;
     top: -7px;
     left: 19px;
+}
+.type-3 {
+    width: 50%;
+    float: left;
+}
+.img-width-3 {
+    width: 100px;
 }
 .hide-work {
     position: relative;
@@ -208,4 +240,10 @@ a:hover {
 }
 .top-work {
     height: auto;
+}
+
+.opacity-slider {
+    position: absolute;
+    width: 100px;
+    background-color: red;
 }

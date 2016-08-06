@@ -12,7 +12,6 @@ class BaseModel
     {
         try {
             $this->db = new Database();
-            // set the PDO error mode to exception
             $this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         }
         catch(PDOException $e)
@@ -44,13 +43,8 @@ class BaseModel
             $els->execute();
         }
     }
-    public function insertArrays($tablename, $datas){
-        foreach ($datas as $value){
-            $this->insert($tablename, $value);
-        }
-    }
+
     public function insert($tablename, $a) {
-        echo 11;
         list($fields, $values) = $this->convertData($tablename, $a);
         $fieldlist=implode('`,`',$fields);
         $qs=str_repeat("?,",count($fields)-1);
@@ -61,7 +55,7 @@ class BaseModel
         }
         return 0;
     }
-    protected function convertData($tablename, $data) {
+    private function convertData($tablename, $data) {
         foreach($data as $f=>$v){
             if($this->validateField($tablename, $f)){
                 $fields[]=$f;
@@ -70,7 +64,7 @@ class BaseModel
         }
         return array($fields, $values);
     }
-    protected function validateField($tablename, $field) {
+    private function validateField($tablename, $field) {
         $els = $this->db->prepare("SHOW COLUMNS FROM $tablename");
         $els->execute();
         $els->setFetchMode(PDO::FETCH_ASSOC);
@@ -80,5 +74,18 @@ class BaseModel
             $fieldArray[] = $value['Field'];
         }
         return in_array($field, $fieldArray) ? true :false ;
+    }
+    public function getTableById($tablename, $id) {
+        $els = $this->db->prepare("select * from $tablename where id = " . $id);
+        $els->execute();
+        $els->setFetchMode(PDO::FETCH_ASSOC);
+        return $els->fetchAll()[0];
+    }
+    public function getAllTable($tablename) {
+        $cate = $this->db->prepare("SELECT * FROM $tablename");
+        $cate->execute();
+        $cate->setFetchMode(PDO::FETCH_ASSOC);
+        $result = $cate->fetchAll();
+        return $result;
     }
 }

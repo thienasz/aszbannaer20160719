@@ -10,7 +10,10 @@ class Database extends PDO
 {
     public function __construct()
     {
-        parent::__construct('mysql:host=localhost;dbname=mvc', 'root', '12345678');
-        
+        $dsn = 'mysql:dbname='.DBNAME.';host='.DBHOST;
+        $user = 'root';
+        $password = '12345678';
+        parent::__construct($dsn, $user, $password);
+
     }
 }
