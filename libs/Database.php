@@ -11,8 +11,8 @@ class Database extends PDO
     public function __construct()
     {
         $dsn = 'mysql:dbname='.DBNAME.';host='.DBHOST;
-        $user = 'root';
-        $password = '12345678';
+        $user = DBUSER;
+        $password = DBPASS;
         parent::__construct($dsn, $user, $password);
 
     }
