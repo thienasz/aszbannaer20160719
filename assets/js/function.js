@@ -4,6 +4,8 @@ function getRotationDegrees(obj) {
         obj.css("-ms-transform")     ||
         obj.css("-o-transform")      ||
         obj.css("transform");
+    console.log(matrix);
+    console.log(777777);
     if(matrix !== 'none') {
         var values = matrix.split('(')[1].split(')')[0].split(',');
         var a = values[0];

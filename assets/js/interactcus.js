@@ -14,8 +14,11 @@ function interactInit() {
         });
     $('.j-rotate').rotatable({
         workingEl: '.img-handle',
+        
     });
-
+    $('.border-box').mousedown(function (e) {
+        console.log($(this).css('transform'));
+    });
     $('.menu').find('.option').click(function (e) {
         $(this).off('click');
         var option = $(this).data('option');
@@ -103,7 +106,6 @@ function drawBoxOpacity(el, op) {
 }
 
 function drawText() {
-    return false;
     removeActiveEl();
     var numberTime = new Date().valueOf();
     var html = '';
