@@ -45,7 +45,6 @@ function addToWorkSection() {
     workEls.click(function () {
         var workEl = $(this);
         var id = workEl.data("value");
-        console.log(id);
         // call api
         $.ajax({
             url: root +'/element/getElementAjax',
@@ -61,7 +60,6 @@ function addToWorkSection() {
                 removeActiveEl();
                 //random number by time
                 var numberTime = new Date().valueOf();
-                console.log(numberTime);
                 var html = '';
                 // add content img
                 html += '<div class="img-handle-'+numberTime+'" data-value="'+value.id+'" element-active="true">' +
@@ -71,6 +69,8 @@ function addToWorkSection() {
                 //add border
                 html = '<div class="border-box border-box-'+numberTime+' j-drag j-resize j-rotate" data-value="'+numberTime+'" ></div>';
                 $('#working-box .working-inner-box').append(html);
+                html = '<div class="position-box position-box-'+numberTime+'"></div>';
+                $('#working-box .working-inner-box').append(html);
                 $('#working-box').trigger('contentChange');
             }
         });
@@ -79,7 +79,6 @@ function addToWorkSection() {
 
 //load js
 $(function () {
-    $( ".selector" ).draggable( "option", "addClasses", false );
     reset();
     $(".menu-fix > li").click(function () {
         $(".active").removeClass("active");
@@ -94,32 +93,4 @@ $(function () {
     $('#working-box').on('contentChange', function () {
         interactInit()
     });
-    $('.test-click').click(function () {
-
-        // call api
-        $.ajax({
-            url: root +'/element/getElementTestAjax',
-            dataType: 'json',
-            type: 'POST',
-            error: function() {
-                $('#info').html('<p>An error has occurred</p>');
-            },
-            success: function (value) {
-                removeActiveEl();
-                //random number by time
-                var numberTime = new Date().valueOf();
-                console.log(numberTime);
-                var html = '';
-                // add content img
-                html += '<div class="img-handle-'+numberTime+'" data-value= element-active="true">' +
-                    ' <img class="img-show h100 cursor-move" src="data:image/png;base64,'+value.image+'">' +
-                    '</div>';
-                $('#working-box .working-inner-box .box-hidden').append(html);
-                //add border
-                html = '<div class="border-box border-box-'+numberTime+' j-drag j-resize j-rotate" data-value="'+numberTime+'" ></div>';
-                $('#working-box .working-inner-box').append(html);
-                $('#working-box').trigger('contentChange');
-            }
-        });
-    })
 });

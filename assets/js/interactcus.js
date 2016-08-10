@@ -58,6 +58,7 @@ function interactInit() {
         var ac = $(this);
         refreshBorder(ac);
     });
+    setWidthHeight();
 }
 function removeBorder() {
     $('.border-box').css('border', 'none');
@@ -133,6 +134,24 @@ function signBoxtext(bel) {
     bel.width(w);
     var left = parseInt(img.css('left')) - parseInt(w)/2;
     bel.css('transform', 'translate3d(' + left + 'px, 0px, 0px)');
+}
+function setWidthHeight() {
+    var innerBox = $('.inner-box');
+    var iw = innerBox.outerWidth();
+    var ih = (iw*295)/784;
+    var num;
+    $('.border-box').each(function () {
+        num = '.img-handle-' + $(this).data('value');
+        num1 = '.position-box-' + $(this).data('value');
+        console.log(num);
+        $(num).height(ih);
+        $(num).width(iw);
+        $(num1).height(ih);
+        $(num1).width(iw);
+        $(this).height(ih);
+        $(this).width(iw);
+    });
+    innerBox.outerHeight(ih);
 }
 function heightWorkingbox() {
     var innerBox = $('.inner-box');

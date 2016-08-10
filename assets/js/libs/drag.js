@@ -54,6 +54,9 @@ $.widget("ui.draggable", $.ui.mouse, {
     _create: function () {
         var name = this.options.workingEl+'-'+this.element.data('value');
         this.workingEl = $(name);
+
+        this.topor = parseFloat(this.element.css("transform-origin").split(' ')[1]);
+        this.leftor = parseFloat(this.element.css("transform-origin").split(' ')[0]);
         if (this.options.helper === "original") {
             this._setPositionRelative();
         }
@@ -101,13 +104,21 @@ $.widget("ui.draggable", $.ui.mouse, {
     },
 
     _mouseStart: function (event) {
-        setTimeout(function () {
-        }, 1000);
+
         this.rotateCurrent = getRotationDegrees(this.workingEl);
-        console.log(this.rotateCurrent);
-        console.log(121212);
-        console.log(this);
-        var o = this.options;
+
+        this.topBefore = this.workingEl.css("top");//translate x
+        this.leftBefore = this.workingEl.css("left");//translate y
+        this.workingEl.css('position', "absolute");
+        this.workingEl.css('left', "0px");
+        this.handleElement.css('left', "0px");
+        this.topor = parseFloat(this.element.css("transform-origin").split(' ')[1]);
+        this.leftor = parseFloat(this.element.css("transform-origin").split(' ')[0]);
+        
+        this.workingEl.css('top', "0px");
+        this.handleElement.css('top', "0px");
+        
+		 var o = this.options;
         //Create and append the visible helper
         this.helper = this._createHelper(event);
 
@@ -216,17 +227,8 @@ $.widget("ui.draggable", $.ui.mouse, {
         if(this.options.workingEl){
             var name = this.options.workingEl+'-'+this.element.data('value');
             this.workingEl = $(name);
-            this.workingEl.css('position', "absolute");
-            this.workingEl.css('left', "0px");
-            this.handleElement.css('left', "0px");
-            // this.workingEl.css('left', this.position.left + "px");
-            // this.workingEl.css('right', -this.position.left + "px");
-            this.workingEl.css('top', "0px");
-            this.handleElement.css('top', "0px");
-            // this.workingEl.css('top', this.position.top + "px");
-            // this.workingEl.css('bottom', -this.position.top + "px");
-            this.workingEl.css('transform', 'translate3d('+this.position.left+'px, '+this.position.top+'px, 0px) rotate('+ this.rotateCurrent +'deg)');
-            this.handleElement.css('transform', 'translate3d('+this.position.left+'px, '+this.position.top+'px, 0px) rotate('+ this.rotateCurrent +'deg)');
+            this.workingEl.css('transform', 'translate3d('+this.position.left+'px, '+this.position.top+'px, 0px) rotateZ('+ this.rotateCurrent +'deg)');
+            this.handleElement.css('transform', 'translate3d('+this.position.left+'px, '+this.position.top+'px, 0px) rotateZ('+ this.rotateCurrent +'deg)');
 
 
             // this.handleElement.css('left', this.position.left + "px");
@@ -654,43 +656,46 @@ $.widget("ui.draggable", $.ui.mouse, {
                 pageY = this.originalPageY;
             }
         }
+        var a = Math.cos(this.rotateCurrent) * this.element.height();
+        
+        var topR =  // The absolute mouse position
+            pageY -
+
+            // Click offset (relative to the element)
+            this.offset.click.top -
+
+            // Only for relative positioned nodes: Relative offset from element to offset parent
+            this.offset.relative.top -
+
+            // The offsetParent's offset without borders (offset + border)
+            this.offset.parent.top +
+            ( this.cssPosition === "fixed" ?
+                -this.offset.scroll.top :
+                ( scrollIsRootNode ? 0 : this.offset.scroll.top ) );
+        var leftR =
+            // The absolute mouse position
+            pageX -
+
+            // Click offset (relative to the element)
+            this.offset.click.left -
+
+            // Only for relative positioned nodes: Relative offset from element to offset parent
+            this.offset.relative.left -
+
+            // The offsetParent's offset without borders (offset + border)
+            this.offset.parent.left +
+            ( this.cssPosition === "fixed" ?
+                -this.offset.scroll.left :
+                ( scrollIsRootNode ? 0 : this.offset.scroll.left ) );
+        
+        //var rad = this.rotateCurrent;
+        //leftR = leftR + this.leftor * Math.cos(rad) - this.topor * Math.sin(rad) - this.leftor* Math.cos(rad);
+        //topR = topR + this.leftor * Math.sin(rad) + this.topor * Math.cos(rad) - this.topor* Math.cos(rad);
 
         return {
-            top: (
-
-                // The absolute mouse position
-                pageY -
-
-                // Click offset (relative to the element)
-                this.offset.click.top -
-
-                // Only for relative positioned nodes: Relative offset from element to offset parent
-                this.offset.relative.top -
-
-                // The offsetParent's offset without borders (offset + border)
-                this.offset.parent.top +
-                ( this.cssPosition === "fixed" ?
-                    -this.offset.scroll.top :
-                    ( scrollIsRootNode ? 0 : this.offset.scroll.top ) )
-            ),
-            left: (
-
-                // The absolute mouse position
-                pageX -
-
-                // Click offset (relative to the element)
-                this.offset.click.left -
-
-                // Only for relative positioned nodes: Relative offset from element to offset parent
-                this.offset.relative.left -
-
-                // The offsetParent's offset without borders (offset + border)
-                this.offset.parent.left +
-                ( this.cssPosition === "fixed" ?
-                    -this.offset.scroll.left :
-                    ( scrollIsRootNode ? 0 : this.offset.scroll.left ) )
-            )
-        };
+                top: topR,
+                left: leftR
+            };
 
     },
 
