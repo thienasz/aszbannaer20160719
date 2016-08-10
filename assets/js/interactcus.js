@@ -20,7 +20,7 @@ function interactInit() {
         console.log($(this).css('transform'));
     });
     $('.menu').find('.option').click(function (e) {
-        $(this).off('click');
+        e.stopImmediatePropagation();
         var option = $(this).data('option');
         var elActive = $("[element-active='true']");
         var elColor = elActive.css('background-color');
@@ -110,7 +110,7 @@ function drawText() {
     removeActiveEl();
     var numberTime = new Date().valueOf();
     var html = '';
-    html = '<div class="img-handle-'+numberTime+' ">' +
+    html = '<div class="img-handle img-handle-'+numberTime+' ">' +
         '<div class="text-handle"><p>Example</p></div>' +
         '</div>'
     $('#box-hidden').append(html);
@@ -146,8 +146,8 @@ function setWidthHeight() {
         console.log(num);
         $(num).height(ih);
         $(num).width(iw);
-        $(num1).height(ih);
-        $(num1).width(iw);
+        // $(num1).height(ih);
+        // $(num1).width(iw);
         $(this).height(ih);
         $(this).width(iw);
     });
@@ -192,6 +192,7 @@ $(function () {
     $(window).mousedown(function() {
         removeBorder();
     });
+    interactInit();
     heightWorkingbox();
 });
 

@@ -62,7 +62,7 @@ function addToWorkSection() {
                 var numberTime = new Date().valueOf();
                 var html = '';
                 // add content img
-                html += '<div class="img-handle-'+numberTime+'" data-value="'+value.id+'" element-active="true">' +
+                html += '<div class="img-handle img-handle-'+numberTime+'" data-value="'+value.id+'" element-active="true">' +
                             ' <img class="img-show h100 cursor-move" src="data:image/png;base64,'+value.image+'">' +
                         '</div>';
                 $('#working-box .working-inner-box .box-hidden').append(html);

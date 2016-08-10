@@ -116,17 +116,18 @@ a:hover {
     margin: 0;
     position: absolute;
     border: 2px dotted darkgray;
-    z-index: -9999;
+    /*z-index: -9999;*/
 }
 .img-handle {
     position: absolute;
     top: 0;
-    right: 0;
     left: 0;
-    bottom: 0;
     padding: 0;
     margin: 0;
-    z-index: 11;
+    z-index: 10;
+}
+.text-handle {
+    z-index: 111;
 }
 .no-padding {
     padding: 0;
