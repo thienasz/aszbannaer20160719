@@ -63,11 +63,11 @@ function addToWorkSection() {
                 var html = '';
                 // add content img
                 html += '<div class="img-handle img-handle-'+numberTime+'" data-value="'+value.id+'" element-active="true">' +
-                            ' <img class="img-show h100 cursor-move" src="data:image/png;base64,'+value.image+'">' +
+                            ' <img class="img-box-set img-show h100 cursor-move" src="data:image/png;base64,'+value.image+'">' +
                         '</div>';
                 $('#working-box .working-inner-box .box-hidden').append(html);
                 //add border
-                html = '<div class="border-box border-box-'+numberTime+' j-drag j-resize j-rotate" data-value="'+numberTime+'" ></div>';
+                html = '<div class="border-box border-box-'+numberTime+' j-drag j-resize j-rotate"  data-value="'+numberTime+'"  data-type="'+value.category_id+'" ></div>';
                 $('#working-box .working-inner-box').append(html);
                 html = '<div class="position-box position-box-'+numberTime+'"></div>';
                 $('#working-box .working-inner-box').append(html);
@@ -93,4 +93,43 @@ $(function () {
     $('#working-box').on('contentChange', function () {
         interactInit()
     });
+});
+
+///text
+$(function () {
+    function initToolbarBootstrapBindings() {
+        var fonts = ['Serif', 'Sans', 'Arial', 'Arial Black', 'Courier',
+                'Courier New', 'Comic Sans MS', 'Helvetica', 'Impact', 'Lucida Grande', 'Lucida Sans', 'Tahoma', 'Times',
+                'Times New Roman', 'Verdana'],
+            fontTarget = $('[title=Font]').siblings('.dropdown-menu');
+        $.each(fonts, function (idx, fontName) {
+            fontTarget.append($('<li><a data-edit="fontName ' + fontName + '" style="font-family:\'' + fontName + '\'">' + fontName + '</a></li>'));
+        });
+        $('a[title]').tooltip({container: 'body'});
+        $('.dropdown-menu input').click(function () {
+                return false;
+            })
+            .change(function () {
+                $(this).parent('.dropdown-menu').siblings('.dropdown-toggle').dropdown('toggle');
+            })
+            .keydown('esc', function () {
+                this.value = '';
+                $(this).change();
+            });
+
+        $('[data-role=magic-overlay]').each(function () {
+            var overlay = $(this), target = $(overlay.data('target'));
+            overlay.css('opacity', 0).css('position', 'absolute').offset(target.offset()).width(target.outerWidth()).height(target.outerHeight());
+        });
+        if ("onwebkitspeechchange" in document.createElement("input")) {
+            var editorOffset = $('#editor').offset();
+            $('#voiceBtn').css('position', 'absolute').offset({
+                top: editorOffset.top,
+                left: editorOffset.left + $('#editor').innerWidth() - 35
+            });
+        } else {
+            $('#voiceBtn').hide();
+        }
+    };
+    initToolbarBootstrapBindings();
 });

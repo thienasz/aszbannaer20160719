@@ -508,9 +508,19 @@ $.widget("ui.resizable", $.ui.mouse, {
             props.height = this.size.height + "px";
         }
         if(this.options.workingEl){
+
             var name = this.options.workingEl+'-'+this.element.data('value');
             this.workingEl = $(name);
             this.workingEl.css(props);
+            if(this.element.data('type') == 4) {
+                console.log(props.width);
+                if(typeof props.width != "undefined"){
+                    this.workingEl.width(parseInt(props.width) - parseInt(20));
+                }
+                if(typeof props.height != "undefined") {
+                    this.workingEl.height(parseInt(props.height) - parseInt(20));
+                }
+            }
         }
         this.helper.css(props);
 

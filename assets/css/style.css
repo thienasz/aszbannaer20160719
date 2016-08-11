@@ -252,3 +252,12 @@ a:hover {
     top: 0;
     left: 0;
 }
+.btn-toolbar {
+    margin-left: 50px;
+}
+.editor {
+    display: inline-block;
+    z-index: 22;
+    -ms-word-break: break-all;
+    word-break: break-all;;
+}

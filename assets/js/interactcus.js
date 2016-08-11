@@ -75,6 +75,14 @@ function removeBorder() {
 }
 function refreshBorder(el) {
     removeBorder();
+    if(el){
+
+    }else {
+        el = $('.border-box[element-active="true"]').first();
+
+    }
+    console.log(el);
+    console.log(13231);
     el.css('border', 'dashed 1px red');
     el.find('> .ui-resizable-handle').addClass('th-resize');
     el.find('> .ui-resizable-n').addClass('resize-n');
@@ -110,48 +118,81 @@ function drawText() {
     removeActiveEl();
     var numberTime = new Date().valueOf();
     var html = '';
-    html = '<div class="img-handle img-handle-'+numberTime+' ">' +
-        '<div class="text-handle"><p>Example</p></div>' +
+    html = '<div class="text-handle editor text-box-set  img-handle-'+numberTime+' " data-value="' + numberTime + '">' +
+        '<div class=""  element-active="true">' +
+        'xxxxxxxxxxx' +
         '</div>'
+        '</div>';
     $('#box-hidden').append(html);
-    html = '<div class="border-box border-box-'+numberTime+' j-drag j-rotate" data-value="'+numberTime+'"  element-active="true"></div>';
+    html = '<div class="border-box border-box-'+numberTime+' j-drag j-rotate j-resize" data-value="'+numberTime+'"  data-type="4"  element-active="true"></div>';
     $('#working-box .working-inner-box').append(html);
     interactInit();
-    ///
-    signBoxtext($('.border-box-'+numberTime));
+    $('.editor').wysiwyg();
+    setWidthHeight();
 
-}
-function signBoxtext(bel) {
-    var num = bel.data('value');
-    var img = $('.img-handle-'+num).find('p').first();
-    img.css('padding', '10px');
-    img.css('display', 'inline');
-    img.css('top', '0');
-    img.css('left', parseInt($('#box-hidden').width())/2);
-    var h = img.outerHeight();
-    var w = img.outerWidth();
-    bel.height(h);
-    bel.width(w);
-    var left = parseInt(img.css('left')) - parseInt(w)/2;
-    bel.css('transform', 'translate3d(' + left + 'px, 0px, 0px)');
+    $( ".editor" ).mousedown(function(e) {
+        e.stopPropagation();
+        refreshBorder()
+    }).keyup(function (e) {
+        e.stopPropagation();
+        refreshWidthHeight($(this));
+    });
 }
 function setWidthHeight() {
     var innerBox = $('.inner-box');
     var iw = innerBox.outerWidth();
     var ih = (iw*295)/784;
+    innerBox.outerHeight(ih);
+
     var num;
     $('.border-box').each(function () {
         num = '.img-handle-' + $(this).data('value');
+        num = $(num);
         num1 = '.position-box-' + $(this).data('value');
-        console.log(num);
-        $(num).height(ih);
-        $(num).width(iw);
-        // $(num1).height(ih);
-        // $(num1).width(iw);
+        var type = $(this).data('type');
+        switch (type){
+            case 4:
+                var text = num;
+                iw = parseInt(text.outerWidth()) + parseInt(20);
+                ih = parseInt(text.outerHeight()) + parseInt(20);
+                num.height(ih - 20);
+                num.width(iw - 20);
+                num.css('margin', '10px');
+                break;
+            case 3:
+                var el = num.find('.img-box-set').first();
+                var image = new Image();
+                image.src = el.attr("src");
+                iw = image.naturalWidth;
+                ih = image.naturalHeight;
+                console.log(32);
+                if(iw > 100){
+                    ih = ih * 100/iw;
+                    iw = 100;
+                }
+                num.height(ih);
+                num.width(iw);
+                break;
+            default :
+                iw = innerBox.outerWidth();
+                ih = innerBox.outerHeight();
+                num.height(ih);
+                num.width(iw);
+        }
         $(this).height(ih);
         $(this).width(iw);
+
     });
-    innerBox.outerHeight(ih);
+}
+function refreshWidthHeight(el) {
+    var totalHeight = 20;
+    el.children().each(function(){
+        totalHeight = totalHeight + $(this).outerHeight(true);
+    });
+    var text = el.closest('.text-handle');
+    var num = text.data('value');
+    $('.border-box-' + num).outerHeight(totalHeight);
+    text.outerHeight(totalHeight - 20);
 }
 function heightWorkingbox() {
     var innerBox = $('.inner-box');
@@ -160,6 +201,7 @@ function heightWorkingbox() {
     innerBox.outerHeight(ih);
 }
 function tiny_mce(el) {
+    return false;
     tinymce.init({
         selector: el,
         inline: true,

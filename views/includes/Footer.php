@@ -1,6 +1,8 @@
 
 <script src="assets/js/libs/jquery.min.js"></script>
 <script src="assets/js/libs/jquery-ui.js"></script>
+<script src="assets/js/libs/external/jquery.hotkeys.js"></script>
+<script src="assets/js/libs/bootstrap-wysiwyg.js"></script>
 <script src="assets/js/libs/drag.js"></script>
 <script src="assets/js/libs/resize.js"></script>
 <script src="assets/js/libs/jquery.ui.rotatable.min.js"></script>
