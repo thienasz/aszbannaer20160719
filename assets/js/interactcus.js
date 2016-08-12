@@ -1,5 +1,4 @@
 function interactInit() {
-    tiny_mce('.text-handle');
     // start interact with jquery UI
     $('.j-resize').resizable(
         {
@@ -9,12 +8,12 @@ function interactInit() {
     );
 
     $('.j-drag').draggable({
-            workingEl: '.img-handle',
-            cursor: "move",
-        });
+        workingEl: '.img-handle',
+        cursor: "move",
+    });
     $('.j-rotate').rotatable({
         workingEl: '.img-handle',
-        
+
     });
     $('.border-box').mousedown(function (e) {
         console.log($(this).css('transform'));
@@ -53,7 +52,7 @@ function interactInit() {
     $('.border-box').mousedown(function (e) {
         e.stopPropagation();
         removeActiveEl();
-        $('.img-handle-'+$(this).data('value')).attr('element-active', 'true');
+        $('.img-handle-' + $(this).data('value')).attr('element-active', 'true');
         $(this).attr('element-active', 'true');
         var ac = $(this);
         refreshBorder(ac);
@@ -75,9 +74,9 @@ function removeBorder() {
 }
 function refreshBorder(el) {
     removeBorder();
-    if(el){
+    if (el) {
 
-    }else {
+    } else {
         el = $('.border-box[element-active="true"]').first();
 
     }
@@ -97,7 +96,7 @@ function refreshBorder(el) {
 }
 function removeActiveEl() {
     var active = $("[element-active='true']");
-    active.removeAttr( 'element-active' );
+    active.removeAttr('element-active');
 }
 function drawBoxColor() {
     console.log('draw box');
@@ -106,9 +105,9 @@ function drawBoxOpacity(el, op) {
     return false;
     $('.opacity-slider').remove();
     el.append('<div class="opacity-slider"></div>');
-    $( ".opacity-slider" ).slider({
-        value: op*100,
-        stop: function( event, ui ) {
+    $(".opacity-slider").slider({
+        value: op * 100,
+        stop: function (event, ui) {
 
         }
     });
@@ -118,19 +117,19 @@ function drawText() {
     removeActiveEl();
     var numberTime = new Date().valueOf();
     var html = '';
-    html = '<div class="text-handle editor text-box-set  img-handle-'+numberTime+' " data-value="' + numberTime + '">' +
-        '<div class=""  element-active="true">' +
-        'xxxxxxxxxxx' +
-        '</div>'
-        '</div>';
+    html = '<div class="text-handle editor text-box-set  img-handle-' + numberTime + ' " data-value="' + numberTime + '">' +
+        '<p   element-active="true">' +
+        'Text' +
+        '</p>'
+    '</div>';
     $('#box-hidden').append(html);
-    html = '<div class="border-box border-box-'+numberTime+' j-drag j-rotate j-resize" data-value="'+numberTime+'"  data-type="4"  element-active="true"></div>';
+    html = '<div class="border-box border-box-' + numberTime + ' j-drag j-rotate j-resize" data-value="' + numberTime + '"  data-type="4"  element-active="true"></div>';
     $('#working-box .working-inner-box').append(html);
     interactInit();
     $('.editor').wysiwyg();
     setWidthHeight();
 
-    $( ".editor" ).mousedown(function(e) {
+    $(".editor").mousedown(function (e) {
         e.stopPropagation();
         refreshBorder()
     }).keyup(function (e) {
@@ -141,7 +140,7 @@ function drawText() {
 function setWidthHeight() {
     var innerBox = $('.inner-box');
     var iw = innerBox.outerWidth();
-    var ih = (iw*295)/784;
+    var ih = (iw * 295) / 784;
     innerBox.outerHeight(ih);
 
     var num;
@@ -150,7 +149,7 @@ function setWidthHeight() {
         num = $(num);
         num1 = '.position-box-' + $(this).data('value');
         var type = $(this).data('type');
-        switch (type){
+        switch (type) {
             case 4:
                 var text = num;
                 iw = parseInt(text.outerWidth()) + parseInt(20);
@@ -166,8 +165,8 @@ function setWidthHeight() {
                 iw = image.naturalWidth;
                 ih = image.naturalHeight;
                 console.log(32);
-                if(iw > 100){
-                    ih = ih * 100/iw;
+                if (iw > 100) {
+                    ih = ih * 100 / iw;
                     iw = 100;
                 }
                 num.height(ih);
@@ -186,7 +185,7 @@ function setWidthHeight() {
 }
 function refreshWidthHeight(el) {
     var totalHeight = 20;
-    el.children().each(function(){
+    el.children().each(function () {
         totalHeight = totalHeight + $(this).outerHeight(true);
     });
     var text = el.closest('.text-handle');
@@ -197,41 +196,11 @@ function refreshWidthHeight(el) {
 function heightWorkingbox() {
     var innerBox = $('.inner-box');
     var iw = innerBox.outerWidth();
-    var ih = (iw*295)/784;
+    var ih = (iw * 295) / 784;
     innerBox.outerHeight(ih);
 }
-function tiny_mce(el) {
-    return false;
-    tinymce.init({
-        selector: el,
-        inline: true,
-        menubar: false,
-        theme: 'modern',
-        plugins: [
-            'emoticons template paste textcolor colorpicker '
-        ],
-        toolbar: ' insertfile undo redo | styleselect | fontselect fontsizeselect forecolor | bold italic | emoticons paste ',
-        font_sizes : "8px,10px,12px,14px,16px,18px,20px,24px,32px,36px",
-        style_formats: [
-            {title: 'Open Sans', inline: 'span', styles: { 'font-family':'Open Sans'}},
-            {title: 'Arial', inline: 'span', styles: { 'font-family':'arial'}},
-            {title: 'Book Antiqua', inline: 'span', styles: { 'font-family':'book antiqua'}},
-            {title: 'Comic Sans MS', inline: 'span', styles: { 'font-family':'comic sans ms,sans-serif'}},
-            {title: 'Courier New', inline: 'span', styles: { 'font-family':'courier new,courier'}},
-            {title: 'Georgia', inline: 'span', styles: { 'font-family':'georgia,palatino'}},
-            {title: 'Helvetica', inline: 'span', styles: { 'font-family':'helvetica'}},
-            {title: 'Impact', inline: 'span', styles: { 'font-family':'impact,chicago'}},
-            {title: 'Symbol', inline: 'span', styles: { 'font-family':'symbol'}},
-            {title: 'Tahoma', inline: 'span', styles: { 'font-family':'tahoma'}},
-            {title: 'Terminal', inline: 'span', styles: { 'font-family':'terminal,monaco'}},
-            {title: 'Times New Roman', inline: 'span', styles: { 'font-family':'times new roman,times'}},
-            {title: 'Verdana', inline: 'span', styles: { 'font-family':'Verdana'}}
-        ],
-    });
-}
-
 $(function () {
-    $(window).mousedown(function() {
+    $(window).mousedown(function () {
         removeBorder();
     });
     interactInit();

@@ -256,7 +256,7 @@ a:hover {
     margin-left: 50px;
 }
 .editor {
-    display: inline-block;
+    position: absolute;
     z-index: 22;
     -ms-word-break: break-all;
     word-break: break-all;;
