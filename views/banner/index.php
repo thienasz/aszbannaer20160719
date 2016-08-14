@@ -68,7 +68,7 @@
                     <li class="option" data-option="up"><a href="#">up</a></li>
                     <li class="option" data-option="down"><a href="#">down</a></li>
                     <li class="option" data-option="delete"><a href="#">delete</a></li>
-                    <li class="submit_image" data-option="submit"><a href="#">submit</a></li>
+                    <li class="option submit_image" data-option="submit"><a href="#">submit</a></li>
                 </ul>
             </div>
             <div class="working-box-wrapper  col-sm-8 col-sm-offset-2 no-padding">

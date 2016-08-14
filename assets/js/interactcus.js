@@ -1,20 +1,20 @@
 function interactInit() {
+
     // start interact with jquery UI
-    $('.j-resize').resizable(
-        {
+    $('.j-resize').resizable({
             handles: "n, ne, e, se, s, sw, w, nw",
             workingEl: '.img-handle',
-        }
-    );
+        });
 
     $('.j-drag').draggable({
         workingEl: '.img-handle',
         cursor: "move",
     });
+
     $('.j-rotate').rotatable({
         workingEl: '.img-handle',
-
     });
+
     $('.border-box').mousedown(function (e) {
         console.log($(this).css('transform'));
     });
@@ -45,10 +45,15 @@ function interactInit() {
             case 'delete':
                 elActive.remove();
                 break;
+            case 'submit':
+                console.log('menusb');
+                submitData();
+                break;
         }
     });
 
     //event for border
+    setWidthHeight();
     $('.border-box').mousedown(function (e) {
         e.stopPropagation();
         removeActiveEl();
@@ -57,8 +62,10 @@ function interactInit() {
         var ac = $(this);
         refreshBorder(ac);
     });
-    setWidthHeight();
 }
+/**
+ * handle border
+ */
 function removeBorder() {
     $('.border-box').css('border', 'none');
     $('.border-box > .ui-resizable-handle').removeClass('th-resize');
@@ -80,8 +87,6 @@ function refreshBorder(el) {
         el = $('.border-box[element-active="true"]').first();
 
     }
-    console.log(el);
-    console.log(13231);
     el.css('border', 'dashed 1px red');
     el.find('> .ui-resizable-handle').addClass('th-resize');
     el.find('> .ui-resizable-n').addClass('resize-n');
@@ -94,13 +99,25 @@ function refreshBorder(el) {
     el.find('> .ui-resizable-nw').addClass('resize-nw');
     el.find(' .ui-rotatable-handle').addClass('th-rotate-handle');
 }
+/**
+ * remove active element when click delete
+ */
 function removeActiveEl() {
     var active = $("[element-active='true']");
     active.removeAttr('element-active');
 }
+/**
+ * draw color box when click color option
+ */
 function drawBoxColor() {
     console.log('draw box');
 }
+/**
+ * show slider when click opacity option
+ * @param el
+ * @param op
+ * @returns {boolean}
+ */
 function drawBoxOpacity(el, op) {
     return false;
     $('.opacity-slider').remove();
@@ -112,7 +129,9 @@ function drawBoxOpacity(el, op) {
         }
     });
 }
-
+/**
+ * draw when click text option
+ */
 function drawText() {
     removeActiveEl();
     var numberTime = new Date().valueOf();
@@ -127,7 +146,6 @@ function drawText() {
     $('#working-box .working-inner-box').append(html);
     interactInit();
     $('.editor').wysiwyg();
-    setWidthHeight();
 
     $(".editor").mousedown(function (e) {
         e.stopPropagation();
@@ -137,6 +155,9 @@ function drawText() {
         refreshWidthHeight($(this));
     });
 }
+/**
+ * set border and el handle
+ */
 function setWidthHeight() {
     var innerBox = $('.inner-box');
     var iw = innerBox.outerWidth();
@@ -145,44 +166,50 @@ function setWidthHeight() {
 
     var num;
     $('.border-box').each(function () {
-        num = '.img-handle-' + $(this).data('value');
-        num = $(num);
-        num1 = '.position-box-' + $(this).data('value');
-        var type = $(this).data('type');
-        switch (type) {
-            case 4:
-                var text = num;
-                iw = parseInt(text.outerWidth()) + parseInt(20);
-                ih = parseInt(text.outerHeight()) + parseInt(20);
-                num.height(ih - 20);
-                num.width(iw - 20);
-                num.css('margin', '10px');
-                break;
-            case 3:
-                var el = num.find('.img-box-set').first();
-                var image = new Image();
-                image.src = el.attr("src");
-                iw = image.naturalWidth;
-                ih = image.naturalHeight;
-                console.log(32);
-                if (iw > 100) {
-                    ih = ih * 100 / iw;
-                    iw = 100;
-                }
-                num.height(ih);
-                num.width(iw);
-                break;
-            default :
-                iw = innerBox.outerWidth();
-                ih = innerBox.outerHeight();
-                num.height(ih);
-                num.width(iw);
+        if($(this).attr('resize') != 'true') {
+            console.log(123);
+            num = '.img-handle-' + $(this).data('value');
+            num = $(num);
+            num1 = '.position-box-' + $(this).data('value');
+            var type = $(this).data('type');
+            switch (type){
+                case 4:
+                    var text = num;
+                    iw = parseInt(text.outerWidth()) + parseInt(20);
+                    ih = parseInt(text.outerHeight()) + parseInt(20);
+                    num.height(ih - 20);
+                    num.width(iw - 20);
+                    num.css('margin', '10px');
+                    break;
+                case 3:
+                    var el = num.find('.img-box-set').first();
+                    var image = new Image();
+                    image.src = el.attr("src");
+                    iw = image.naturalWidth;
+                    ih = image.naturalHeight;
+                    console.log(32);
+                    if(iw > 100){
+                        ih = ih * 100/iw;
+                        iw = 100;
+                    }
+                    num.height(ih);
+                    num.width(iw);
+                    break;
+                default :
+                    iw = innerBox.outerWidth();
+                    ih = innerBox.outerHeight();
+                    num.height(ih);
+                    num.width(iw);
+            }
+            $(this).height(ih);
+            $(this).width(iw);
         }
-        $(this).height(ih);
-        $(this).width(iw);
-
     });
 }
+/**
+ * refresh when type text
+ * @param el
+ */
 function refreshWidthHeight(el) {
     var totalHeight = 20;
     el.children().each(function () {
@@ -193,17 +220,51 @@ function refreshWidthHeight(el) {
     $('.border-box-' + num).outerHeight(totalHeight);
     text.outerHeight(totalHeight - 20);
 }
-function heightWorkingbox() {
-    var innerBox = $('.inner-box');
-    var iw = innerBox.outerWidth();
-    var ih = (iw * 295) / 784;
-    innerBox.outerHeight(ih);
+/**
+ * submit data for layout
+ */
+function submitData() {
+    console.log('vaosu');
+    var array = [];
+    var els = $('.border-box');
+    var define = [];
+
+    els.each(function (index, value) {
+        var type = $(this).data('type');
+        var handle = $('.img-handle-' + $(this).data('value'));
+        var layout = {};
+        layout.id = handle.data('value');
+        layout.top = handle.position().top;
+        layout.left = handle.position().left;
+        layout.width = handle.width();
+        layout.height = handle.height();
+        layout.type = type;
+        layout.zindex = handle.css('z-index');
+        layout.rotate = getRotationDegrees(handle);
+        array.push(layout);
+    });
+    console.log(array);
+// call api
+    $.ajax({
+        url: root +'/element/getAllElementsAjax',
+        data: {
+            layouts: array,
+            define: define,
+        },
+        dataType: 'json',
+        type: 'POST',
+        error: function() {
+            $('#info').html('<p>An error has occurred</p>');
+        },
+        success: function (data) {
+            
+        }
+    });
 }
 $(function () {
     $(window).mousedown(function () {
         removeBorder();
     });
     interactInit();
-    heightWorkingbox();
 });
 

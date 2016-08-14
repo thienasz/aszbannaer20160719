@@ -513,7 +513,6 @@ $.widget("ui.resizable", $.ui.mouse, {
             this.workingEl = $(name);
             this.workingEl.css(props);
             if(this.element.data('type') == 4) {
-                console.log(props.width);
                 if(typeof props.width != "undefined"){
                     this.workingEl.width(parseInt(props.width) - parseInt(20));
                 }
@@ -522,6 +521,7 @@ $.widget("ui.resizable", $.ui.mouse, {
                 }
             }
         }
+        this.helper.attr('resize',true);
         this.helper.css(props);
 
         return props;

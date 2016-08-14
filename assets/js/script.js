@@ -1,6 +1,4 @@
 // global var
-var initOnce = 0;
-console.log(root);
 function reset() {
     var active;
     active = $(".active");
@@ -38,7 +36,7 @@ function reset() {
         });
     }
 }
-// function add al to work section
+// function add element to work section
 
 function addToWorkSection() {
     var workEls = $('.working-el');
@@ -93,10 +91,9 @@ $(function () {
     $('#working-box').on('contentChange', function () {
         interactInit()
     });
-});
-
-///text
-$(function () {
+    /**
+     * handle text toolbar
+     */
     function initToolbarBootstrapBindings() {
         var fonts = ['Serif', 'Sans', 'Arial', 'Arial Black', 'Courier',
                 'Courier New', 'Comic Sans MS', 'Helvetica', 'Impact', 'Lucida Grande', 'Lucida Sans', 'Tahoma', 'Times',
