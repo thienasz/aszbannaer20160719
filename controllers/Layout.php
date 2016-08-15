@@ -10,7 +10,7 @@ class Layout extends BaseController
 {
     public function saveDataLayout() {
 
-        $datas = $_POST['data'];
+        $datas = $_POST['layouts'];
         $this->model->insertLayout($datas);
     }
     public function getLayout($id =8)

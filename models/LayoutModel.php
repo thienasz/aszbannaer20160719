@@ -9,6 +9,7 @@
 class LayoutModel extends BaseModel
 {
     public function insertLayout($datas) {
+        var_dump("dvds") ;
         $data['name']=  'fix'; //@to do
         $layout_id = $this->insert('layouts', $data);
         foreach ($datas as $data) {

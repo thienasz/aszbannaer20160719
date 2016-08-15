@@ -227,13 +227,14 @@ function submitData() {
     console.log('vaosu');
     var array = [];
     var els = $('.border-box');
+    console.log(els);
     var define = [];
 
     els.each(function (index, value) {
         var type = $(this).data('type');
         var handle = $('.img-handle-' + $(this).data('value'));
         var layout = {};
-        layout.id = handle.data('value');
+        layout.element_id = handle.data('value');
         layout.top = handle.position().top;
         layout.left = handle.position().left;
         layout.width = handle.width();
@@ -246,7 +247,7 @@ function submitData() {
     console.log(array);
 // call api
     $.ajax({
-        url: root +'/element/getAllElementsAjax',
+        url: root +'/layout/saveDataLayout',
         data: {
             layouts: array,
             define: define,
@@ -257,7 +258,7 @@ function submitData() {
             $('#info').html('<p>An error has occurred</p>');
         },
         success: function (data) {
-            
+
         }
     });
 }
