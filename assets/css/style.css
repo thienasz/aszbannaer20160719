@@ -27,6 +27,7 @@ footer, header, hgroup, menu, nav, section {
 }
 body {
     line-height: 1;
+    background: #ebeced;
 }
 ol, ul {
     list-style: none;
@@ -47,7 +48,16 @@ a:hover {
     color: #337ab7;
 }
 .top-header {
-    background-color: black;
+    background-color: #5bc0de;
+    height: 55px;
+}
+#logo-banner {
+    font-size: 25px;
+    font-style: italic;
+    margin-left: 20px;
+    color: white;
+    text-decoration: none;
+    line-height: 2;
 }
 .left-section {
     position: relative;
@@ -73,7 +83,12 @@ a:hover {
 }
 .menu li a {
     color: #fff;
+    text-decoration: none;
 }
+.menu li a:hover{
+    color: #0e90d2;
+}
+
 /*content show*/
 .content-show{
     margin-left: 110px;
@@ -88,6 +103,7 @@ a:hover {
     margin: 5px 0;
     border: 1px gray;
     border-style: dashed;
+
 }
 .cursor-move {
     cursor: move;
@@ -100,7 +116,7 @@ a:hover {
     height: auto;
 }
 .small-menu li{
-    padding: 10px;
+    padding: 20px;
 }
 .inner-box {
     position: relative;
@@ -115,7 +131,8 @@ a:hover {
     padding: 0;
     margin: 0;
     position: absolute;
-    border: 2px dotted darkgray;
+    border: 1px solid #ebeced;
+    background: white;
     /*z-index: -9999;*/
 }
 .img-handle {
@@ -253,7 +270,7 @@ a:hover {
     left: 0;
 }
 .btn-toolbar {
-    margin-left: 50px;
+    margin-left: 90px;
 }
 .editor {
     position: absolute;

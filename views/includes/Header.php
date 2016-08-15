@@ -8,5 +8,7 @@
 </head>
 <body>
 <header>
-    <div class="top-header">abc</div>
+    <div class="top-header">
+        <a id ="logo-banner">Banner</a>
+    </div>
 </header>
