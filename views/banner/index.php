@@ -82,4 +82,24 @@
 
         </div>
     </div>
+
 </section>
+<!--sliderUI-->
+<!--<div id="slider_UI" >
+    <script>
+        $(function() {
+
+            $( "#slider-5" ).slider({
+                //orientation:"vertical",
+                value:50,
+                slide: function( event, ui ) {
+                    $( "#minval" ).val( ui.value );
+                }
+            });
+            $( "#minval" ).val( $( "#slider-5" ).slider( "value" ) );
+        });
+    </script>
+
+    <div id="slider-5"></div>
+</div>-->
+</html>

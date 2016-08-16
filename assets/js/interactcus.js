@@ -34,6 +34,7 @@ function interactInit() {
                 drawBoxColor();
                 break;
             case 'opacity':
+
                 drawBoxOpacity($(this), elOpacity);
                 break;
             case 'up':
@@ -119,15 +120,20 @@ function drawBoxColor() {
  * @returns {boolean}
  */
 function drawBoxOpacity(el, op) {
-    return false;
+   // return false;
     $('.opacity-slider').remove();
-    el.append('<div class="opacity-slider"></div>');
+    el.append('<div class="opacity-slider" style="height: 6px;width: 70px; margin-top: 10px" ></div>');
     $(".opacity-slider").slider({
-        value: op * 100,
-        stop: function (event, ui) {
-
+        value:50,
+        slide: function( event, ui ) {
+            $( "#minval" ).val( ui.value );
+            $(".img-handle[element-active='true']").css('opacity',  ui.value/100);
         }
     });
+
+    $( "#minval" ).val( $( ".opacity-slider" ).slider( "value" ) );
+    $('#minval').remove();
+    //el.append('<input type="text" id="minval" style="border:0; color:#2b669a; font-weight:bold;margin-top: 20px; width: 35px">');
 }
 /**
  * draw when click text option

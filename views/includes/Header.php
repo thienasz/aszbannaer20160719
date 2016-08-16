@@ -4,6 +4,8 @@
     <link rel="stylesheet" href="assets/css/boostrap.icons.min.css">
     <link rel="stylesheet" href="assets/css/font-awesome.min.css">
     <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/jquery-ui.css">
+
     <script> var root = '<?php echo BASE_URL; ?>' </script>
 </head>
 <body>
