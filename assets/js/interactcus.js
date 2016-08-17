@@ -165,8 +165,8 @@ function drawText() {
     removeActiveEl();
     var numberTime = new Date().valueOf();
     var html = '';
-    html = '<div class="text-handle editor text-box-set  img-handle-' + numberTime + ' " data-value="' + numberTime + '">' +
-        '<p   element-active="true">' +
+    html = '<div class="text-handle editor text-box-set  img-handle-' + numberTime + ' " data-value="' + numberTime + '" element-active="true">' +
+        '<p>' +
         'Text' +
         '</p>'
     '</div>';
@@ -174,7 +174,7 @@ function drawText() {
     html = '<div class="border-box border-box-' + numberTime + ' j-drag j-rotate j-resize" data-value="' + numberTime + '"  data-type="4"  element-active="true"></div>';
     $('#working-box .working-inner-box').append(html);
     interactInit();
-    $('.editor').wysiwyg();
+    $('.editor[element-active="true"]').wysiwyg();
 
     $(".editor").mousedown(function (e) {
         e.stopPropagation();

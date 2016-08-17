@@ -102,6 +102,19 @@ $(function () {
         $.each(fonts, function (idx, fontName) {
             fontTarget.append($('<li><a data-edit="fontName ' + fontName + '" style="font-family:\'' + fontName + '\'">' + fontName + '</a></li>'));
         });
+        var fontcolor = $('.colorpickerplus-dropdown .colorpickerplus-container');
+        fontcolor.colorpickerembed();
+        fontcolor.on('changeColor', function (e, color) {
+            var el = $('.color-fill-icon', $('#fontcolor'));
+            if (color == null) {
+                //when select transparent color
+                el.addClass('colorpicker-color');
+            } else {
+                el.removeClass('colorpicker-color');
+                el.css('background-color', color);
+
+            }
+        });
         $('a[title]').tooltip({container: 'body'});
         $('.dropdown-menu input').click(function () {
                 return false;
@@ -127,19 +140,6 @@ $(function () {
         } else {
             $('#voiceBtn').hide();
         }
-        var fontcolor = $('.colorpickerplus-dropdown .colorpickerplus-container');
-        fontcolor.colorpickerembed();
-        fontcolor.on('changeColor', function (e, color) {
-            var el = $('.color-fill-icon', $('#fontcolor'));
-            if (color == null) {
-                //when select transparent color
-                el.addClass('colorpicker-color');
-            } else {
-                el.removeClass('colorpicker-color');
-                el.css('background-color', color);
-
-            }
-        });
 
     };
 
