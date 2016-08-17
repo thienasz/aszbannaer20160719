@@ -263,14 +263,15 @@ function submitData() {
         var type = $(this).data('type');
         var handle = $('.img-handle-' + $(this).data('value'));
         var layout = {};
+        layout.rotate = getRotationDegrees(handle);
+        var x =  layout.rotate*0.0175;
         layout.element_id = handle.data('value');
         layout.top = handle.position().top;
         layout.left = handle.position().left;
-        layout.width = handle.width();
-        layout.height = handle.height();
+        layout.width = handle.width()*Math.cos(x) + handle.height()*Math.sin(x);
+        layout.height = handle.width()*Math.sin(x) + handle.height()*Math.cos(x);
         layout.type = type;
         layout.zindex = handle.css('z-index');
-        layout.rotate = getRotationDegrees(handle);
         array.push(layout);
     });
     console.log(array);

@@ -13,20 +13,20 @@ class Layout extends BaseController
         $datas = $_POST['layouts'];
         $this->model->insertLayout($datas);
     }
-    public function getLayout($id =8)
+    public function getLayout($id =89)
     {
         $layout = $this->model->getLayoutById($id);
-        $x = 784;
-        $y = 295;
+        $x = 580;
+        $y = 218;
         $background = imagecreatetruecolor($x, $y);
-        $whiteBackground = imagecolorallocate($background, 255, 255, 255);
+        $whiteBackground = imagecolorallocate($background, 0, 255, 255);
         imagefill($background,0,0,$whiteBackground);
         $outputImage = $background;
         foreach ($layout as $el) {
             $link = ROOT . '/images/backgrounds/' . $el['link'];
             $first = imagecreatefromjpeg($link);
-            $first = imagerotate($first, $el['rotate'], 0);
-            imagecopymerge($outputImage, $first, $el['left'], $el['top'],0,0, $x, $y,100);
+            $first = imagerotate($first,180-$el['rotate'], 0);
+            imagecopymerge($outputImage, $first, $el['left'], $el['top'],0,0, $el['width'], $el['height'],100);
         }
         header('Content-Type: image/jpeg');
         imagejpeg($outputImage);
