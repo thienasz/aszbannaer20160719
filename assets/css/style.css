@@ -289,16 +289,16 @@ a:hover {
 }
 .color-fill-icon {
     display: inline-block;
-    width: 16px;
-    height: 16px;
-    border: 1px solid #000;
-    background-color: #fff;
-    margin: 2px;
+    width: 21px;
+    height: 20px;
+    border: 1px solid #ddd;
+    background-color: #ddd;
+    margin: 0px;
 }
 
 .dropdown-color-fill-icon {
     position: relative;
     float: left;
-    margin-left: 0;
-    margin-right: 0
+    margin-left: -4px;
+    margin-right: 0px;
 }

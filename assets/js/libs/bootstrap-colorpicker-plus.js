@@ -27,7 +27,7 @@
 	var CELLS = 10;
     var createColorCell = function(color, cell) {
         if(!cell) {
-          cell = $('<div class="colorcell"></div>');
+          cell = $('<a class="colorcell" data-edit="foreColor ' + color + '" style="color:\'' + color + '\'">' + '</a>');
 		}
         if(!!color) {
           cell.data('color', color);

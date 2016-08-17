@@ -118,6 +118,15 @@ $(function () {
             var overlay = $(this), target = $(overlay.data('target'));
             overlay.css('opacity', 0).css('position', 'absolute').offset(target.offset()).width(target.outerWidth()).height(target.outerHeight());
         });
+        if ("onwebkitspeechchange" in document.createElement("input")) {
+            var editorOffset = $('#editor').offset();
+            $('#voiceBtn').css('position', 'absolute').offset({
+                top: editorOffset.top,
+                left: editorOffset.left + $('#editor').innerWidth() - 35
+            });
+        } else {
+            $('#voiceBtn').hide();
+        }
         var fontcolor = $('.colorpickerplus-dropdown .colorpickerplus-container');
         fontcolor.colorpickerembed();
         fontcolor.on('changeColor', function (e, color) {
@@ -128,8 +137,10 @@ $(function () {
             } else {
                 el.removeClass('colorpicker-color');
                 el.css('background-color', color);
+
             }
         });
+
     };
 
     initToolbarBootstrapBindings();
