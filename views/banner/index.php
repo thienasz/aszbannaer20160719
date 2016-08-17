@@ -75,6 +75,7 @@
                     <li class="option" data-option="up"><a href="#">up</a></li>
                     <li class="option" data-option="down"><a href="#">down</a></li>
                     <li class="option" data-option="delete"><a href="#">delete</a></li>
+                    <li class="option" data-option="circle"><a href="#">circle</a></li>
                     <li class="option submit_image" data-option="submit"><a href="#">submit</a></li>
                 </ul>
             </div>

@@ -25,6 +25,7 @@ function interactInit() {
         var elColor = elActive.css('background-color');
         var elOpacity = elActive.css('opacity');
         var elZIndex = elActive.css('z-index');
+        var elCircle = $('.img-box-set');
         switch (option) {
             case 'text':
                 console.log($(this));
@@ -49,6 +50,10 @@ function interactInit() {
             case 'submit':
                 console.log('menusb');
                 submitData();
+                break;
+            case 'circle':
+                circle($(this), elCircle);
+                // img1.css('border-radius',  '50%');
                 break;
         }
     });
@@ -138,6 +143,24 @@ function drawBoxOpacity(el, op) {
 /**
  * draw when click text option
  */
+
+function circle(el, op) {
+    $('.circle-slider').remove();
+    el.append('<div class="circle-slider" style="height: 6px;width: 70px; margin-top: 10px" ></div>');
+    $(".circle-slider").slider({
+        value:50,
+        slide: function( event, ui ) {
+            $( "#minval" ).val( ui.value );
+            $(".img-handle[element-active='true'] .img-box-set").css('border-radius',  ui.value+ '%');
+        }
+    });
+
+    $( "#minval" ).val( $( ".circle-slider" ).slider( "value" ) );
+    $('#minval').remove();
+
+
+    //$(".img-show[element-active='true']").css('border-radius', 50);
+}
 function drawText() {
     removeActiveEl();
     var numberTime = new Date().valueOf();
