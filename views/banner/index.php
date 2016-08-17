@@ -24,6 +24,15 @@
                 <li><a data-edit="fontSize 1"><font size="1">Small</font></a></li>
             </ul>
         </div>
+        <div class="btn-group btn-group-sm colorpickerplus-dropdown" id="fontcolor">
+            <div class="btn btn-default dropdown-toggle" data-toggle="dropdown" title="Font Color"><span class="color-fill-icon dropdown-color-fill-icon"></span>&nbsp;<b class="caret"></b></div>
+            <ul class="dropdown-menu">
+                <li class="disabled">
+                    <div class="colorpickerplus-container"></div>
+                </li>
+
+            </ul>
+        </div>
         <div class="btn-group">
             <a class="btn" data-edit="bold" title="" data-original-title="Bold (Ctrl/Cmd+B)"><i class="fa fa-bold"></i></a>
             <a class="btn" data-edit="italic" title="" data-original-title="Italic (Ctrl/Cmd+I)"><i class="fa fa-italic"></i></a>
