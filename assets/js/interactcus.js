@@ -271,7 +271,7 @@ function submitData() {
         layout.width = handle.width()*Math.cos(x) + handle.height()*Math.sin(x);
         layout.height = handle.width()*Math.sin(x) + handle.height()*Math.cos(x);
         layout.type = type;
-        layout.zindex = handle.css('z-index');
+        layout.zindex = handle.css('z-index');2
         array.push(layout);
     });
     console.log(array);
