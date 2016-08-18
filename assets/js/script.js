@@ -1,4 +1,9 @@
 // global var
+var info = {};
+info.zindex = [];
+info.listNum = [];
+info.num = [];
+
 function reset() {
     var active;
     active = $(".active");
@@ -70,11 +75,124 @@ function addToWorkSection() {
                 html = '<div class="position-box position-box-'+numberTime+'"></div>';
                 $('#working-box .working-inner-box').append(html);
                 $('#working-box').trigger('contentChange');
+
+                //calculate zindex
+                calculateZindex('new', numberTime)
+
+                console.log(info);
             }
         });
     });
 }
 
+/**
+ * calculate zindex
+ */
+function calculateZindex(type, numberTime) {
+    // get global z-index
+    var activeEl = $('div[class*="-' + numberTime + '"]');
+    switch (type){
+        case 'new':
+            if(info.zindex && info.zindex.length == 0){
+                info.zindex.push(10);
+                info.num[numberTime] = 0;
+            } else {
+                info.num[numberTime] = info.zindex.length;
+                info.zindex.push(parseInt(info.zindex[info.num[numberTime] - 1]) + 1);
+            }
+            info.listNum.push(numberTime);
+            info.num.length++;
+            activeEl.css('z-index', info.zindex[info.num[numberTime]]);
+            break;
+        case 'down':
+            var upActiveEl = $('div[class*="-' + info.listNum[parseInt(info.num[numberTime]) - 1] + '"]');
+            // set css for el
+            activeEl.css('z-index', info.zindex[info.num[numberTime] - 1]);
+            upActiveEl.css('z-index', info.zindex[info.num[numberTime]]);
+
+            // set info.listNum
+            var temp;
+            temp = info.listNum[info.num[numberTime]]
+            info.listNum[info.num[numberTime]] = info.listNum[info.num[numberTime] - 1];
+            info.listNum[info.num[numberTime] - 1] = temp;
+
+            // set info.num
+            info.num[info.listNum[info.num[numberTime]]] = info.num[numberTime];
+            info.num[numberTime] -= 1;
+
+            break;
+        case 'up':
+            var dowwnActiveEl = $('div[class*="-' + info.listNum[parseInt(info.num[numberTime]) + 1] + '"]');
+            activeEl.css('z-index', info.zindex[info.num[numberTime] + 1]);
+            dowwnActiveEl.css('z-index', info.zindex[info.num[numberTime]]);
+
+            // set info.listNum
+            var temp;
+            temp = info.listNum[info.num[numberTime]]
+            info.listNum[info.num[numberTime]] = info.listNum[info.num[numberTime] + 1];
+            info.listNum[info.num[numberTime] + 1] = temp;
+
+            // set info.num
+            info.num[info.listNum[info.num[numberTime]]] = info.num[numberTime];
+            info.num[numberTime] += 1;
+            break;
+        case 'delete':
+            break;
+    }
+    console.log(info);
+}
+
+/**
+ * handle text toolbar
+ */
+function initToolbarBootstrapBindings() {
+    var fonts = ['Serif', 'Sans', 'Arial', 'Arial Black', 'Courier',
+            'Courier New', 'Comic Sans MS', 'Helvetica', 'Impact', 'Lucida Grande', 'Lucida Sans', 'Tahoma', 'Times',
+            'Times New Roman', 'Verdana'],
+        fontTarget = $('[title=Font]').siblings('.dropdown-menu');
+    $.each(fonts, function (idx, fontName) {
+        fontTarget.append($('<li><a data-edit="fontName ' + fontName + '" style="font-family:\'' + fontName + '\'">' + fontName + '</a></li>'));
+    });
+    var fontcolor = $('.colorpickerplus-dropdown .colorpickerplus-container');
+    fontcolor.colorpickerembed();
+    fontcolor.on('changeColor', function (e, color) {
+        var el = $('.color-fill-icon', $('#fontcolor'));
+        if (color == null) {
+            //when select transparent color
+            el.addClass('colorpicker-color');
+        } else {
+            el.removeClass('colorpicker-color');
+            el.css('background-color', color);
+
+        }
+    });
+    $('a[title]').tooltip({container: 'body'});
+    $('.dropdown-menu input').click(function () {
+        return false;
+    })
+        .change(function () {
+            $(this).parent('.dropdown-menu').siblings('.dropdown-toggle').dropdown('toggle');
+        })
+        .keydown('esc', function () {
+            this.value = '';
+            $(this).change();
+        });
+
+    $('[data-role=magic-overlay]').each(function () {
+        var overlay = $(this), target = $(overlay.data('target'));
+        overlay.css('opacity', 0).css('position', 'absolute').offset(target.offset()).width(target.outerWidth()).height(target.outerHeight());
+    });
+    if ("onwebkitspeechchange" in document.createElement("input")) {
+        var editorOffset = $('#editor').offset();
+        $('#voiceBtn').css('position', 'absolute').offset({
+            top: editorOffset.top,
+            left: editorOffset.left + $('#editor').innerWidth() - 35
+        });
+    } else {
+        $('#voiceBtn').hide();
+    }
+
+};
 //load js
 $(function () {
     reset();
@@ -91,57 +209,6 @@ $(function () {
     $('#working-box').on('contentChange', function () {
         interactInit()
     });
-    /**
-     * handle text toolbar
-     */
-    function initToolbarBootstrapBindings() {
-        var fonts = ['Serif', 'Sans', 'Arial', 'Arial Black', 'Courier',
-                'Courier New', 'Comic Sans MS', 'Helvetica', 'Impact', 'Lucida Grande', 'Lucida Sans', 'Tahoma', 'Times',
-                'Times New Roman', 'Verdana'],
-            fontTarget = $('[title=Font]').siblings('.dropdown-menu');
-        $.each(fonts, function (idx, fontName) {
-            fontTarget.append($('<li><a data-edit="fontName ' + fontName + '" style="font-family:\'' + fontName + '\'">' + fontName + '</a></li>'));
-        });
-        var fontcolor = $('.colorpickerplus-dropdown .colorpickerplus-container');
-        fontcolor.colorpickerembed();
-        fontcolor.on('changeColor', function (e, color) {
-            var el = $('.color-fill-icon', $('#fontcolor'));
-            if (color == null) {
-                //when select transparent color
-                el.addClass('colorpicker-color');
-            } else {
-                el.removeClass('colorpicker-color');
-                el.css('background-color', color);
-
-            }
-        });
-        $('a[title]').tooltip({container: 'body'});
-        $('.dropdown-menu input').click(function () {
-                return false;
-            })
-            .change(function () {
-                $(this).parent('.dropdown-menu').siblings('.dropdown-toggle').dropdown('toggle');
-            })
-            .keydown('esc', function () {
-                this.value = '';
-                $(this).change();
-            });
-
-        $('[data-role=magic-overlay]').each(function () {
-            var overlay = $(this), target = $(overlay.data('target'));
-            overlay.css('opacity', 0).css('position', 'absolute').offset(target.offset()).width(target.outerWidth()).height(target.outerHeight());
-        });
-        if ("onwebkitspeechchange" in document.createElement("input")) {
-            var editorOffset = $('#editor').offset();
-            $('#voiceBtn').css('position', 'absolute').offset({
-                top: editorOffset.top,
-                left: editorOffset.left + $('#editor').innerWidth() - 35
-            });
-        } else {
-            $('#voiceBtn').hide();
-        }
-
-    };
 
     initToolbarBootstrapBindings();
 });

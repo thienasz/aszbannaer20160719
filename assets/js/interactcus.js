@@ -39,10 +39,12 @@ function interactInit() {
                 drawBoxOpacity($(this), elOpacity);
                 break;
             case 'up':
-                elActive.css('z-index', parseInt(elZIndex) + 1);
+                calculateZindex('up', $(".border-box[element-active='true']").data('value'));
                 break;
             case 'down':
-                elActive.css('z-index', parseInt(elZIndex) - 1);
+                console.log($(".border-box[element-active='true']").data('value'));
+                console.log(222);
+                calculateZindex('down', $(".border-box[element-active='true']").data('value'));
                 break;
             case 'delete':
                 elActive.remove();
