@@ -78,6 +78,11 @@ a:hover {
 .menu li {
     padding: 20px;
 }
+.menu li:hover{
+    background: #5bc0de;
+    transition: 1s;
+    /*box-shadow: 0 0 50px rgba(255,255,255,0.3),0 0 40px rgba(255,255,255,0.3),0 0 30px rgba(255,255,255,0.3),0 0 20px rgba(255,255,255,0.3);*/
+}
 .menu li.active {
     background-color: #004863;
 }
@@ -108,9 +113,13 @@ a:hover {
 }
 .box-left {
     margin: 5px 0;
-    border: 1px gray;
+    border: 1px rgba(255, 255, 255, .15);
     border-style: dashed;
 
+}
+.box-left:hover{
+
+    box-shadow: 0 0 50px #e5e5e5,0 0 40px rgba(255,255,255,0.3),0 0 30px rgba(255,255,255,0.3),0 0 20px rgba(255,255,255,0.3);
 }
 .cursor-move {
     cursor: move;
@@ -234,6 +243,7 @@ a:hover {
     right: 0;
     top: 30%;
     z-index: 90;
+    font: normal normal normal 14px/1 FontAwesome;
 }
 .th-rotate-handle:before {
     content: '';
