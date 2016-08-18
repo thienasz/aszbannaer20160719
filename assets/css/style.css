@@ -49,15 +49,17 @@ a:hover {
 }
 .top-header {
     background-color: #5bc0de;
-    height: 55px;
+    height: 50px;
 }
 #logo-banner {
-    font-size: 25px;
-    font-style: italic;
+    font-size: 37px;
+    /* font-style: italic; */
     margin-left: 20px;
     color: white;
     text-decoration: none;
-    line-height: 2;
+    /* height: 20px; */
+    line-height: 1.5;
+    font-family: 'Gochi Hand', cursive;
 }
 .left-section {
     position: relative;
@@ -89,9 +91,11 @@ a:hover {
 .menu li a {
     color: #fff;
     text-decoration: none;
+    font-family: 'Indie Flower', cursive;
 }
 .menu li a:hover{
-    color: #0e90d2;
+    /*color: #0e90d2;*/
+
 }
 
 /*content show*/
