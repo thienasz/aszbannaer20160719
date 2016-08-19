@@ -18,27 +18,51 @@ function reset() {
     } else {
         var category;
         category = active.data("value");
+        console.log(category)  ;
+        if(category == 1){
+            $.ajax({
+                url: root +'/layout/getAllLayoutsAjax',
+                type: 'POST',
+                dataType: 'json',
+                error: function() {
+                    $('#info').html('<p>An error has occurred</p>');
+                },
+                success: function (data) {
+                     console.log(data);
+                    var html = '';
+                    html += '<div class="left-wrapper">';
+                    $.each (data, function (index, value) {
+                        html += '<div class="box-left working-el" data-value="'+value.id+'"> <img class="img-show" src="data:image/png;base64,'+value.image+'"></div>';
+                    });
+                    $('#content-show').html(html);
+                    $('#content-show').trigger('contentChange');
+                }
+            });
+        } else {
+            $.ajax({
+                url: root +'/element/getAllElementsAjax',
+                data: {
+                    cateId: category,
+                },
+                dataType: 'json',
+                type: 'POST',
+                error: function() {
+                    $('#info').html('<p>An error has occurred</p>');
+                },
+                success: function (data) {
+                    console.log(data);
+                    var html = '';
+                    html += '<div class="left-wrapper">';
+                    $.each (data, function (index, value) {
+                        html += '<div class="box-left working-el" data-value="'+value.id+'"> <img class="img-show" src="data:image/png;base64,'+value.image+'"></div>';
+                    });
+                    $('#content-show').html(html);
+                    $('#content-show').trigger('contentChange');
+                }
+            });
+        }
         // call api
-        $.ajax({
-            url: root +'/element/getAllElementsAjax',
-            data: {
-                cateId: category,
-            },
-            dataType: 'json',
-            type: 'POST',
-            error: function() {
-                $('#info').html('<p>An error has occurred</p>');
-            },
-            success: function (data) {
-                var html = '';
-                html += '<div class="left-wrapper">';
-                $.each (data, function (index, value) {
-                    html += '<div class="box-left working-el" data-value="'+value.id+'"> <img class="img-show" src="data:image/png;base64,'+value.image+'"></div>';
-                });
-                $('#content-show').html(html);
-                $('#content-show').trigger('contentChange');
-            }
-        });
+
     }
 }
 // function add element to work section

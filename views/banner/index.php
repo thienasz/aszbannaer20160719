@@ -79,14 +79,32 @@
                     <li class="option submit_image" data-option="submit"><a href="#">submit</a></li>
                 </ul>
             </div>
+            <div id="notify">
+
+<!--                <div class="alert alert-info fade in">-->
+<!--                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>-->
+<!--                    <strong>Info!</strong> This alert box could indicate a neutral informative change or action.-->
+<!--                </div>-->
+<!--                <div class="alert alert-warning fade in">-->
+<!--                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>-->
+<!--                    <strong>Warning!</strong> This alert box could indicate a warning that might need attention.-->
+<!--                </div>-->
+<!--                <div class="alert alert-danger fade in">-->
+<!--                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>-->
+<!--                    <strong>Danger!</strong> This alert box could indicate a dangerous or potentially negative action.-->
+<!--                </div>-->
+            </div>
+
             <div class="working-box-wrapper  col-sm-8 col-sm-offset-2 no-padding">
                 <div class="inner-box">
                     <div class="working-inner-box">
                         <div class="box-hidden" id="box-hidden">
                         </div>
+
                     </div>
                 </div>
             </div>
+
 
         </div>
     </div>

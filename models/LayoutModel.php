@@ -19,9 +19,15 @@ class LayoutModel extends BaseModel
     }
     public function getLayoutById($Id)
     {
-        $els = $this->db->prepare("select * from detail_layouts as l INNER JOIN elements as e ON l.element_id = e.id where layout_id = " . $Id);
+        $els = $this->db->prepare("select * from detail_layouts as l INNER JOIN elements as e ON l.element_id = e.id  where layout_id = " . $Id . " ORDER BY l.zindex" );
         $els->execute();
         $els->setFetchMode(PDO::FETCH_ASSOC);
         return $els->fetchAll();
     }
-}
+    public function getLayoutLatest()
+    {
+        $els = $this->db->prepare("select * from layouts ORDER BY id DESC LIMIT 0,5 " );
+        $els->execute();
+        $els->setFetchMode(PDO::FETCH_ASSOC);
+        return $els->fetchAll();
+    }}

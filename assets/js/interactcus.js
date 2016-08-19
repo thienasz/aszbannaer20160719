@@ -277,8 +277,8 @@ function submitData() {
         array.push(layout);
     });
     console.log(array);
-// call api
     $.ajax({
+
         url: root +'/layout/saveDataLayout',
         data: {
             layouts: array,
@@ -290,7 +290,12 @@ function submitData() {
             $('#info').html('<p>An error has occurred</p>');
         },
         success: function (data) {
-
+            console.log(data)  ;
+            $('#notify').html('<div class="alert alert-success fade in"> ' +
+                '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a> ' +
+                '<strong>Thêm thành công!</strong>Xem ảnh tại   ' +
+                '<a href="layout/viewLayout/'+ data + '">   đây.. </a> ' +
+                '</div>') ;
         }
     });
 }
