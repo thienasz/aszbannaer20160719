@@ -19,7 +19,7 @@ function reset() {
         var category;
         category = active.data("value");
         console.log(category)  ;
-        if(category == 1){
+        if(category==1){
             $.ajax({
                 url: root +'/layout/getAllLayoutsAjax',
                 type: 'POST',
@@ -30,7 +30,7 @@ function reset() {
                 success: function (data) {
                      console.log(data);
                     var html = '';
-                    html += '<div class="left-wrapper">';
+                    html += '<div class="left-wrapper" >';
                     $.each (data, function (index, value) {
                         html += '<div class="box-left working-el" data-value="'+value.id+'"> <img class="img-show" src="data:image/png;base64,'+value.image+'"></div>';
                     });
@@ -38,7 +38,7 @@ function reset() {
                     $('#content-show').trigger('contentChange');
                 }
             });
-        } else {
+        } else if(category==2){
             $.ajax({
                 url: root +'/element/getAllElementsAjax',
                 data: {
@@ -52,14 +52,39 @@ function reset() {
                 success: function (data) {
                     console.log(data);
                     var html = '';
-                    html += '<div class="left-wrapper">';
+                    html += '<div class="left-wrapper" >';
                     $.each (data, function (index, value) {
-                        html += '<div class="box-left working-el" data-value="'+value.id+'"> <img class="img-show" src="data:image/png;base64,'+value.image+'"></div>';
+                        html += '<div class="box-left working-el"  data-value="'+value.id+'"> <img class="img-show" src="data:image/png;base64,'+value.image+'"></div>';
                     });
                     $('#content-show').html(html);
                     $('#content-show').trigger('contentChange');
                 }
             });
+        }
+        else{
+            {
+                $.ajax({
+                    url: root +'/element/getAllElementsAjax',
+                    data: {
+                        cateId: category,
+                    },
+                    dataType: 'json',
+                    type: 'POST',
+                    error: function() {
+                        $('#info').html('<p>An error has occurred</p>');
+                    },
+                    success: function (data) {
+                        console.log(data);
+                        var html = '';
+                        html += '<div class="left-wrapper" style="display: inline-flex; margin-left: 5px" >';
+                        $.each (data, function (index, value) {
+                            html += '<div class="box-left working-el"  style=" margin-right: 5px" data-value="'+value.id+'"> <img class="img-show" src="data:image/png;base64,'+value.image+'"></div>';
+                        });
+                        $('#content-show').html(html);
+                        $('#content-show').trigger('contentChange');
+                    }
+                });
+            }
         }
         // call api
 
