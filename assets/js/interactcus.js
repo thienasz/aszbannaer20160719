@@ -180,7 +180,7 @@ function drawText() {
 
     $(".editor").mousedown(function (e) {
         e.stopPropagation();
-        refreshBorder()
+        refreshBorder(e)
     }).keyup(function (e) {
         e.stopPropagation();
         refreshWidthHeight($(this));
