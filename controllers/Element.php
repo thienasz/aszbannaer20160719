@@ -42,4 +42,5 @@ class Element extends BaseController
         }
         return $link;
     }
+
 }

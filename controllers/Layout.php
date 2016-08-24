@@ -26,8 +26,19 @@ class Layout extends BaseController
         }
         echo json_encode($layouts);
     }
-    public function saveDataLayout() {
+    public function getLayoutAjax($Id = null)
+    {
+        $id = ($_POST['id']) ? $_POST['id'] : $Id;
+        $layout = $this->model->getLayoutById($id);
+        foreach ($layout as &$e){
+            $cate_id = (int)$e['category_id'] ;
+            $link = $this->getLink($e);
+            $e['image'] = covertImageToBase64($link, $e['type']);
+        }
 
+        echo json_encode($layout);
+    }
+    public function saveDataLayout() {
         $datas = $_POST['layouts'];
         $layout_id = $this->model->insertLayout($datas);
         echo $layout_id;
@@ -49,23 +60,35 @@ class Layout extends BaseController
         $outputImage = $background;
         foreach ($layout as $el) {
             $link = ROOT . '/images/backgrounds/' . $el['link'];
-            list($width, $height) = getimagesize($link);
-            $new_width = 580;
-            $new_height = 218;
+
+
             $type = $el['type'];
-            $image_p = imagecreatetruecolor($new_width, $new_height);
+
             if ($type == 'png') {
+                $new_width = 100;
+                $new_height = 100;
+                $link = ROOT . '/images/elements/png/' . $el['link'];
                 $image = imagecreatefrompng($link);
             }
             if ($type == 'jpg') {
+                $new_width = 580;
+                $new_height = 218;
+                $link = ROOT . '/images/backgrounds/' . $el['link'];
                 $image = imagecreatefromjpeg($link);
+            }
+            $image_p = imagecreatetruecolor($new_width, $new_height);
+            list($width, $height) = getimagesize($link);
+            imagealphablending($image_p, false);
+            imagesavealpha($image_p, true);
+            if ($type == 'png') {
+                $rotate =  $el['rotate'];
+            }
+            if ($type == 'jpg') {
+                $rotate =  180-$el['rotate'];
             }
             imagecopyresampled($image_p, $image, 0, 0, 0, 0, $new_width, $new_height, $width, $height);
 
-            imagealphablending($image_p, false);
-            imagesavealpha($image_p, true);
-
-            $rotation = imagerotate($image_p, 180 - $el['rotate'], imageColorAllocateAlpha($image_p, 0, 0, 0, 127));
+            $rotation = imagerotate($image_p, $rotate, imageColorAllocateAlpha($image_p, 0, 0, 0, 127));
 
             $this->imagecopymerge_alpha($outputImage, $rotation, $el['left'], $el['top'], 0, 0, $el['width'], $el['height'], 100); // merge with no background
 
@@ -107,6 +130,18 @@ class Layout extends BaseController
 
         // insert cut resource to destination image
         imagecopymerge($dst_im, $cut, $dst_x, $dst_y, 0, 0, $src_w, $src_h, $pct);
+    }
+    private function getLink($element) {
+        switch ($element['category_id']) {
+            case 3:
+                $link = 'images/elements/' . $element['type'] . '/' . $element['link'];
+                break;
+            case 2:
+            default :
+                $link = 'images/backgrounds/' . $element['link'];
+                break;
+        }
+        return $link;
     }
 
 

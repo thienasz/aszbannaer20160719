@@ -32,7 +32,7 @@ function reset() {
                     var html = '';
                     html += '<div class="left-wrapper" >';
                     $.each (data, function (index, value) {
-                        html += '<div class="box-left working-el" data-value="'+value.id+'"> <img class="img-show" src="data:image/png;base64,'+value.image+'"></div>';
+                        html += '<div class="box-left working-el" data-value="'+value.id+'" data-category="1"> <img class="img-show" src="data:image/png;base64,'+value.image+'"></div>';
                     });
                     $('#content-show').html(html);
                     $('#content-show').trigger('contentChange');
@@ -54,7 +54,7 @@ function reset() {
                     var html = '';
                     html += '<div class="left-wrapper" >';
                     $.each (data, function (index, value) {
-                        html += '<div class="box-left working-el"  data-value="'+value.id+'"> <img class="img-show" src="data:image/png;base64,'+value.image+'"></div>';
+                        html += '<div class="box-left working-el"  data-value="'+value.id+'" data-category="'+value.category_id+'"> <img class="img-show" src="data:image/png;base64,'+value.image+'"></div>';
                     });
                     $('#content-show').html(html);
                     $('#content-show').trigger('contentChange');
@@ -78,7 +78,7 @@ function reset() {
                         var html = '';
                         html += '<div class="left-wrapper" style="display: inline-flex; margin-left: 5px" >';
                         $.each (data, function (index, value) {
-                            html += '<div class="box-left working-el"  style=" margin-right: 5px" data-value="'+value.id+'"> <img class="img-show" src="data:image/png;base64,'+value.image+'"></div>';
+                            html += '<div class="box-left working-el"  style=" margin-right: 5px" data-value="'+value.id+'" data-category="'+value.category_id+'"> <img class="img-show" src="data:image/png;base64,'+value.image+'"></div>';
                         });
                         $('#content-show').html(html);
                         $('#content-show').trigger('contentChange');
@@ -96,41 +96,96 @@ function addToWorkSection() {
     var workEls = $('.working-el');
     workEls.click(function () {
         var workEl = $(this);
+        console.log(workEl.data);
         var id = workEl.data("value");
-        // call api
-        $.ajax({
-            url: root +'/element/getElementAjax',
-            data: {
-                id: id,
-            },
-            dataType: 'json',
-            type: 'POST',
-            error: function() {
-                $('#info').html('<p>An error has occurred</p>');
-            },
-            success: function (value) {
-                removeActiveEl();
-                //random number by time
-                var numberTime = new Date().valueOf();
-                var html = '';
-                // add content img
-                html += '<div class="img-handle img-handle-'+numberTime+'" data-value="'+value.id+'" element-active="true">' +
-                            ' <img class="img-box-set img-show h100 cursor-move" src="data:image/png;base64,'+value.image+'">' +
+        var cate_id =  workEl.data("category");
+        console.log(id) ;
+        console.log(cate_id) ;
+        if(cate_id == 1){
+            $.ajax({
+                url: root +'/layout/getLayoutAjax',
+                data: {
+                    id: id,
+                },
+                dataType: 'json',
+                type: 'POST',
+                error: function() {
+                    $('#info').html('<p>An error has occurred</p>');
+                },
+                success: function (data) {
+                    console.log(data);
+                    $.each (data, function (index,value){
+                        console.log(value) ;
+                        removeActiveEl();
+                        $('#working-box .working-inner-box .box-hidden').empty();
+                        var numberTime = new Date().valueOf();
+                        var html = '';
+                        // add content img
+                        html += '<div class="img-handle img-handle-'+numberTime+'" data-value="'+value.id+'" element-active="true" style="'+
+                            'top:' + value.top +
+                            'px;left:' + value.left +
+
+                            'px' +
+                            ';zindex:' + value.zindex +
+                            ';transform: rotate('+ value.rotate + 'deg)'+
+                            '" ><img class="img-box-set img-show h100 cursor-move" src="data:image/png;base64,'+value.image+'"></div>';
+                        $('#working-box .working-inner-box .box-hidden').append(html);
+                        //add border
+                        html = '<div class="border-box border-box-'+numberTime+' j-drag j-resize j-rotate"  data-value="'+numberTime+'"  data-type="'+value.category_id+'"  style="'+
+                            'top:' + value.top +
+                            'px;left:' + value.left +
+
+                            'px' +
+                            ';zindex:' + value.zindex +
+                            ';transform: rotate('+ value.rotate + 'deg)'+
+                            '" ></div>';
+                        $('#working-box .working-inner-box').append(html);
+
+                        $('#working-box').trigger('contentChange');
+
+                        //calculate zindex
+                        calculateZindex('new', numberTime)
+
+                        // console.log(info);
+                    })
+
+
+                }
+            });
+        }else {
+            $.ajax({
+                url: root +'/element/getElementAjax',
+                data: {
+                    id: id,
+                },
+                dataType: 'json',
+                type: 'POST',
+                error: function() {
+                    $('#info').html('<p>An error has occurred</p>');
+                },
+                success: function (value) {
+                    removeActiveEl();
+                    //random number by time
+                    var numberTime = new Date().valueOf();
+                    var html = '';
+                    // add content img
+                    html += '<div class="img-handle img-handle-'+numberTime+'" data-value="'+value.id+'" element-active="true">' +
+                        ' <img class="img-box-set img-show h100 cursor-move" src="data:image/png;base64,'+value.image+'">' +
                         '</div>';
-                $('#working-box .working-inner-box .box-hidden').append(html);
-                //add border
-                html = '<div class="border-box border-box-'+numberTime+' j-drag j-resize j-rotate"  data-value="'+numberTime+'"  data-type="'+value.category_id+'" ></div>';
-                $('#working-box .working-inner-box').append(html);
-                html = '<div class="position-box position-box-'+numberTime+'"></div>';
-                $('#working-box .working-inner-box').append(html);
-                $('#working-box').trigger('contentChange');
+                    $('#working-box .working-inner-box .box-hidden').append(html);
+                    //add border
+                    html = '<div class="border-box border-box-'+numberTime+' j-drag j-resize j-rotate"  data-value="'+numberTime+'"  data-type="'+value.category_id+'" ></div>';
+                    $('#working-box .working-inner-box').append(html);
 
-                //calculate zindex
-                calculateZindex('new', numberTime)
+                    $('#working-box').trigger('contentChange');
+                    console.log(info);
+                }
+            });
 
-                console.log(info);
-            }
-        });
+        }
+
+        // call api
+
     });
 }
 
