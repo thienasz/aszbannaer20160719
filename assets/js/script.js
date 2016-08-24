@@ -253,10 +253,19 @@ function initToolbarBootstrapBindings() {
     var fonts = ['Serif', 'Sans', 'Arial', 'Arial Black', 'Courier',
             'Courier New', 'Comic Sans MS', 'Helvetica', 'Impact', 'Lucida Grande', 'Lucida Sans', 'Tahoma', 'Times',
             'Times New Roman', 'Verdana'],
-        fontTarget = $('[title=Font]').siblings('.dropdown-menu');
-    $.each(fonts, function (idx, fontName) {
-        fontTarget.append($('<li><a data-edit="fontName ' + fontName + '" style="font-family:\'' + fontName + '\'">' + fontName + '</a></li>'));
-    });
+                fontTarget = $('[title=Font]').siblings('.dropdown-menu');
+            $.each(fonts, function (idx, fontName) {
+                fontTarget.append($('<li><a data-edit="fontName ' + fontName + '" style="font-family:\'' + fontName + '\'">' + fontName + '</a></li>'));
+                });
+
+            var fnts = ['1', '2', '3', '4', '5',
+                        '6', '7', '8', '9', '10', '11', '12', '13',
+                        '14', '15'],
+                    fntTarget = $('[title=FontSize]').siblings('.dropdown-menu');
+             $.each(fnts, function (size, fontSize) {
+                fntTarget.append($('<li><a data-edit="fontSize ' + fontSize + '" >' + fontSize + '</a></li>'));
+             });
+             
     var fontcolor = $('.colorpickerplus-dropdown .colorpickerplus-container');
     fontcolor.colorpickerembed();
     fontcolor.on('changeColor', function (e, color) {

@@ -26,12 +26,9 @@
                 </ul>
             </div>
             <div class="btn-group">
-                <a class="btn dropdown-toggle" data-toggle="dropdown" title="Font Size"><i class="icon-text-height" ></i>&nbsp;<b
+                <a class="btn dropdown-toggle" data-toggle="dropdown" title="FontSize"><i class="icon-text-height" ></i>&nbsp;<b
                         class="caret"></b></a>
                 <ul class="dropdown-menu">
-                    <li><a data-edit="fontSize 5"><font size="5">Huge</font></a></li>
-                    <li><a data-edit="fontSize 3"><font size="3">Normal</font></a></li>
-                    <li><a data-edit="fontSize 1"><font size="1">Small</font></a></li>
                 </ul>
             </div>
             <div class="btn-group">
@@ -87,12 +84,23 @@
     $(function () {
         function initToolbarBootstrapBindings() {
             var fonts = ['Serif', 'Sans', 'Arial', 'Arial Black', 'Courier',
-                        'Courier New', 'Comic Sans MS', 'Helvetica', 'Impact', 'Lucida Grande', 'Lucida Sans', 'Tahoma', 'Times',
-                        'Times New Roman', 'Verdana'],
-                    fontTarget = $('[title=Font]').siblings('.dropdown-menu');
+            'Courier New', 'Comic Sans MS', 'Helvetica', 'Impact', 'Lucida Grande', 'Lucida Sans', 'Tahoma', 'Times',
+            'Times New Roman', 'Verdana'],
+                fontTarget = $('[title=Font]').siblings('.dropdown-menu');
             $.each(fonts, function (idx, fontName) {
                 fontTarget.append($('<li><a data-edit="fontName ' + fontName + '" style="font-family:\'' + fontName + '\'">' + fontName + '</a></li>'));
-            });
+                });
+
+            var fnts = ['1', '2', '3', '4', '5',
+                        '6', '7', '8', '9', '10', '11', '12', '13',
+                        '14', '15'],
+                    fntTarget = $('[title=FontSize]').siblings('.dropdown-menu');
+             $.each(fnts, function (size, fontSize) {
+                fntTarget.append($('<li><a data-edit="fontSize ' + fontSize + '" >' + fontSize + '</a></li>'));
+             });
+
+             
+
             $('a[title]').tooltip({container: 'body'});
             $('.dropdown-menu input').click(function () {
                         return false;
