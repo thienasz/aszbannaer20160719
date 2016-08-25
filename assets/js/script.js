@@ -200,10 +200,11 @@ function addToWorkSection() {
 /**
  * calculate zindex
  */
-function calculateZindex(type, numberTime) {
+function calculateZindex(type, numberTime, text) {
 
     // get global z-index
     var activeEl = $('div[class*="-' + numberTime + '"]');
+    var textEl;
     switch (type){
         case 'new':
             if(info.zindex && info.zindex.length == 0){
@@ -211,7 +212,7 @@ function calculateZindex(type, numberTime) {
                 info.num[numberTime] = 0;
             } else {
                 info.num[numberTime] = info.zindex.length;
-                info.zindex.push(parseInt(info.zindex[info.num[numberTime] - 1]) + 1);
+                info.zindex.push(parseInt(info.zindex[info.num[numberTime] - 1]) + 2);
             }
             info.listNum.push(numberTime);
             info.num.length++;
@@ -219,6 +220,11 @@ function calculateZindex(type, numberTime) {
             break;
         case 'down':
             var upActiveEl = $('div[class*="-' + info.listNum[parseInt(info.num[numberTime]) - 1] + '"]');
+
+            textEl = info.listNum[parseInt(info.num[numberTime]) - 1];
+            if(typeof textEl == 'undefined') {
+                return false;
+            }
             // set css for el
             activeEl.css('z-index', info.zindex[info.num[numberTime] - 1]);
             upActiveEl.css('z-index', info.zindex[info.num[numberTime]]);
@@ -236,6 +242,10 @@ function calculateZindex(type, numberTime) {
             break;
         case 'up':
             var dowwnActiveEl = $('div[class*="-' + info.listNum[parseInt(info.num[numberTime]) + 1] + '"]');
+            textEl = info.listNum[parseInt(info.num[numberTime]) + 1];
+            if(typeof textEl == 'undefined') {
+                return false;
+            }
             activeEl.css('z-index', info.zindex[info.num[numberTime] + 1]);
             dowwnActiveEl.css('z-index', info.zindex[info.num[numberTime]]);
 
@@ -252,7 +262,15 @@ function calculateZindex(type, numberTime) {
         case 'delete':
             break;
     }
-    console.log(info);
+
+    var typeEl = $('.border-box-' + numberTime).first().data('type');
+    if(textEl && $('.border-box-' + textEl).first().data('type') == 4) {
+        numberTime = textEl;
+        typeEl = $('.border-box-' + numberTime).first().data('type');
+    }
+    if(text && text == 'text' || typeEl == 4) {
+        $('.img-handle-' + numberTime ).css('z-index', parseInt($('.border-box-' + numberTime ).first().css('z-index')) + 1);
+    }
 }
 
 /**

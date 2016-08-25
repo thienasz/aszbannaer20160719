@@ -65,6 +65,7 @@ function interactInit() {
     setWidthHeight();
     $('.border-box').mousedown(function (e) {
         e.stopPropagation();
+        $(':focus').blur();
         removeActiveEl();
         $('.img-handle-' + $(this).data('value')).attr('element-active', 'true');
         $(this).attr('element-active', 'true');
@@ -93,8 +94,11 @@ function refreshBorder(el) {
     if (el) {
 
     } else {
-        el = $('.border-box[element-active="true"]').first();
-
+        var temp;
+        temp = $('.text-handle[element-active="true"]').first();
+        el = $('.border-box-' + temp.data('value'));
+        el.attr('element-active', 'true');
+        
     }
     el.css('border', 'dashed 1px red');
     el.find('> .ui-resizable-handle').addClass('th-resize');
@@ -179,8 +183,12 @@ function drawText() {
     interactInit();
     $('.editor[element-active="true"]').wysiwyg();
 
+    calculateZindex('new', numberTime, 'text');
+
     $(".editor").mousedown(function (e) {
         e.stopPropagation();
+        removeActiveEl();
+        $(this).attr('element-active', 'true');
         refreshBorder()
     }).keyup(function (e) {
         e.stopPropagation();
