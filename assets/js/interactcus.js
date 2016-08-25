@@ -204,6 +204,9 @@ function setWidthHeight() {
             num = $(num);
             num1 = '.position-box-' + $(this).data('value');
             var type = $(this).data('type');
+            var cate = $(this).data('category');
+            console.log(cate) ;
+            console.log(num) ;
             switch (type){
                 case 4:
                     var text = num;
@@ -223,6 +226,18 @@ function setWidthHeight() {
                     if(iw > 100){
                         ih = ih * 100/iw;
                         iw = 100;
+                    }
+                    num.height(ih);
+                    num.width(iw);
+                    break;
+                case 2 :
+                    if(cate == 1){
+                        iw= num.css('width');
+                        ih = num.css('height');
+                    }
+                    if(cate == 0){
+                        iw = 580;
+                        ih= 218;
                     }
                     num.height(ih);
                     num.width(iw);
@@ -271,12 +286,15 @@ function submitData() {
         layout.element_id = handle.data('value');
         layout.top = handle.position().top;
         layout.left = handle.position().left;
+        layout.top_real = handle.css('top') ;
+        layout.left_real = handle.css('left') ;
+        console.log(handle.css('top'));
         layout.width_real = handle.width();
         layout.height_real = handle.height();
         layout.width = handle.width()*Math.cos(x) + handle.height()*Math.sin(x);
         layout.height = handle.width()*Math.sin(x) + handle.height()*Math.cos(x);
         layout.type = type;
-        layout.zindex = handle.css('z-index');2
+        layout.zindex = handle.css('z-index');
         array.push(layout);
     });
     console.log(array);

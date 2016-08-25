@@ -59,21 +59,15 @@ class Layout extends BaseController
         imagefill($background,0,0,$whiteBackground);
         $outputImage = $background;
         foreach ($layout as $el) {
-            //$link = ROOT . '/images/backgrounds/' . $el['link'];
-
 
             $type = $el['type'];
-
+            $link = $this->getLink($el);
+            $new_width = $el['width_real'];
+            $new_height = $el['height_real'];
             if ($type == 'png') {
-                $new_width = $el['width_real'];
-                $new_height = $el['height_real'];
-                $link = ROOT . '/images/elements/png/' . $el['link'];
                 $image = imagecreatefrompng($link);
             }
             if ($type == 'jpg') {
-                $new_width = $el['width_real'];
-                $new_height = $el['height_real'];
-                $link = ROOT . '/images/backgrounds/' . $el['link'];
                 $image = imagecreatefromjpeg($link);
             }
             $image_p = imagecreatetruecolor($new_width, $new_height);
@@ -81,7 +75,7 @@ class Layout extends BaseController
             imagealphablending($image_p, false);
             imagesavealpha($image_p, true);
             if ($type == 'png') {
-                $rotate =  $el['rotate'];
+                $rotate =  360-$el['rotate'];
             }
             if ($type == 'jpg') {
                 $rotate =  180-$el['rotate'];
@@ -90,7 +84,7 @@ class Layout extends BaseController
 
             $rotation = imagerotate($image_p, $rotate, imageColorAllocateAlpha($image_p, 0, 0, 0, 127));
 
-            $this->imagecopymerge_alpha($outputImage, $rotation, $el['left'], $el['top'], 0, 0, $el['width'], $el['height'], 100); // merge with no background
+            $this->imagecopymerge_alpha($outputImage, $rotation, $el['left'], $el['top'], 0, 0, abs($el['width']), abs($el['height']), 100); // merge with no background
 
         }
         return $outputImage;

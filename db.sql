@@ -129,3 +129,10 @@ INSERT INTO `layouts` VALUES ('17', 'th', null);
 INSERT INTO `layouts` VALUES ('18', 'th', null);
 INSERT INTO `layouts` VALUES ('19', 'th', null);
 INSERT INTO `layouts` VALUES ('20', 'th', null);
+
+
+ALTER TABLE `detail_layouts` ADD `width_real` FLOAT NULL DEFAULT NULL AFTER `height`;
+ALTER TABLE `detail_layouts` ADD `height_real` FLOAT NULL DEFAULT NULL AFTER `height`;
+ALTER TABLE `detail_layouts` ADD `top_real` INT DEFAULT NULL AFTER `left`;
+ALTER TABLE `detail_layouts` ADD `left_real` INT DEFAULT NULL AFTER `left`;
+

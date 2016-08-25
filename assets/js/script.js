@@ -128,29 +128,30 @@ function addToWorkSection() {
                         var html = '';
                         // add content img
                         html += '<div class="img-handle img-handle-'+numberTime+'" data-value="'+value.id+'" element-active="true" style="'+
-                            'top:' + value.top + 'px;' +
-                            'left:' + value.left + 'px;' +
-                            'width:' + value.width_real + 'px;' +
-                            'height:' + value.height_real + 'px;' +
-                            'zindex:' + value.zindex +
+                            'top: ' + value.top_real + 'px;' +
+                            'left: ' + value.left_real + 'px;' +
+                            'width: ' + value.width_real + 'px;' +
+                            'height: ' + value.height_real + 'px;' +
+                            'z-index: ' + value.zindex +
                             ';transform: rotate('+ value.rotate + 'deg)'+
                             '" ><img class="img-box-set img-show h100 cursor-move" src="data:image/png;base64,'+value.image+'"></div>';
+                        //console.log(html);
                         $('#working-box .working-inner-box .box-hidden').append(html);
                         //add border
-                        html = '<div class="border-box border-box-'+numberTime+' j-drag j-resize j-rotate"  data-value="'+numberTime+'"  data-type="'+value.category_id+'"  style="'+
-                            'top:' + value.top + 'px;' +
-                            'left:' + value.left + 'px;' +
+                        html = '<div class="border-box border-box-'+numberTime+' j-drag j-resize j-rotate"  data-value="'+numberTime+'"  data-type="'+value.category_id+'" data-category="1" style="'+
+                            'top:' + value.top_real + 'px;' +
+                            'left:' + value.left_real + 'px;' +
                             'width:' + value.width_real + 'px;' +
                             'height:' + value.height_real + 'px;' +
-                            'zindex:' + value.zindex +
+                            'z-index:' + value.zindex +
                             ';transform: rotate('+ value.rotate + 'deg)'+
-                            '" ></div>';
+                            '"></div>';
                         $('#working-box .working-inner-box').append(html);
 
                         $('#working-box').trigger('contentChange');
 
                         //calculate zindex
-                        calculateZindex('new', numberTime)
+                        calculateZindex('new', numberTime);
 
                         // console.log(info);
                     })
@@ -175,22 +176,16 @@ function addToWorkSection() {
                     var numberTime = new Date().valueOf();
                     var html = '';
                     // add content img
-                    if(value.type== 'png'|| value.type =='jpg'){
-                        html += '<div class="img-handle img-handle-'+numberTime+'" data-value="'+value.id+'" element-active="true">' +
-                            ' <img class="img-box-set img-show h100 cursor-move" src="data:image/png;base64,'+value.image+'">' +
-                            '</div>';
-                    }else{
-                        html += '<div class="img-handle img-handle-'+numberTime+'" data-value="'+value.id+'" element-active="true" style="width: 120px; height: 120px; z-index: 100">' +
-                            ' <div  class="img-box-set1 img-show h100 cursor-move" style="height: 120px; width: 120px" ' +value.image+ '</div>'+
-                            '</div>';
-                    }
+                    html += '<div class="img-handle img-handle-'+numberTime+'" data-value="'+value.id+'" element-active="true">' +
+                        ' <img class="img-box-set img-show h100 cursor-move" src="data:image/png;base64,'+value.image+'">' +
+                        '</div>';
                     $('#working-box .working-inner-box .box-hidden').append(html);
                     //add border
-                    html = '<div class="border-box border-box-'+numberTime+' j-drag j-resize j-rotate"  data-value="'+numberTime+'"  data-type="'+value.category_id+'" ></div>';
+                    html = '<div class="border-box border-box-'+numberTime+' j-drag j-resize j-rotate"  data-value="'+numberTime+'"  data-type="'+value.category_id+'" data-category="0"></div>';
                     $('#working-box .working-inner-box').append(html);
 
                     $('#working-box').trigger('contentChange');
-                    calculateZindex('new', numberTime)
+                    calculateZindex('new', numberTime);
                     console.log(info);
                 }
             });
