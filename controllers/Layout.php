@@ -91,14 +91,14 @@ class Layout extends BaseController
     }
 
     function testRotate() {
-        $x = 808;
-        $y = 377;
+        $x = 1000;
+        $y = 1000;
         $background = imagecreatetruecolor($x, $y);
         $red = imagecolorallocate($background, 255, 0, 0);
         imagefill($background,0,0,$red);
 //        imagepng($background, $background);
-        $link = "C:/xampp/htdocs/aszbannaer20160719/images/backgrounds/bg5.jpg";
-        $source = imagecreatefromjpeg ($link);
+        $link ='C:\AppServ\www\banner\images\elements\png\boy.png';
+        $source = imagecreatefrompng ($link);
         imagealphablending($source, false);
         imagesavealpha($source, true);
 
@@ -107,12 +107,16 @@ class Layout extends BaseController
         $this->imagecopymerge_alpha($background, $rotation, 0,0,0,0, $x, $y, 100); // merge with no background
 
         header('Content-type: image/png');
-        imagepng($background, null);
+        imagepng($background);
         imagedestroy($source);
         imagedestroy($rotation);
     }
 
-    function imagecopymerge_alpha($dst_im, $src_im, $dst_x, $dst_y, $src_x, $src_y, $src_w, $src_h, $pct){
+    function imagecopymerge_alpha(&$dst_im, $src_im, $dst_x, $dst_y, $src_x, $src_y, $src_w, $src_h, $pct){
+        // reset width height @todo check why width and height be changed
+        $src_w = imagesx($src_im);
+        $src_h = imagesy($src_im);
+
         // creating a cut resource
         $cut = imagecreatetruecolor($src_w, $src_h);
 
@@ -123,7 +127,7 @@ class Layout extends BaseController
         imagecopy($cut, $src_im, 0, 0, $src_x, $src_y, $src_w, $src_h);
 
         // insert cut resource to destination image
-        imagecopymerge($dst_im, $cut, $dst_x, $dst_y, 0, 0, $src_w, $src_h, $pct);
+        imagecopymerge($dst_im, $cut, $dst_x, $dst_y, 0, 0, $src_w , $src_h , $pct);
     }
     private function getLink($element) {
         switch ($element['category_id']) {
