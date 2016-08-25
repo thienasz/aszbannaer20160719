@@ -99,9 +99,10 @@ function addToWorkSection() {
         console.log(workEl.data);
         var id = workEl.data("value");
         var cate_id =  workEl.data("category");
-        console.log(id) ;
-        console.log(cate_id) ;
+
         if(cate_id == 1){
+            $('.border-box').remove();
+            $('.img-handle').remove();
             $.ajax({
                 url: root +'/layout/getLayoutAjax',
                 data: {
@@ -117,26 +118,26 @@ function addToWorkSection() {
                     $.each (data, function (index,value){
                         console.log(value) ;
                         removeActiveEl();
-                        $('#working-box .working-inner-box .box-hidden').empty();
+
                         var numberTime = new Date().valueOf();
                         var html = '';
                         // add content img
                         html += '<div class="img-handle img-handle-'+numberTime+'" data-value="'+value.id+'" element-active="true" style="'+
-                            'top:' + value.top +
-                            'px;left:' + value.left +
-
-                            'px' +
-                            ';zindex:' + value.zindex +
+                            'top:' + value.top + 'px;' +
+                            'left:' + value.left + 'px;' +
+                            'width:' + value.width_real + 'px;' +
+                            'height:' + value.height_real + 'px;' +
+                            'zindex:' + value.zindex +
                             ';transform: rotate('+ value.rotate + 'deg)'+
                             '" ><img class="img-box-set img-show h100 cursor-move" src="data:image/png;base64,'+value.image+'"></div>';
                         $('#working-box .working-inner-box .box-hidden').append(html);
                         //add border
                         html = '<div class="border-box border-box-'+numberTime+' j-drag j-resize j-rotate"  data-value="'+numberTime+'"  data-type="'+value.category_id+'"  style="'+
-                            'top:' + value.top +
-                            'px;left:' + value.left +
-
-                            'px' +
-                            ';zindex:' + value.zindex +
+                            'top:' + value.top + 'px;' +
+                            'left:' + value.left + 'px;' +
+                            'width:' + value.width_real + 'px;' +
+                            'height:' + value.height_real + 'px;' +
+                            'zindex:' + value.zindex +
                             ';transform: rotate('+ value.rotate + 'deg)'+
                             '" ></div>';
                         $('#working-box .working-inner-box').append(html);
@@ -178,6 +179,7 @@ function addToWorkSection() {
                     $('#working-box .working-inner-box').append(html);
 
                     $('#working-box').trigger('contentChange');
+                    calculateZindex('new', numberTime)
                     console.log(info);
                 }
             });
@@ -193,6 +195,7 @@ function addToWorkSection() {
  * calculate zindex
  */
 function calculateZindex(type, numberTime) {
+
     // get global z-index
     var activeEl = $('div[class*="-' + numberTime + '"]');
     switch (type){

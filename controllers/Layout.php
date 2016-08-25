@@ -59,20 +59,20 @@ class Layout extends BaseController
         imagefill($background,0,0,$whiteBackground);
         $outputImage = $background;
         foreach ($layout as $el) {
-            $link = ROOT . '/images/backgrounds/' . $el['link'];
+            //$link = ROOT . '/images/backgrounds/' . $el['link'];
 
 
             $type = $el['type'];
 
             if ($type == 'png') {
-                $new_width = 100;
-                $new_height = 100;
+                $new_width = $el['width_real'];
+                $new_height = $el['height_real'];
                 $link = ROOT . '/images/elements/png/' . $el['link'];
                 $image = imagecreatefrompng($link);
             }
             if ($type == 'jpg') {
-                $new_width = 580;
-                $new_height = 218;
+                $new_width = $el['width_real'];
+                $new_height = $el['height_real'];
                 $link = ROOT . '/images/backgrounds/' . $el['link'];
                 $image = imagecreatefromjpeg($link);
             }

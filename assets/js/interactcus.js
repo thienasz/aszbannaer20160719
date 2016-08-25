@@ -39,6 +39,7 @@ function interactInit() {
                 drawBoxOpacity($(this), elOpacity);
                 break;
             case 'up':
+                console.log("dsvsa");
                 calculateZindex('up', $(".border-box[element-active='true']").data('value'));
                 break;
             case 'down':
@@ -180,7 +181,7 @@ function drawText() {
 
     $(".editor").mousedown(function (e) {
         e.stopPropagation();
-        refreshBorder(e)
+        refreshBorder()
     }).keyup(function (e) {
         e.stopPropagation();
         refreshWidthHeight($(this));
@@ -270,6 +271,8 @@ function submitData() {
         layout.element_id = handle.data('value');
         layout.top = handle.position().top;
         layout.left = handle.position().left;
+        layout.width_real = handle.width();
+        layout.height_real = handle.height();
         layout.width = handle.width()*Math.cos(x) + handle.height()*Math.sin(x);
         layout.height = handle.width()*Math.sin(x) + handle.height()*Math.cos(x);
         layout.type = type;

@@ -49,6 +49,8 @@ CREATE TABLE `detail_layouts` (
   `created` varchar(255) DEFAULT NULL,
   `width` float DEFAULT NULL,
   `height` float DEFAULT NULL,
+  `width_real` float DEFAULT NULL,
+  `height_real` float DEFAULT NULL,
   `layout_id` bigint(10) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8;
