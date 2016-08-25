@@ -105,6 +105,15 @@ a:hover {
 .img-show {
     width: 100%;
 }
+.img-show-element{
+    width: 144.83px;
+    height: 144.83px;
+}
+.img-show-svg{
+    width: 144.83px;
+    height: 144.83px;
+}
+
 #slider_UI{
     width: 300px;
     height: 70px;
@@ -116,14 +125,14 @@ a:hover {
     height: 100%;
 }
 .box-left {
-    margin: 5px 0;
+    margin-bottom: 10px;
     border: 1px rgba(255, 255, 255, .15);
     border-style: dashed;
 
 }
 .box-left:hover{
 
-    box-shadow: 0 0 50px #e5e5e5,0 0 40px rgba(255,255,255,0.3),0 0 30px rgba(255,255,255,0.3),0 0 20px rgba(255,255,255,0.3);
+    box-shadow: 0 0 50px #e5e5e5,0 0 50px rgba(255,255,255,0.3),0 0 50px rgba(255,255,255,0.3),0 0 50px rgba(255,255,255,0.3);
 }
 .cursor-move {
     cursor: move;

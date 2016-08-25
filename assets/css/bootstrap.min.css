@@ -85,7 +85,9 @@ img {
 }
 
 svg:not(:root) {
-    overflow: hidden
+    overflow: hidden;
+    width: 144.83px;
+    height: 147px;
 }
 
 figure {

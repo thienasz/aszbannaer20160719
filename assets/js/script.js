@@ -76,9 +76,14 @@ function reset() {
                     success: function (data) {
                         console.log(data);
                         var html = '';
-                        html += '<div class="left-wrapper" style="display: inline-flex; margin-left: 5px" >';
+                        html += '<div class="left-wrapper" style="margin-top: 10px" >';
                         $.each (data, function (index, value) {
-                            html += '<div class="box-left working-el"  style=" margin-right: 5px" data-value="'+value.id+'" data-category="'+value.category_id+'"> <img class="img-show" src="data:image/png;base64,'+value.image+'"></div>';
+                            if(value.type == 'png' || value.type== 'jpg') {
+                                html += '<div class="box-left working-el" style="width: 47%;float: left;margin-left: 8px"   data-value="' + value.id + '" data-category="' + value.category_id + '"> <img class="img-show" src="data:image/png;base64,' + value.image + '"></div>';
+                            }else{
+                                html += '<div class="box-left working-el"  style=" width: 146.83px; height: 147px;margin-left: 8px; width: 47%;float: left;" data-value="' + value.id + '" data-category="' + value.category_id + '"><div class ="img-show-svg" ' + value.image + '</div>'+'</div>';
+
+                            }
                         });
                         $('#content-show').html(html);
                         $('#content-show').trigger('contentChange');

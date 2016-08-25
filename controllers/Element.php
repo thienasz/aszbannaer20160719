@@ -17,7 +17,12 @@ class Element extends BaseController
         $cateId = ($_POST['cateId']) ? $_POST['cateId'] : $cateId;
         $elements = $this->model->getAllElementByCategory($cateId);
         foreach ($elements as &$element){
-            $element['image'] = covertImageToBase64($this->getLinkElement($element), $element['type']);
+            if($element['type']=='svg'){
+                $link= 'images/elements/svg/' . $element['link'];
+                $element['image'] = file_get_contents($link);
+            }else{
+                $element['image'] = covertImageToBase64($this->getLinkElement($element), $element['type']);
+            }
         }
         echo json_encode($elements);
     }
@@ -42,5 +47,4 @@ class Element extends BaseController
         }
         return $link;
     }
-
 }
