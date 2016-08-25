@@ -30,8 +30,12 @@ class Element extends BaseController
     {
         $id = ($_POST['id']) ? $_POST['id'] : $Id;
         $element = $this->model->getElementById($id);
-        $link = $this->getLinkElement($element);
-        $element['image'] = covertImageToBase64($link, $element['type']);
+        if($element['type']=='svg'){
+            $link= 'images/elements/svg/' . $element['link'];
+            $element['image'] = file_get_contents($link);
+        }else{
+            $element['image'] = covertImageToBase64($this->getLinkElement($element), $element['type']);
+        }
         echo json_encode($element);
     }
 
