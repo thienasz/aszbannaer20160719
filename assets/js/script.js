@@ -78,11 +78,10 @@ function reset() {
                         var html = '';
                         html += '<div class="left-wrapper" style="margin-top: 10px" >';
                         $.each (data, function (index, value) {
-                            console.log(value);
                             if(value.type == 'png' || value.type== 'jpg') {
                                 html += '<div class="box-left working-el" style="width: 47%;float: left;margin-left: 8px"   data-value="' + value.id + '" data-category="' + value.category_id + '"> <img class="img-show" src="data:image/png;base64,' + value.image + '"></div>';
                             }else{
-                                html += '<div class="box-left working-el"  style=" width: 146.83px; height: 147px;margin-left: 8px; width: 47%;float: left;" data-value="' + value.id + '" data-category="' + value.category_id + '"><div class ="img-show-svg" ' + value.image + '</div>'+'</div>';
+                                html += '<div class="box-left working-el"  style=" width: 146.83px; height: 147px;margin-left: 8px; width: 47%;float: left;" data-value="' + value.id + '" data-category="' + value.category_id + '"><div class ="img-show-svg" >' + value.image + '</div>'+'</div>';
 
                             }
                         });
@@ -171,30 +170,24 @@ function addToWorkSection() {
                     $('#info').html('<p>An error has occurred</p>');
                 },
                 success: function (value) {
-                    console.log(value);
                     removeActiveEl();
                     //random number by time
                     var numberTime = new Date().valueOf();
                     var html = '';
                     // add content img
-                    if(value.type== 'png' || value.type == 'jpg'){
+                    if(value.type== 'png'|| value.type =='jpg'){
                         html += '<div class="img-handle img-handle-'+numberTime+'" data-value="'+value.id+'" element-active="true">' +
                             ' <img class="img-box-set img-show h100 cursor-move" src="data:image/png;base64,'+value.image+'">' +
                             '</div>';
                     }else{
-                        html += '<div class="img-handle img-handle-'+numberTime+'" data-value="'+value.id+'" element-active="true">' +
-                            value.image +
+                        html += '<div class="img-handle img-handle-'+numberTime+'" data-value="'+value.id+'" element-active="true" style="width: 120px; height: 120px; z-index: 100">' +
+                            ' <div  class="img-box-set1 img-show h100 cursor-move" style="height: 120px; width: 120px" ' +value.image+ '</div>'+
                             '</div>';
                     }
-
                     $('#working-box .working-inner-box .box-hidden').append(html);
                     //add border
-                    if(value.type== 'png' || value.type == 'jpg') {
-                        html = '<div class="border-box border-box-' + numberTime + ' j-drag j-resize j-rotate"  data-value="' + numberTime + '"  data-type="' + value.category_id + '" ></div>';
-                    }else{
-                        html = '<div class="border-box border-box-' + numberTime + ' j-drag j-resize j-rotate"  data-value="' + numberTime + '"  data-type="' + value.category_id + '" ></div>';
-                    }
-                        $('#working-box .working-inner-box').append(html);
+                    html = '<div class="border-box border-box-'+numberTime+' j-drag j-resize j-rotate"  data-value="'+numberTime+'"  data-type="'+value.category_id+'" ></div>';
+                    $('#working-box .working-inner-box').append(html);
 
                     $('#working-box').trigger('contentChange');
                     calculateZindex('new', numberTime)
