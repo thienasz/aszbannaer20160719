@@ -172,10 +172,8 @@ function drawText() {
     removeActiveEl();
     var numberTime = new Date().valueOf();
     var html = '';
-    html = '<div class="text-handle editor text-box-set  img-handle-' + numberTime + ' " data-value="' + numberTime + '" element-active="true">' +
-        '<p>' +
-        'Text' +
-        '</p>'
+    html = '<div class="text-handle editor text-box-set  img-handle-' + numberTime + ' " data-value="' + numberTime + '" element-active="true">' + 
+        '<div class="">' + 'Text' + '</div>'+
     '</div>';
     $('#box-hidden').append(html);
     html = '<div class="border-box border-box-' + numberTime + ' j-drag j-rotate j-resize" data-value="' + numberTime + '"  data-type="4"  element-active="true"></div>';

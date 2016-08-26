@@ -296,8 +296,7 @@ function initToolbarBootstrapBindings() {
                 });
 
             var fnts = ['1', '2', '3', '4', '5',
-                        '6', '7', '8', '9', '10', '11', '12', '13',
-                        '14', '15'],
+                        '6', '7'],
                     fntTarget = $('[title=FontSize]').siblings('.dropdown-menu');
              $.each(fnts, function (size, fontSize) {
                 fntTarget.append($('<li><a data-edit="fontSize ' + fontSize + '" >' + fontSize + '</a></li>'));

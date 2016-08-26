@@ -348,3 +348,8 @@ a:hover {
     margin-left: -4px;
     margin-right: 0px;
 }
+ul.scrollfont{
+    width: 148px;
+    height: 81px;
+    overflow-y: auto;
+}

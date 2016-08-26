@@ -13,7 +13,7 @@
     <div class="btn-toolbar" data-role="editor-toolbar" data-target="#editor">
         <div class="btn-group">
             <a class="btn dropdown-toggle" data-toggle="dropdown" title="Font" data-original-title="Font"><i class="fa fa-font"></i><b class="caret"></b></a>
-            <ul class="dropdown-menu">
+            <ul class="dropdown-menu scrollfont">
             </ul>
         </div>
         <div class="btn-group">
@@ -54,11 +54,6 @@
             </div>
             <a class="btn" data-edit="unlink" title="" data-original-title="Remove Hyperlink"><i class="fa fa-cut"></i></a>
 
-        </div>
-
-        <div class="btn-group">
-            <a class="btn" data-edit="undo" title="" data-original-title="Undo (Ctrl/Cmd+Z)"><i class="fa fa-undo"></i></a>
-            <a class="btn" data-edit="redo" title="" data-original-title="Redo (Ctrl/Cmd+Y)"><i class="fa fa-repeat"></i></a>
         </div>
         <input type="text" data-edit="inserttext" id="voiceBtn" x-webkit-speech="" style="display: none;">
     </div>
