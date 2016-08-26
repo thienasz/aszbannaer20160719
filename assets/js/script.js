@@ -176,12 +176,22 @@ function addToWorkSection() {
                     var numberTime = new Date().valueOf();
                     var html = '';
                     // add content img
-                    html += '<div class="img-handle img-handle-'+numberTime+'" data-value="'+value.id+'" element-active="true">' +
-                        ' <img class="img-box-set img-show h100 cursor-move" src="data:image/png;base64,'+value.image+'">' +
-                        '</div>';
+                    if(value.type == 'png' || value.type =='jpg') {
+                        html += '<div class="img-handle img-handle-' + numberTime + '" data-value="' + value.id + '" element-active="true">' +
+                            ' <img class="img-box-set img-show h100 cursor-move" src="data:image/png;base64,' + value.image + '">' +
+                            '</div>';
+                    }else{
+                        html += '<div class="img-svg img-handle img-handle-' + numberTime + '" data-value="' + value.id + '" element-active="true">' +
+                            ' <div class="img-box-set img-show img-show-svg h100 cursor-move" >' + value.image +
+                            '</div></div>';
+                    }
                     $('#working-box .working-inner-box .box-hidden').append(html);
                     //add border
-                    html = '<div class="border-box border-box-'+numberTime+' j-drag j-resize j-rotate"  data-value="'+numberTime+'"  data-type="'+value.category_id+'" data-category="0"></div>';
+                    if(value.type == 'png'|| value.type == 'jpg') {
+                        html = '<div class="border-box border-box-' + numberTime + ' j-drag j-resize j-rotate"  data-value="' + numberTime + '"  data-type="' + value.category_id + '" data-category="0"></div>';
+                    }else{
+                        html = '<div class="border-box-svg border-box border-box-' + numberTime + ' j-drag j-resize j-rotate"  data-value="' + numberTime + '"  data-type="' + value.category_id + '" data-category="0"></div>';
+                    }
                     $('#working-box .working-inner-box').append(html);
 
                     $('#working-box').trigger('contentChange');

@@ -113,6 +113,24 @@ a:hover {
     width: 144.83px;
     height: 144.83px;
 }
+.img-svg{
+    width: 120px !important;
+    height: 120px !important;
+    z-index: 20  !important;
+}
+.img-box-set svg{
+    width: 100px;
+    height: 100px;
+}
+.img-show-svg{
+    width: 100px;
+    height: 100px;
+}
+.border-box-svg{
+    width: 100px !important;
+    height: 100px !important;
+    z-index: 20  !important;
+}
 
 #slider_UI{
     width: 300px;
