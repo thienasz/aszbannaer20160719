@@ -65,7 +65,7 @@
     <div class="working-wrapper text-center">
         <div class="working-box" id="working-box">
             <div class="menu menu-fix menu-option small-menu z-show">
-                <ul class="">
+                <ul class="menu">
                     <li class="option" data-option="text"><a href="#">text</a></li>
                     <li class="option" data-option="color"><a href="#">color</a></li>
                     <li class="option" data-option="opacity"><a href="#">opacity</a></li>
