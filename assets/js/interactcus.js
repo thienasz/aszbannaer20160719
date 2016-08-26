@@ -232,6 +232,9 @@ function setWidthHeight() {
                     if(iw > 100){
                         ih = ih * 100/iw;
                         iw = 100;
+                    }else{
+                        ih = 100;
+                        iw = 100;
                     }
                     num.height(ih);
                     num.width(iw);

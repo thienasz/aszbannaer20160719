@@ -83,13 +83,6 @@ sub {
 img {
     border: 0
 }
-
-svg:not(:root) {
-    overflow: hidden;
-    width: 144.83px;
-    height: 147px;
-}
-
 figure {
     margin: 1em 40px
 }
