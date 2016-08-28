@@ -146,7 +146,7 @@ function addToWorkSection() {
                                 html += '<font size="' +
                                     Math.round(parseInt(text.font_size)/7) +
                                     '" color="' +
-                                    text.color +
+                                    rgbToHex(text.color) +
                                     '">' +
                                     text.content +
                                     '</font>';

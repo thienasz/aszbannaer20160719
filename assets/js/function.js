@@ -38,3 +38,15 @@ function getParamas(el, times) {
     console.log(1111);
     return obj;
 }
+
+function rgbToHex(rgb) {
+    rgb = rgb.substring(4, rgb.length-1)
+        .replace(/ /g, '')
+        .split(',');
+    var b = rgb.map(function(x){             //For each array element
+        x = parseInt(x).toString(16);      //Convert to a base16 string
+        return (x.length==1) ? "0"+x : x;  //Add zero if we get only one character
+    })
+    b = "#"+b.join("");
+    return b;
+}
