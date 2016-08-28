@@ -341,6 +341,19 @@ function submitData() {
                         });
                     }
                 });
+            } else {
+                //default
+                elTemp = {};
+                elTemp.content = handle.find('.text-content').text();
+                elTemp.color = handle.find('.text-content').css('color');
+                elTemp.font_family = handle.find('.text-content').css('font-family');
+                elTemp.font_size = handle.find('.text-content').css('font-size');
+                elTemp.font_weight = handle.find('.text-content').css('font-weight');
+                elTemp.font_style = handle.find('.text-content').css('font-style');
+                elTemp.top = handle.find('.text-content').position().top;
+                elTemp.left = handle.find('.text-content').position().left;
+
+                layout.text.push(elTemp);
             }
         }
         array.push(layout);

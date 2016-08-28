@@ -139,14 +139,15 @@ class Layout extends BaseController
         $col=imageColorAllocateAlpha($im, 0, 0, 0, 127);
         imagefilledrectangle($im,0,0,($temp_layout['width_real']+ 20)*$times, ($temp_layout['height_real']+ 20)*$times,$col);
 
-        $left = $texts[0]['left']+10;
-        $top = 50;
+        $left = $texts[0]['left']+12;
 
         $maxFont = (int)$texts[0]['font_size'];
 
         foreach ($texts as $text) {
-            if((int)$texts[0]['font_size'] > $maxFont) {
-                $maxFont = (int)$texts[0]['font_size'];
+            $top = (int)$text['font_size'] + 10;
+
+            if((int)$text['font_size'] > $maxFont) {
+                $maxFont = (int)$text['font_size'];
             }
             $font = $this->getFontPath($text);
             $s_color = $text['color'];
@@ -157,10 +158,12 @@ class Layout extends BaseController
             $font_size = (int)$text['font_size']*0.75;
             $bbox = imagettfbbox($font_size, 0, $font, $text['content']);
 
-            if(($left+$bbox[4])*$times > ($temp_layout['width_real'])*$times) {
-                $left = $texts[0]['left']+10;
-                $top = $maxFont + 50;
-
+            /**
+             * @todo: need check with break word case
+             */
+            if(($left+$bbox[4])*$times > ($temp_layout['width_real']+ 20)*$times) {
+                $left = $texts[0]['left']+12;
+                $top = ($maxFont + 10)*$times;
             }
             imagettftext($im, $font_size*$times, 0, $left*$times, $top*$times, $color, $font, $text['content']);
             $left += $bbox[4];
