@@ -173,7 +173,7 @@ a:hover {
     z-index: 10;
 }
 .text-handle {
-    z-index: 111;
+    position: absolute;
 }
 .no-padding {
     padding: 0;

@@ -108,6 +108,7 @@ function addToWorkSection() {
         if(cate_id == 1){
             $('.border-box').remove();
             $('.img-handle').remove();
+            $('.text-handle').remove();
             $.ajax({
                 url: root +'/layout/getLayoutAjax',
                 data: {
@@ -121,21 +122,49 @@ function addToWorkSection() {
                 success: function (data) {
                     console.log(data);
                     $.each (data, function (index,value){
-                        console.log(value) ;
+
                         removeActiveEl();
 
                         var numberTime = new Date().valueOf();
                         var html = '';
                         // add content img
-                        html += '<div class="img-handle img-handle-'+numberTime+'" data-value="'+value.id+'" element-active="true" style="'+
+                        if(value.type == 'text') {
+                            html += '<div class="text-handle editor text-box-set img-handle-'+numberTime+'" data-value="'+numberTime+'" element-active="true" style="'+
                             'top: ' + value.top_real + 'px;' +
                             'left: ' + value.left_real + 'px;' +
                             'width: ' + value.width_real + 'px;' +
                             'height: ' + value.height_real + 'px;' +
                             'z-index: ' + value.zindex +
                             ';transform: rotate('+ value.rotate + 'deg)'+
-                            '" ><img class="img-box-set img-show h100 cursor-move" src="data:image/png;base64,'+value.image+'"></div>';
-                        //console.log(html);
+                            '" contenteditable="true">' +
+                            '<div class="text-content">';
+                            $.each(value.text, function (index, text) {
+                                //@todo: not yet. text not working.
+                                console.log(123);
+                                console.log(text) ;
+                                console.log(123);
+                                html += '<font size="' +
+                                    Math.round(parseInt(text.font_size)/7) +
+                                    '" color="' +
+                                    text.color +
+                                    '">' +
+                                    text.content +
+                                    '</font>';
+                                //console.log(html);
+                            });
+                            html += '</div>' +
+                                '</div>';
+                        } else {
+                            html += '<div class="img-handle img-handle-'+numberTime+'" data-value="'+value.id+'" element-active="true" style="'+
+                                'top: ' + value.top_real + 'px;' +
+                                'left: ' + value.left_real + 'px;' +
+                                'width: ' + value.width_real + 'px;' +
+                                'height: ' + value.height_real + 'px;' +
+                                'z-index: ' + value.zindex +
+                                ';transform: rotate('+ value.rotate + 'deg)'+
+                                '" ><img class="img-box-set img-show h100 cursor-move" src="data:image/png;base64,'+value.image+'"></div>';
+                            //console.log(html);
+                        }
                         $('#working-box .working-inner-box .box-hidden').append(html);
                         //add border
                         html = '<div class="border-box border-box-'+numberTime+' j-drag j-resize j-rotate"  data-value="'+numberTime+'"  data-type="'+value.category_id+'" data-category="1" style="'+
@@ -192,7 +221,6 @@ function addToWorkSection() {
 
                     $('#working-box').trigger('contentChange');
                     calculateZindex('new', numberTime);
-                    console.log(info);
                 }
             });
 

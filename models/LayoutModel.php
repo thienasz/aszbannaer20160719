@@ -13,13 +13,19 @@ class LayoutModel extends BaseModel
         $layout_id = $this->insert('layouts', $data);
         foreach ($datas as $data) {
             $data['layout_id'] = $layout_id;
-            $this->insert('detail_layouts', $data);
+            $id = $this->insert('detail_layouts', $data);
+            if($data['type'] == 4) {
+                foreach ($data['text'] as $text) {
+                    $text['layout_detail_id'] = $id;
+                    $this->insert('texts', $text);
+                }
+            }
         }
         echo $layout_id;
     }
     public function getLayoutById($Id)
     {
-        $els = $this->db->prepare("select * from detail_layouts as l INNER JOIN elements as e ON l.element_id = e.id  where layout_id = " . $Id . " ORDER BY l.zindex" );
+        $els = $this->db->prepare("select l.id as dlid, l.element_id as dlcheck, l.*, e.* from detail_layouts as l INNER JOIN elements as e ON l.element_id = e.id  where layout_id = " . $Id . " ORDER BY l.zindex" );
         $els->execute();
         $els->setFetchMode(PDO::FETCH_ASSOC);
         return $els->fetchAll();
@@ -30,4 +36,30 @@ class LayoutModel extends BaseModel
         $els->execute();
         $els->setFetchMode(PDO::FETCH_ASSOC);
         return $els->fetchAll();
-    }}
+    }
+
+    public function getTextByLayout($id)
+    {
+        $els =  $this->db->prepare("select * from texts where layout_detail_id = ".$id." ORDER BY id ASC" );
+        $els->execute();
+        $els->setFetchMode(PDO::FETCH_ASSOC);
+        return $els->fetchAll();
+    }
+
+    public function getLinkFontByName($name)
+    {
+        $els =  $this->db->prepare("select * from fonts where name LIKE '".$name."'");
+        $els->execute();
+        $els->setFetchMode(PDO::FETCH_ASSOC);
+        return $els->fetchAll()[0];
+    }
+
+    public function getLayoutDetailById($id)
+    {
+        $els =  $this->db->prepare("select * from detail_layouts where id = ".$id." ORDER BY id ASC" );
+        $els->execute();
+        $els->setFetchMode(PDO::FETCH_ASSOC);
+        return $els->fetchAll()[0];
+    }
+
+}

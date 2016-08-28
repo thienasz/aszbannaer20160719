@@ -93,7 +93,7 @@ function imagecreatefromfile($path, $user_functions = false)
 /**
  * func create image to ajax for background
  */
-function covertImageToBase64 ($path, $type = 'jpg') {
+function covertImageToBase64 ($path, $type = 'jpg', $option = array()) {
     ob_start();
     switch ($type) {
         case 'png':
@@ -106,6 +106,10 @@ function covertImageToBase64 ($path, $type = 'jpg') {
             $im = imagecreatefromjpeg (ROOT . '/' . $path);
             break;
     }
+    /**
+     * @todo need resize image follow $option
+     *
+    */
     imagepng($im);
     imagedestroy($im);
     // Get Image content a variable

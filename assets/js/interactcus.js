@@ -173,7 +173,7 @@ function drawText() {
     var numberTime = new Date().valueOf();
     var html = '';
     html = '<div class="text-handle editor text-box-set  img-handle-' + numberTime + ' " data-value="' + numberTime + '" element-active="true">' + 
-        '<div class="">' + 'Text' + '</div>'+
+        '<div class="text-content">' + 'Text' + '</div>'+
     '</div>';
     $('#box-hidden').append(html);
     html = '<div class="border-box border-box-' + numberTime + ' j-drag j-rotate j-resize" data-value="' + numberTime + '"  data-type="4"  element-active="true"></div>';
@@ -211,8 +211,6 @@ function setWidthHeight() {
             num1 = '.position-box-' + $(this).data('value');
             var type = $(this).data('type');
             var cate = $(this).data('category');
-            console.log(cate) ;
-            console.log(num) ;
             switch (type){
                 case 4:
                     var text = num;
@@ -279,17 +277,33 @@ function refreshWidthHeight(el) {
 /**
  * submit data for layout
  */
+function getFinalElementText(el, otherEl) {
+    if(!el.children().length > 0){
+        if(typeof otherEl != 'undefined') {
+            return el.add(otherEl);
+        } else {
+            return el;
+        }
+    } else {
+        el.each(function (index, value) {
+            if($(this).clone().children().remove().end().text().length){
+                otherEl = (typeof otherEl != 'undefined') ? otherEl.add($(this)) : $(this);
+            }
+        });
+        return getFinalElementText(el.children(), otherEl);
+    }
+}
 function submitData() {
     console.log('vaosu');
     var array = [];
     var els = $('.border-box');
     console.log(els);
     var define = [];
-
     els.each(function (index, value) {
         var type = $(this).data('type');
         var handle = $('.img-handle-' + $(this).data('value'));
         var layout = {};
+        layout.text = [];
         layout.rotate = getRotationDegrees(handle);
         var x =  layout.rotate*0.0175;
         layout.element_id = handle.data('value');
@@ -297,13 +311,38 @@ function submitData() {
         layout.left = handle.position().left;
         layout.top_real = handle.css('top') ;
         layout.left_real = handle.css('left') ;
-        console.log(handle.css('top'));
         layout.width_real = handle.width();
         layout.height_real = handle.height();
         layout.width = handle.width()*Math.cos(x) + handle.height()*Math.sin(x);
         layout.height = handle.width()*Math.sin(x) + handle.height()*Math.cos(x);
         layout.type = type;
         layout.zindex = handle.css('z-index');
+        if(type == 4) {
+            layout.element_id = 0;
+            var origin = handle.find('.text-content').children();
+            if(origin.length > 0) {
+                origin.each(function (index, value) { //if select color first
+                    var temp = getFinalElementText($(this));
+
+                    if(temp.length > 0) {
+                        var elTemp;
+                        temp.each(function (index, value) {
+                            elTemp = {};
+                            elTemp.content = $(this).clone().children().remove().end().text();
+                            elTemp.color = $(this).css('color');
+                            elTemp.font_family = $(this).css('font-family');
+                            elTemp.font_size = $(this).css('font-size');
+                            elTemp.font_weight = $(this).css('font-weight');
+                            elTemp.font_style = $(this).css('font-style');
+                            elTemp.top = $(this).position().top;
+                            elTemp.left = $(this).position().left;
+                      
+                            layout.text.push(elTemp);
+                        });
+                    }
+                });
+            }
+        }
         array.push(layout);
     });
     console.log(array);
