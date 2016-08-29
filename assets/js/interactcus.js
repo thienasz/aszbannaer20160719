@@ -187,6 +187,9 @@ function drawText() {
         e.stopPropagation();
         removeActiveEl();
         $(this).attr('element-active', 'true');
+        $("ul.dropdown-menu").click(function(){
+            refreshWidthHeight($(".editor"));
+        })
         refreshWidthHeight($(this));
     }).keyup(function (e) {
         e.stopPropagation();
