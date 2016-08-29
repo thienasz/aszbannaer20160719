@@ -318,6 +318,7 @@ function submitData() {
         layout.height_real = handle.height();
         layout.width = handle.width()*Math.cos(x) + handle.height()*Math.sin(x);
         layout.height = handle.width()*Math.sin(x) + handle.height()*Math.cos(x);
+        layout.opacity = handle.css('opacity') ;
         layout.type = type;
         layout.zindex = handle.css('z-index');
         if(type == 4) {

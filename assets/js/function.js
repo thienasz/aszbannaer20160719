@@ -33,7 +33,7 @@ function getParamas(el, times) {
     obj['height'] = height * times;
     obj['element_id'] = id;
     obj['rotate'] = getRotationDegrees(el);
-    obj['top'] = tl.top;
+    obj['top'] = el.top;
     console.log( el.get(0).getBoundingClientRect());
     console.log(1111);
     return obj;

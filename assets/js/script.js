@@ -160,7 +160,8 @@ function addToWorkSection() {
                                 'left: ' + value.left_real + 'px;' +
                                 'width: ' + value.width_real + 'px;' +
                                 'height: ' + value.height_real + 'px;' +
-                                'z-index: ' + value.zindex +
+                                'opacity: ' + value.opacity +
+                                ';z-index: ' + value.zindex +
                                 ';transform: rotate('+ value.rotate + 'deg)'+
                                 '" ><img class="img-box-set img-show h100 cursor-move" src="data:image/png;base64,'+value.image+'"></div>';
                             //console.log(html);
