@@ -57,6 +57,7 @@ CREATE TABLE `detail_layouts` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+ALTER TABLE `detail_layouts` ADD `opacity` FLOAT NULL AFTER `rotate`;
 -- ----------------------------
 -- Records of detail_layouts
 -- ----------------------------

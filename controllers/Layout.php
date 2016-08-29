@@ -98,7 +98,7 @@ class Layout extends BaseController
 
             $rotation = imagerotate($image_p, $rotate, imageColorAllocateAlpha($image_p, 0, 0, 0, 127));
 
-            $this->imagecopymerge_alpha($outputImage, $rotation, $el['left']*$times, $el['top']*$times, 0, 0, abs($el['width']*$times), abs($el['height']*$times), 100); // merge with no background
+            $this->imagecopymerge_alpha($outputImage, $rotation, $el['left']*$times, $el['top']*$times, 0, 0, abs($el['width']*$times), abs($el['height']*$times), 100*$el['opacity']); // merge with no background
 
         }
         return $outputImage;
