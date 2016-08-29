@@ -200,6 +200,7 @@ function editor_wysiwyg(numberTime){
         e.stopPropagation();
         refreshWidthHeight($(this));
     });
+    $('.border-box-' + numberTime).css('min-height', '36px');
 }
 /**
  * set border and el handle
@@ -281,6 +282,7 @@ function refreshWidthHeight(el) {
     var num = text.data('value');
     $('.border-box-' + num).outerHeight(totalHeight);
     text.outerHeight(totalHeight - 20);
+    $('.border-box-' + num).css('min-height', totalHeight);
 }
 /**
  * submit data for layout
