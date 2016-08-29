@@ -187,7 +187,7 @@ function drawText() {
         e.stopPropagation();
         removeActiveEl();
         $(this).attr('element-active', 'true');
-        refreshBorder()
+        refreshWidthHeight($(this));
     }).keyup(function (e) {
         e.stopPropagation();
         refreshWidthHeight($(this));
