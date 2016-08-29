@@ -178,7 +178,12 @@ function drawText() {
     $('#box-hidden').append(html);
     html = '<div class="border-box border-box-' + numberTime + ' j-drag j-rotate j-resize" data-value="' + numberTime + '"  data-type="4"  element-active="true"></div>';
     $('#working-box .working-inner-box').append(html);
+    editor_wysiwyg(numberTime);
+}
+
+function editor_wysiwyg(numberTime){
     interactInit();
+    console.log('abcdds');
     $('.editor[element-active="true"]').wysiwyg();
 
     calculateZindex('new', numberTime, 'text');

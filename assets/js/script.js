@@ -123,7 +123,7 @@ function addToWorkSection() {
                     console.log(data);
                     $.each (data, function (index,value){
 
-                        removeActiveEl();
+                        // removeActiveEl();
 
                         var numberTime = new Date().valueOf();
                         var html = '';
@@ -136,13 +136,10 @@ function addToWorkSection() {
                             'height: ' + value.height_real + 'px;' +
                             'z-index: ' + value.zindex +
                             ';transform: rotate('+ value.rotate + 'deg)'+
-                            '" contenteditable="true">' +
+                            '">' +
                             '<div class="text-content">';
                             $.each(value.text, function (index, text) {
                                 //@todo: not yet. text not working.
-                                console.log(123);
-                                console.log(text) ;
-                                console.log(123);
                                 html += '<font size="' +
                                     Math.round(parseInt(text.font_size)/7) +
                                     '" color="' +
@@ -181,8 +178,7 @@ function addToWorkSection() {
                         $('#working-box').trigger('contentChange');
 
                         //calculate zindex
-                        calculateZindex('new', numberTime);
-
+                        editor_wysiwyg(numberTime);
                         // console.log(info);
                     })
 
@@ -320,8 +316,7 @@ function initToolbarBootstrapBindings() {
                 fontTarget.append($('<li><a data-edit="fontName ' + fontName + '" style="font-family:\'' + fontName + '\'">' + fontName + '</a></li>'));
                 });
 
-            var fnts = ['1', '2', '3', '4', '5',
-                        '6', '7'],
+            var fnts = ['1px', '2px', '3px', '4px', '5px', '6px', '7px'],
                     fntTarget = $('[title=FontSize]').siblings('.dropdown-menu');
              $.each(fnts, function (size, fontSize) {
                 fntTarget.append($('<li><a data-edit="fontSize ' + fontSize + '" >' + fontSize + '</a></li>'));
