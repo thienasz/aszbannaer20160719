@@ -88,12 +88,7 @@ class Layout extends BaseController
             $image_p = imagecreatetruecolor($new_width*$times, $new_height*$times);
             imagealphablending($image_p, false);
             imagesavealpha($image_p, true);
-            if ($type == 'png' || $type == 'text') {
-                $rotate =  360-$el['rotate'];
-            }
-            if ($type == 'jpg') {
-                $rotate =  180-$el['rotate'];
-            }
+            $rotate =  360-$el['rotate'];
             imagecopyresampled($image_p, $image, 0, 0, 0, 0, $new_width*$times, $new_height*$times, $width, $height);
 
             $rotation = imagerotate($image_p, $rotate, imageColorAllocateAlpha($image_p, 0, 0, 0, 127));

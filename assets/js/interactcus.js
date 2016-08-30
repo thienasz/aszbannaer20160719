@@ -236,12 +236,17 @@ function setWidthHeight() {
                     iw = image.naturalWidth;
                     ih = image.naturalHeight;
                     console.log(32);
-                    if(iw > 100){
-                        ih = ih * 100/iw;
-                        iw = 100;
-                    }else{
-                        ih = 100;
-                        iw = 100;
+                    if(cate == 1){
+                        iw= num.css('width');
+                        ih = num.css('height');
+                    } else {
+                        if(iw > 100){
+                            ih = ih * 100/iw;
+                            iw = 100;
+                        }else{
+                            ih = 100;
+                            iw = 100;
+                        }
                     }
                     num.height(ih);
                     num.width(iw);
@@ -386,8 +391,8 @@ function submitData() {
             console.log(data)  ;
             $('#notify').html('<div class="alert alert-success fade in"> ' +
                 '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a> ' +
-                '<strong>Thêm thành công!</strong>Xem ảnh tại   ' +
-                '<a href="layout/viewLayout/'+ data + '">   đây.. </a> ' +
+                '<strong>Submit success!</strong>View    ' +
+                '<a href="layout/viewLayout/'+ data + '">   layout </a> ' +
                 '</div>') ;
         }
     });
