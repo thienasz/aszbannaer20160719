@@ -15,9 +15,7 @@ class Layout extends BaseController
         foreach ($layouts as &$layout){
             ob_start();
             $id = (int)$layout['id'];
-            $im = $this->viewLayout($id);
-            imagepng($im);
-            imagedestroy($im);
+            $this->viewLayout($id);
             // Get Image content a variable
             $imageData=ob_get_contents();
             // Clean the output buffer
@@ -49,7 +47,7 @@ class Layout extends BaseController
         $layout_id = $this->model->insertLayout($datas);
     }
     public function viewLayout($id = 89){
-        $outputImage = $this->getLayout($id);
+        $outputImage = $this->getLayout($id, 1);
         header('Content-Type: image/png');
         imagejpeg($outputImage);
         imagedestroy($outputImage);
@@ -73,30 +71,35 @@ class Layout extends BaseController
                 $image = imagecreatefrompng($link);
             } elseif ($type == 'jpg') {
                 $image = imagecreatefromjpeg($link);
-            }
-            if ($type == 'text') {
+            } elseif ($type == 'text') {
                 $image = $this->getTextPng($el['dlid'], $times);
                 $width = imagesx($image);
                 $el['width_real'] = imagesx($image)/$times;
                 $height = imagesy($image);
                 $el['height_real'] = imagesy($image)/$times;
-            } else {
             }
 
             $new_width = $el['width_real'];
             $new_height = $el['height_real'];
+
             $image_p = imagecreatetruecolor($new_width*$times, $new_height*$times);
             imagealphablending($image_p, false);
             imagesavealpha($image_p, true);
-            if ($type == 'png' || $type == 'text') {
-                $rotate =  360-$el['rotate'];
-            }
-            if ($type == 'jpg') {
-                $rotate =  180-$el['rotate'];
-            }
             imagecopyresampled($image_p, $image, 0, 0, 0, 0, $new_width*$times, $new_height*$times, $width, $height);
 
-            $rotation = imagerotate($image_p, $rotate, imageColorAllocateAlpha($image_p, 0, 0, 0, 127));
+            if($el['rotate'] != 0) {
+                if ($type == 'png' || $type == 'text') {
+                    $rotate =  360-$el['rotate'];
+                }
+                if ($type == 'jpg') {
+                    $rotate =  180-$el['rotate'];
+                }
+
+                $rotation = imagerotate($image_p, $rotate, imageColorAllocateAlpha($image_p, 0, 0, 0, 127));
+                    $el['left'] += 2;
+            } else {
+                $rotation = $image_p;
+            }
 
             $this->imagecopymerge_alpha($outputImage, $rotation, $el['left']*$times, $el['top']*$times, 0, 0, abs($el['width']*$times), abs($el['height']*$times), 100*$el['opacity']); // merge with no background
 
@@ -134,7 +137,6 @@ class Layout extends BaseController
         imagealphablending($im, false);
         imagesavealpha($im, true);
 
-        imageColorAllocateAlpha($im, 0, 0, 0, 127);
 
         $col=imageColorAllocateAlpha($im, 0, 0, 0, 127);
         imagefilledrectangle($im,0,0,($temp_layout['width_real']+ 20)*$times, ($temp_layout['height_real']+ 20)*$times,$col);
@@ -142,9 +144,9 @@ class Layout extends BaseController
         $left = $texts[0]['left']+12;
 
         $maxFont = (int)$texts[0]['font_size'];
+        $top = ($temp_layout['height_real']+ 20)*0.75;
 
         foreach ($texts as $text) {
-            $top = (int)$text['font_size'] + 10;
 
             if((int)$text['font_size'] > $maxFont) {
                 $maxFont = (int)$text['font_size'];
@@ -163,7 +165,7 @@ class Layout extends BaseController
              */
             if(($left+$bbox[4])*$times > ($temp_layout['width_real']+ 20)*$times) {
                 $left = $texts[0]['left']+12;
-                $top = ($maxFont + 10)*$times;
+                $top += ($maxFont)*$times;
             }
             imagettftext($im, $font_size*$times, 0, $left*$times, $top*$times, $color, $font, $text['content']);
             $left += $bbox[4];
@@ -228,6 +230,9 @@ class Layout extends BaseController
             default :
                 $link = 'images/backgrounds/' . $element['link'];
                 break;
+        }
+        if(!file_exists($link)){
+            return 0;
         }
         return $link;
     }

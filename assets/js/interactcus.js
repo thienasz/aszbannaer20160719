@@ -18,6 +18,10 @@ function interactInit() {
     $('.border-box').mousedown(function (e) {
         console.log($(this).css('transform'));
     });
+    $('.editor').mousemove(function () {
+        $('.editor').removeAttr('contenteditable');
+        $(this).attr('contenteditable', true);
+    })
     $('.menu').find('.option').click(function (e) {
         e.stopImmediatePropagation();
         var option = $(this).data('option');
@@ -62,13 +66,26 @@ function interactInit() {
     });
 
     //event for border
+
+
+    $(".editor").mousedown(function (e) {
+        e.stopPropagation();
+        setElActive($(this));
+        $("ul.dropdown-menu").click(function(){
+            refreshWidthHeight($(".editor"));
+        });
+        refreshWidthHeight($(this));
+        refreshBorder();
+    }).keyup(function (e) {
+        e.stopPropagation();
+        refreshWidthHeight($(this));
+    });
+
     setWidthHeight();
     $('.border-box').mousedown(function (e) {
         e.stopPropagation();
         $(':focus').blur();
-        removeActiveEl();
-        $('.img-handle-' + $(this).data('value')).attr('element-active', 'true');
-        $(this).attr('element-active', 'true');
+        setElActive($(this).add($('.img-handle-' + $(this).data('value'))));
         var ac = $(this);
         refreshBorder(ac);
     });
@@ -97,7 +114,7 @@ function refreshBorder(el) {
         var temp;
         temp = $('.text-handle[element-active="true"]').first();
         el = $('.border-box-' + temp.data('value'));
-        el.attr('element-active', 'true');
+        setElActive(el.add(temp));
         
     }
     el.css('border', 'dashed 1px red');
@@ -178,28 +195,13 @@ function drawText() {
     $('#box-hidden').append(html);
     html = '<div class="border-box border-box-' + numberTime + ' j-drag j-rotate j-resize" data-value="' + numberTime + '"  data-type="4"  element-active="true"></div>';
     $('#working-box .working-inner-box').append(html);
-    editor_wysiwyg(numberTime);
-}
-
-function editor_wysiwyg(numberTime){
     interactInit();
-    console.log('abcdds');
-    $('.editor[element-active="true"]').wysiwyg();
 
     calculateZindex('new', numberTime, 'text');
 
-    $(".editor").mousedown(function (e) {
-        e.stopPropagation();
-        removeActiveEl();
-        $(this).attr('element-active', 'true');
-        $("ul.dropdown-menu").click(function(){
-            refreshWidthHeight($(".editor"));
-        })
-        refreshWidthHeight($(this));
-    }).keyup(function (e) {
-        e.stopPropagation();
-        refreshWidthHeight($(this));
-    });
+}
+function textEditor() {
+    $('.text-handle.editor[element-active="true"]').wysiwyg();
 }
 /**
  * set border and el handle
@@ -221,7 +223,7 @@ function setWidthHeight() {
             var cate = $(this).data('category');
             switch (type){
                 case 4:
-                    var text = num;
+                    var text = num.find('.text-content').first();
                     iw = parseInt(text.outerWidth()) + parseInt(20);
                     ih = parseInt(text.outerHeight()) + parseInt(20);
                     num.height(ih - 20);
@@ -302,6 +304,7 @@ function getFinalElementText(el, otherEl) {
     }
 }
 function submitData() {
+    setWidthHeight();
     console.log('vaosu');
     var array = [];
     var els = $('.border-box');
@@ -389,6 +392,11 @@ function submitData() {
                 '</div>') ;
         }
     });
+}
+function setElActive(el) {
+    removeActiveEl();
+    el.attr('element-active', 'true');
+    textEditor();
 }
 $(function () {
     $(window).mousedown(function () {

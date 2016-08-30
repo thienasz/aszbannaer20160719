@@ -10,7 +10,7 @@
     <div class="content content-show left-wrapper" id="content-show"></div>
 </section>
 <section class="col-md-8 col-sm-7 right-section">
-    <div class="btn-toolbar" data-role="editor-toolbar" data-target="#editor">
+    <div class="btn-toolbar" data-role="editor-toolbar" data-target=".editor[element-active='true'] .text-content">
         <div class="btn-group">
             <a class="btn dropdown-toggle" data-toggle="dropdown" title="Font" data-original-title="Font"><i class="fa fa-font"></i><b class="caret"></b></a>
             <ul class="dropdown-menu scrollfont">
@@ -89,22 +89,3 @@
     </div>
 
 </section>
-<!--sliderUI-->
-<!--<div id="slider_UI" >
-    <script>
-        $(function() {
-
-            $( "#slider-5" ).slider({
-                //orientation:"vertical",
-                value:50,
-                slide: function( event, ui ) {
-                    $( "#minval" ).val( ui.value );
-                }
-            });
-            $( "#minval" ).val( $( "#slider-5" ).slider( "value" ) );
-        });
-    </script>
-
-    <div id="slider-5"></div>
-</div>-->
-</html>

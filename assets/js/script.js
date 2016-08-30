@@ -175,13 +175,12 @@ function addToWorkSection() {
                             '"></div>';
                         $('#working-box .working-inner-box').append(html);
 
-                        $('#working-box').trigger('contentChange');
-
                         //calculate zindex
-                        editor_wysiwyg(numberTime);
+                        calculateZindex('new', numberTime);
                         // console.log(info);
                     })
-
+                    $('#working-box').trigger('contentChange');
+                    textEditor();
 
                 }
             });
@@ -316,7 +315,8 @@ function initToolbarBootstrapBindings() {
                 fontTarget.append($('<li><a data-edit="fontName ' + fontName + '" style="font-family:\'' + fontName + '\'">' + fontName + '</a></li>'));
                 });
 
-            var fnts = ['1px', '2px', '3px', '4px', '5px', '6px', '7px'],
+            var fnts = ['1', '2', '3', '4', '5',
+                        '6', '7'],
                     fntTarget = $('[title=FontSize]').siblings('.dropdown-menu');
              $.each(fnts, function (size, fontSize) {
                 fntTarget.append($('<li><a data-edit="fontSize ' + fontSize + '" >' + fontSize + '</a></li>'));
@@ -352,10 +352,10 @@ function initToolbarBootstrapBindings() {
         overlay.css('opacity', 0).css('position', 'absolute').offset(target.offset()).width(target.outerWidth()).height(target.outerHeight());
     });
     if ("onwebkitspeechchange" in document.createElement("input")) {
-        var editorOffset = $('#editor').offset();
+        var editorOffset = $('.editor[element-active="true"]').offset();
         $('#voiceBtn').css('position', 'absolute').offset({
             top: editorOffset.top,
-            left: editorOffset.left + $('#editor').innerWidth() - 35
+            left: editorOffset.left + $('.editor[element-active="true"]').innerWidth() - 35
         });
     } else {
         $('#voiceBtn').hide();
