@@ -47,7 +47,7 @@ class Layout extends BaseController
         $layout_id = $this->model->insertLayout($datas);
     }
     public function viewLayout($id = 89){
-        $outputImage = $this->getLayout($id, 1);
+        $outputImage = $this->getLayout($id, 3);
         header('Content-Type: image/png');
         imagejpeg($outputImage);
         imagedestroy($outputImage);
@@ -67,6 +67,9 @@ class Layout extends BaseController
             if($el['link'])
             list($width, $height) = getimagesize($link);
 
+            $new_width = $el['width_real'];
+            $new_height = $el['height_real'];
+
             if ($type == 'png') {
                 $image = imagecreatefrompng($link);
             } elseif ($type == 'jpg') {
@@ -77,10 +80,10 @@ class Layout extends BaseController
                 $el['width_real'] = imagesx($image)/$times;
                 $height = imagesy($image);
                 $el['height_real'] = imagesy($image)/$times;
-            }
 
-            $new_width = $el['width_real'];
-            $new_height = $el['height_real'];
+                $new_width = (int)$el['width_real'] ;
+                $new_height = (int)$el['height_real'] ;
+            }
 
             $image_p = imagecreatetruecolor($new_width*$times, $new_height*$times);
             imagealphablending($image_p, false);
@@ -88,6 +91,7 @@ class Layout extends BaseController
             imagecopyresampled($image_p, $image, 0, 0, 0, 0, $new_width*$times, $new_height*$times, $width, $height);
 
             if($el['rotate'] != 0) {
+                $rotate =  360-$el['rotate'];
                 if ($type == 'png' || $type == 'text') {
                     $rotate =  360-$el['rotate'];
                 }
@@ -96,7 +100,6 @@ class Layout extends BaseController
                 }
 
                 $rotation = imagerotate($image_p, $rotate, imageColorAllocateAlpha($image_p, 0, 0, 0, 127));
-                    $el['left'] += 2;
             } else {
                 $rotation = $image_p;
             }
@@ -144,13 +147,15 @@ class Layout extends BaseController
         $left = $texts[0]['left']+12;
 
         $maxFont = (int)$texts[0]['font_size'];
-        $top = ($temp_layout['height_real']+ 20)*0.75;
+        foreach ($texts as $text) {
+            if ((int)$text['font_size'] > $maxFont) {
+                $maxFont = (int)$text['font_size'];
+            }
+        }
+        $top = ($temp_layout['height_real']+ 20 + $maxFont/2)/2;
 
         foreach ($texts as $text) {
 
-            if((int)$text['font_size'] > $maxFont) {
-                $maxFont = (int)$text['font_size'];
-            }
             $font = $this->getFontPath($text);
             $s_color = $text['color'];
             $s_color = substr($s_color, 4, strlen($s_color)-5);
@@ -164,8 +169,8 @@ class Layout extends BaseController
              * @todo: need check with break word case
              */
             if(($left+$bbox[4])*$times > ($temp_layout['width_real']+ 20)*$times) {
-                $left = $texts[0]['left']+12;
-                $top += ($maxFont)*$times;
+                $left = $texts[0]['left']+10;
+                $top += ($maxFont);
             }
             imagettftext($im, $font_size*$times, 0, $left*$times, $top*$times, $color, $font, $text['content']);
             $left += $bbox[4];

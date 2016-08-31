@@ -330,3 +330,6 @@ ul.scrollfont{
     height: 81px;
     overflow-y: auto;
 }
+.btn-group {
+    z-index: 150;
+}

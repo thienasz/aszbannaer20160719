@@ -123,7 +123,7 @@ function addToWorkSection() {
                     console.log(data);
                     $.each (data, function (index,value){
 
-                        // removeActiveEl();
+                        removeActiveEl();
 
                         var numberTime = new Date().valueOf();
                         var html = '';
@@ -136,10 +136,13 @@ function addToWorkSection() {
                             'height: ' + value.height_real + 'px;' +
                             'z-index: ' + value.zindex +
                             ';transform: rotate('+ value.rotate + 'deg)'+
-                            '">' +
+                            '" contenteditable="true">' +
                             '<div class="text-content">';
                             $.each(value.text, function (index, text) {
                                 //@todo: not yet. text not working.
+                                console.log(123);
+                                console.log(text) ;
+                                console.log(123);
                                 html += '<font size="' +
                                     Math.round(parseInt(text.font_size)/7) +
                                     '" color="' +
@@ -177,6 +180,7 @@ function addToWorkSection() {
 
                         //calculate zindex
                         calculateZindex('new', numberTime);
+
                         // console.log(info);
                     })
                     $('#working-box').trigger('contentChange');
