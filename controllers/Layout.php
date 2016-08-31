@@ -37,8 +37,14 @@ class Layout extends BaseController
                 $e['text'] = $texts;
 
             } else {
-                $link = $this->getLink($e);
-                $e['image'] = covertImageToBase64($link, $e['type']);
+                if($e['type'] == 'svg'){
+                    $link = $this->getLink($e);
+                    $e['image'] = file_get_contents($link);
+                }else{
+                    $link = $this->getLink($e);
+                    $e['image'] = covertImageToBase64($link, $e['type']);
+                }
+
             }
         }
 
@@ -68,19 +74,20 @@ class Layout extends BaseController
             $link = $this->getLink($el);
             if($el['link'])
             list($width, $height) = getimagesize($link);
-
-            if ($type == 'png') {
-                $image = imagecreatefrompng($link);
-            } elseif ($type == 'jpg') {
-                $image = imagecreatefromjpeg($link);
-            }
-            if ($type == 'text') {
-                $image = $this->getTextPng($el['dlid'], $times);
-                $width = imagesx($image);
-                $el['width_real'] = imagesx($image)/$times;
-                $height = imagesy($image);
-                $el['height_real'] = imagesy($image)/$times;
-            } else {
+            switch ($type) {
+                case 'png':
+                    $image = imagecreatefrompng($link);
+                    break;
+                case 'jpg':
+                    $image = imagecreatefromjpeg($link);
+                    break;
+                case 'text':
+                    $image = $this->getTextPng($el['dlid'], $times);
+                    $width = imagesx($image);
+                    $el['width_real'] = imagesx($image)/$times;
+                    $height = imagesy($image);
+                    $el['height_real'] = imagesy($image)/$times;
+                    break;
             }
 
             $new_width = $el['width_real'];

@@ -125,6 +125,8 @@ function addToWorkSection() {
 
                         removeActiveEl();
 
+                        console.log("aaaa");
+                        console.log( value.image);
                         var numberTime = new Date().valueOf();
                         var html = '';
                         // add content img
@@ -155,16 +157,30 @@ function addToWorkSection() {
                             html += '</div>' +
                                 '</div>';
                         } else {
-                            html += '<div class="img-handle img-handle-'+numberTime+'" data-value="'+value.id+'" element-active="true" style="'+
-                                'top: ' + value.top_real + 'px;' +
-                                'left: ' + value.left_real + 'px;' +
-                                'width: ' + value.width_real + 'px;' +
-                                'height: ' + value.height_real + 'px;' +
-                                'opacity: ' + value.opacity +
-                                ';z-index: ' + value.zindex +
-                                ';transform: rotate('+ value.rotate + 'deg)'+
-                                '" ><img class="img-box-set img-show h100 cursor-move" src="data:image/png;base64,'+value.image+'"></div>';
-                            //console.log(html);
+                            if(value.type == 'svg'){
+                                html += '<div class="img-handle-svg img-handle img-handle-' + numberTime + '" data-value="' + value.id + '"  style="'+
+                                    'top: ' + value.top_real + 'px;' +
+                                    'left: ' + value.left_real + 'px;' +
+                                    'width: ' + value.width_real + 'px;' +
+                                    'height: ' + value.height_real + 'px;' +
+                                    'opacity: ' + value.opacity +
+                                    ';z-index: ' + value.zindex +
+                                    ';transform: rotate('+ value.rotate + 'deg)'+
+                                    '" element-active="true">' +
+                                    ' <div class="img-box-set img-show img-show-svg h100 cursor-move" >' + value.image + '</div></div>';
+
+                            }else {
+                                html += '<div class="img-handle img-handle-'+numberTime+'" data-value="'+value.id+'" element-active="true" style="'+
+                                    'top: ' + value.top_real + 'px;' +
+                                    'left: ' + value.left_real + 'px;' +
+                                    'width: ' + value.width_real + 'px;' +
+                                    'height: ' + value.height_real + 'px;' +
+                                    'opacity: ' + value.opacity +
+                                    ';z-index: ' + value.zindex +
+                                    ';transform: rotate('+ value.rotate + 'deg)'+
+                                    '" ><img class="img-box-set img-show h100 cursor-move" src="data:image/png;base64,'+value.image+'"></div>';
+                                //console.log(html);
+                            }
                         }
                         $('#working-box .working-inner-box .box-hidden').append(html);
                         //add border
