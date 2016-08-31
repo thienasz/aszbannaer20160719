@@ -10,6 +10,7 @@
     <link href="assets/css/bootstrap-colorpicker.min.css" rel="stylesheet">
     <link href="assets/css/bootstrap-colorpicker-plus.css" rel="stylesheet">
     <script> var root = '<?php echo BASE_URL; ?>' </script>
+    <link rel="stylesheet" href="assets/js/libs/jquery1.min.js">
 </head>
 <body>
 <header>
