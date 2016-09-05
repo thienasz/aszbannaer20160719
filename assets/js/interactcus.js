@@ -35,7 +35,6 @@ function interactInit() {
                 drawBoxColor($(this), elColor);
                 break;
             case 'opacity':
-
                 drawBoxOpacity($(this), elOpacity);
                 break;
             case 'up':
@@ -122,9 +121,6 @@ function removeActiveEl() {
 /**
  * draw color box when click color option
  */
-function drawBoxColor() {
-    console.log('draw box');
-}
 /**
  * show slider when click opacity option
  * @param el
@@ -169,34 +165,38 @@ function circle(el, op) {
 
 function drawBoxColor(el, op) {
     $('#table-color').remove();
-    el.append('<div id="table-color" style="width: 60px; margin-bottom: -100px">' +
-        '<svg id="swatches" width="60px" height="200px" viewBox="-4 -4 60 200" style="stroke: #000;stroke-width: 2; stroke-opacity: 0.1">' +
-        '<rect style="fill:#000"    x="0"  y="0" width="20" height="20"/>' +
-        '<rect style="fill:#AD5C51" x="25" y="0" width="20" height="20"/>' +
-        '<rect style="fill:#F4CBB2" x="0"  y="25" width="20" height="20"/>' +
-        '<rect style="fill:#f00"    x="25" y="25" width="20" height="20"/>' +
-        '<rect style="fill:#7DBBE6" x="0"  y="50" width="20" height="20"/>' +
-        '<rect style="fill:#9CDAF1" x="25" y="50" width="20" height="20"/>' +
-        '<rect style="fill:#C3E4D8" x="0"  y="75" width="20" height="20"/>' +
-        '<rect style="fill:#fff"    x="25" y="75" width="20" height="20"/>' +
-        '<rect id="selection" style="stroke:#0000ff; stroke-opacity: 1;fill:none" x="0" y="0" width="20" height="20"/>' +
-        '</svg>' +
+    el.append('<div id="table-color" style="width: 60px; margin-bottom: -100px">'+
+        '<svg id="swatches" width="60px" height="200px" viewBox="-4 -4 60 200" style="stroke: #000;stroke-width: 2; stroke-opacity: 0.1">'+
+        '<rect style="fill:#000"    x="0"  y="0" width="20" height="20"/>'+
+        '<rect style="fill:#AD5C51" x="25" y="0" width="20" height="20"/>'+
+        '<rect style="fill:#F4CBB2" x="0"  y="25" width="20" height="20"/>'+
+        '<rect style="fill:#f00"    x="25" y="25" width="20" height="20"/>'+
+        '<rect style="fill:#7DBBE6" x="0"  y="50" width="20" height="20"/>'+
+        '<rect style="fill:#9CDAF1" x="25" y="50" width="20" height="20"/>'+
+        '<rect style="fill:#C3E4D8" x="0"  y="75" width="20" height="20"/>'+
+        '<rect style="fill:#fff"    x="25" y="75" width="20" height="20"/>'+
+        '<rect id="selection" style="stroke:#0000ff; stroke-opacity: 1;fill:none" x="0" y="0" width="20" height="20"/>'+
+        '</svg>'+
         '</div>');
-
-    var _currentFill = '#fff';
-    $('.img-handle-svg .img-show-svg svg #Capa_1').click(function (event) {
-        $(event.target).attr('fill', _currentFill);
-    })
+    var _currentFill = 'fill:#C3E4D8';
     var $swatches = $("#swatches");
+    var z_index1 = $('.border-box').css('z-index');
     $swatches.click(function (event) {
+        console.log(z_index1);
         $swatch = $(event.target);
-        console.log('abcdds');
-       /* loc = [parseInt($swatch.attr('x'), 10), parseInt($swatch.attr('y'), 10)]
-        $("#selection", $swatches).attr('x', loc[0]);
-        $("#selection", $swatches).attr('y', loc[1]);*/
+        z_index1 = z_index1 - 100;
+        $('.border-box').css('z-index',z_index1);
+        console.log(z_index1);
         _currentFill = $swatch.attr('style');
-        ;
+        $('.img-handle-svg svg').click(function (event) {
+            $(event.target).attr('style', _currentFill);
+            $('.border-box').css('z-index',z_index1+100);
+            })
+
+
     });
+
+
 }
 function drawText() {
     removeActiveEl();
@@ -346,6 +346,7 @@ function submitData() {
     var define = [];
     els.each(function (index, value) {
         var type = $(this).data('type');
+        console.log(type);
         var handle = $('.img-handle-' + $(this).data('value'));
         var layout = {};
         layout.text = [];

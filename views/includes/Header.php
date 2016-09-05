@@ -11,6 +11,7 @@
     <link href="assets/css/bootstrap-colorpicker-plus.css" rel="stylesheet">
     <script> var root = '<?php echo BASE_URL; ?>' </script>
     <link rel="stylesheet" href="assets/js/libs/jquery1.min.js">
+    <link rel="stylesheet" href="assets/js/libs/jquery.min.js">
 </head>
 <body>
 <header>
