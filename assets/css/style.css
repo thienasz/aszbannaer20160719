@@ -290,13 +290,6 @@ a:hover {
     height: auto;
 }
 
-.opacity-slider {
-    position: absolute;
-    width: 100px;
-    height:6px;
-    background-color: red;
-}
-
 .position-box {
     top: 0;
     left: 0;

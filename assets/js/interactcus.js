@@ -131,17 +131,14 @@ function drawBoxOpacity(el, op) {
    // return false;
     $('.opacity-slider').remove();
     el.append('<div class="opacity-slider" style="height: 6px;width: 70px; margin-top: 10px" ></div>');
-    $(".opacity-slider").slider({
+    $('.opacity-slider').slider({
         value:50,
+        min: 0,
+        max: 100,
         slide: function( event, ui ) {
-            $( "#minval" ).val( ui.value );
             $(".img-handle[element-active='true']").css('opacity',  ui.value/100);
         }
     });
-
-    $( "#minval" ).val( $( ".opacity-slider" ).slider( "value" ) );
-    $('#minval').remove();
-    //el.append('<input type="text" id="minval" style="border:0; color:#2b669a; font-weight:bold;margin-top: 20px; width: 35px">');
 }
 /**
  * draw when click text option
@@ -157,10 +154,6 @@ function circle(el, op) {
             $(".img-handle[element-active='true'] .img-box-set").css('border-radius',  ui.value+ '%');
         }
     });
-
-    $( "#minval" ).val( $( ".circle-slider" ).slider( "value" ) );
-    $('#minval').remove();
-
 }
 
 function drawBoxColor(el, op) {
@@ -180,23 +173,21 @@ function drawBoxColor(el, op) {
         '</div>');
     var _currentFill = 'fill:#C3E4D8';
     var $swatches = $("#swatches");
-    var z_index1 = $('.border-box').css('z-index');
+    var z_index1 = $('.border-box-svg').css('z-index');
+    z_index1 = z_index1 - 10;
     $swatches.click(function (event) {
-        console.log(z_index1);
         $swatch = $(event.target);
-        z_index1 = z_index1 - 100;
-        $('.border-box').css('z-index',z_index1);
+        z_index1 = z_index1 - 10;
+        $('.border-box-svg').css('z-index',z_index1);
         console.log(z_index1);
         _currentFill = $swatch.attr('style');
         $('.img-handle-svg svg').click(function (event) {
             $(event.target).attr('style', _currentFill);
-            $('.border-box').css('z-index',z_index1+100);
+            z_index1 = z_index1 + 50;
+            $('.border-box-svg').css('z-index', z_index1);
+            console.log(z_index1);
             })
-
-
     });
-
-
 }
 function drawText() {
     removeActiveEl();

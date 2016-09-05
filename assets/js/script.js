@@ -232,8 +232,11 @@ function addToWorkSection() {
                     }
                     $('#working-box .working-inner-box .box-hidden').append(html);
                     //add border
-                    html = '<div class="border-box border-box-' + numberTime + ' j-drag j-resize j-rotate"  data-value="' + numberTime + '"  data-type="' + value.category_id + '" data-category="0"></div>';
-
+                    if(value.type == 'png' || value.type =='jpg') {
+                        html = '<div class="border-box border-box-' + numberTime + ' j-drag j-resize j-rotate"  data-value="' + numberTime + '"  data-type="' + value.category_id + '" data-category="0"></div>';
+                    }else{
+                        html = '<div class="border-box-svg border-box border-box-' + numberTime + ' j-drag j-resize j-rotate"  data-value="' + numberTime + '"  data-type="' + value.category_id + '" data-category="0"></div>';
+                    }
                     $('#working-box .working-inner-box').append(html);
 
                     $('#working-box').trigger('contentChange');
