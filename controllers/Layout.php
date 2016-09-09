@@ -88,6 +88,10 @@ class Layout extends BaseController
                     $height = imagesy($image);
                     $el['height_real'] = imagesy($image)/$times;
                     break;
+                case 'svg' :
+                    $image = file_get_contents($link);
+                    $image = null;
+                    break;
             }
 
             $new_width = $el['width_real'];
