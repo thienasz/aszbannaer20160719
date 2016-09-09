@@ -336,6 +336,9 @@ function submitData() {
     console.log(els);
     var define = [];
     els.each(function (index, value) {
+
+        console.log(index);
+        console.log(value);
         var type = $(this).data('type');
         console.log(type);
         var handle = $('.img-handle-' + $(this).data('value'));
@@ -346,8 +349,8 @@ function submitData() {
         layout.element_id = handle.data('value');
         layout.top = handle.position().top;
         layout.left = handle.position().left;
-        layout.top_real = handle.css('top') ;
-        layout.left_real = handle.css('left') ;
+        layout.top_real = parseInt(handle.css('top')) ;
+        layout.left_real = parseInt(handle.css('left')) ;
         layout.width_real = handle.width();
         layout.height_real = handle.height();
         layout.width = handle.width()*Math.cos(x) + handle.height()*Math.sin(x);
